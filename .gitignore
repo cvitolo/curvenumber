@@ -9,3 +9,8 @@
 
 # RStudio files
 .Rproj.user/
+.Rproj.user
+
+r_CurveNumber.Rproj
+tests/*
+*.tar.gz
