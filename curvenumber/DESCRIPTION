@@ -1,9 +1,9 @@
 Package: curvenumber
 Type: Package
 Title: Implementation of the SCS curve number method
-Version: 0.1.1
+Version: 0.1.2
 Date: 2014-11-09
-Author: Claudia Vitolo
+Author: Claudia Vitolo and Nataliya Le Vine
 Maintainer: Claudia Vitolo <cvitolodev@gmail.com>
 Description: Implementation of the SCS curve number method.
 Depends:
