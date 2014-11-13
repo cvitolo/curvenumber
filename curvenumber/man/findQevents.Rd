@@ -3,14 +3,14 @@
 \alias{findQevents}
 \title{Find discharge events}
 \usage{
-findQevents(dataQ, newInfoP, plotOption = TRUE)
+findQevents(dataX, infoP, hours2extend = 8)
 }
 \arguments{
-\item{dataQ}{is a Q time series}
+\item{dataX}{is the table containing time series (P,Q and E)}
 
-\item{newInfoP}{table containing summary of P events}
+\item{infoP}{table containing summary of P events}
 
-\item{plotOption}{boolean, if TRUE (default) it prints a plot to show the division of the events}
+\item{hours2extend}{number of hours to extend the rainfall event to account for the discharge peak to occur}
 }
 \value{
 table containing summary of events for the Q time series

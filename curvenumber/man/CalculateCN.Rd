@@ -3,10 +3,10 @@
 \alias{CalculateCN}
 \title{Calculate the Curve Number from P and Q}
 \usage{
-CalculateCN(descendingDF, PQunits = "mm")
+CalculateCN(dfTPQ, PQunits = "mm")
 }
 \arguments{
-\item{descendingDF}{data.frame containing 3 columns: Tr (return period), P (max precipitation) and Q (max discharge)}
+\item{dfTPQ}{data.frame containing 3 columns: Tr (return period), P (max precipitation) and Q (max discharge)}
 
 \item{PQunits}{units in which P and Q are expressed (default="mm")}
 }

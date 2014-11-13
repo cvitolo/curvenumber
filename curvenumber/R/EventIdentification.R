@@ -1,6 +1,6 @@
 #' Identify PQ events
 #'
-#' @param data is a data.frame containing P, Q (and E) time series
+#' @param dataX is a data.frame containing P, Q (and E) time series
 #' @param PQindependent boolean. If TRUE the events P and Q are considered independent and the matching return periods are calculated using the frequency matching approach. If FALSE (default) the events P and Q are dependent and they have the same return period
 #' @param plotOption boolean, if TRUE (default) it prints a plot to show the division of the events
 #' @param variable2plot is a variable to plot
@@ -8,43 +8,43 @@
 #' @return table containing Return period and matching P and Q max values
 #'
 #' @examples
-#' # df <- EventIdentification(data)
+#' # df <- EventIdentification(dataX)
 #'
 
-EventIdentification <- function(data, PQindependent=FALSE,
-                                plotOption = TRUE, variable2plot="Q"){
+EventIdentification <- function(dataX, PQindependent=FALSE,
+                                plotOption = FALSE, variable2plot="Q"){
 
   if (PQindependent == TRUE){
     # Apply Frequency Matching approach
 
     ### STEP 1 ###
     # Separate baseflow from runoff
-    bfs <- zoo(BaseflowSeparation(coredata(data$Q))[,"bt"],
-               order.by=index(data))
+    bfs <- zoo(BaseflowSeparation(coredata(dataX$Q))[,"bt"],
+               order.by=index(dataX))
 
     ## You can check out how this looks with the hydrograph function:
-    # hydrograph(input=data.frame("datetime"=index(data),
-    #                             "P"=coredata(data$P),
-    #                             "Q"=coredata(data$Q),
+    # hydrograph(input=data.frame("datetime"=index(dataX),
+    #                             "P"=coredata(dataX$P),
+    #                             "Q"=coredata(dataX$Q),
     #                             "Qbase"=coredata(bfs[,1])))
 
     # Use quick flow only (runoff - baseflow)
-    qfl <- zoo(BaseflowSeparation(coredata(data$Q))[,"qft"],
-               order.by=index(data))
+    qfl <- zoo(BaseflowSeparation(coredata(dataX$Q))[,"qft"],
+               order.by=index(dataX))
 
     # set up a warmup period
     percentageWarmUp <- 10
-    warmup <- round(dim(data)[1]/percentageWarmUp,0)
-    pperiod <- (warmup+1):dim(data)[1]
+    warmup <- round(dim(dataX)[1]/percentageWarmUp,0)
+    pperiod <- (warmup+1):dim(dataX)[1]
 
     bfs <- bfs[pperiod]
     qfl <- qfl[pperiod]
-    dataNew <- window(data,
-                      start=index(data)[warmup+1],
-                      end=index(data)[dim(data)[1]])
+    dataNew <- window(dataX,
+                      start=index(dataX)[warmup+1],
+                      end=index(dataX)[dim(dataX)[1]])
     dataNew$Q <- qfl
-    data <- data.frame("datetime"=index(data)[pperiod],
-                       "P"=data[pperiod,"P"],
+    dataX <- data.frame("datetime"=index(dataX)[pperiod],
+                       "P"=dataX[pperiod,"P"],
                        "Q"=qfl)
 
     ## You can check out how this looks with the hydrograph function:
@@ -77,8 +77,8 @@ EventIdentification <- function(data, PQindependent=FALSE,
     #   layer_(panel.xblocks(evp, col = c("grey90", "grey80"), border = "grey80")) +
     #   layer(panel.xblocks(evq, block.y = 0, vjust = 1, col = 1))
 
-    newTableP <- eventinfo(dataNew$P, evp, FUN = max)
-    newTableQ <- eventinfo(dataNew$Q, evq, FUN = max)
+    newTableP <- eventinfo(dataNew$P, evp, FUN = sum)
+    newTableQ <- eventinfo(dataNew$Q, evq, FUN = sum)
 
     # Calculate return periods for PQ events
     df <- ReturnPeriod(infoP=newTableP, infoQ=newTableQ,
@@ -89,15 +89,17 @@ EventIdentification <- function(data, PQindependent=FALSE,
   if (PQindependent == FALSE){
     # Apply Nataliya's approach
 
-    tableP <- findPevents(data$P, plotOption = FALSE)
-    tableQ <- findQevents(data$Q,tableP, plotOption = FALSE)
+    tableP <- findPevents(dataX)
+    tableQ <- findQevents(dataX, infoP=tableP)
+
+    # PlotEvents(InputTS, tableP, tableQ)
 
     # adjust end of Q events according to 4*LAG?
     # if so, what shall we do for LAG = 0?
     # LagPQ <- lagtime(tableP, tableQ, timeUnits = "hours")
-    # abline(v=index(data)[tableQ$indexCentroid + 4*LagPQ],col="green")
+    # abline(v=index(dataX)[tableQ$indexCentroid + 4*LagPQ],col="green")
 
-    if ( any(is.na(tableQ$Value)) ){
+    if ( any(is.na(tableQ$Peak)) ){
 
       row2remove <- which(is.na(tableQ$Value))
 
@@ -106,15 +108,19 @@ EventIdentification <- function(data, PQindependent=FALSE,
 
     }
 
-    temp <- FlowSeparation(data, tableQ,
-                           stepsBack=5, timeUnits = "hours",
-                           plotOption = TRUE, event2plot = 3)
+    newTableQ <- FlowSeparation(dataX, tableQ,
+                                stepsBack=5, timeUnits = "hours",
+                                plotOption = FALSE, event2plot = 1)
 
-    newTableP <- tableP[-which(temp$surfacePeak<=0 | is.na(temp$surfacePeak) ),]
-    newTableQ <- temp[-which(temp$surfacePeak<=0 | is.na(temp$surfacePeak) ),]
+    # When the line under the rising limb has positive slope the surface volume
+    # can become negative. In those cases we fix the surface volume to zero.
+    rows2fix <- which(newTableQ$surfaceVolume<0)
+    if ( length(rows2fix) > 0 ) newTableQ$surfaceVolume[rows2fix] <- 0
 
     # Calculate return periods for PQ events
-    df <- ReturnPeriod(newTableP, newTableQ, plotOption, variable2plot)
+    df <- ReturnPeriod(infoP=tableP, infoQ=newTableQ,
+                       plotOption=FALSE, variable2plot = "Q",
+                       PQindependent = TRUE)
 
   }
 

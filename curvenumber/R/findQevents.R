@@ -1,8 +1,8 @@
 #' Find discharge events
 #'
-#' @param dataQ is a Q time series
-#' @param newInfoP table containing summary of P events
-#' @param plotOption boolean, if TRUE (default) it prints a plot to show the division of the events
+#' @param dataX is the table containing time series (P,Q and E)
+#' @param infoP table containing summary of P events
+#' @param hours2extend number of hours to extend the rainfall event to account for the discharge peak to occur
 #'
 #' @return table containing summary of events for the Q time series
 #'
@@ -10,28 +10,39 @@
 #' # tableQ <- findQevents(data$Q,tableP)
 #'
 
-findQevents <- function(dataQ, newInfoP, plotOption=TRUE){
+findQevents <- function(dataX, infoP, hours2extend=8){
 
-  infoQ <- newInfoP[,c("Time","Month","Year","Value","Duration","PreDuration")]
-  # Temporary set the end of the Q event after 6 hours from the P centroid
-  infoQ$Duration <- newInfoP$Duration + 6
-  infoQ$EndTime <- index(data)[which(index(data) %in% newInfoP$EndTime) + 6]
+  # Format standard information table
+  infoQ <- data.frame(matrix(NA,ncol=11,nrow=dim(infoP)[1]))
+  names(infoQ) <- c("Event","indexStart","timeStart","indexEnd","timeEnd",
+                    "indexCentroid","timeCentroid",
+                    "Peak","Volume","Duration","PreDuration")
 
-  newInfoQ <- centroid(dataQ, infoQ,
-                       useMax = TRUE, altStart = newInfoP$indexCentroid)
+  infoQ$Event <- 1:dim(infoQ)[1]
 
-  if (plotOption == TRUE) {
-    plot(dataQ,type="n",main="Discharge",xlab="",ylab="mm")
-    rect(newInfoQ$Time,
-         par("usr")[3],
-         infoQ$EndTime,
-         par("usr")[4],
-         col="gray")
-    points(dataQ,type="l")
-    abline(v=newInfoP$timeCentroid,col="red")
-    abline(v=newInfoQ$timeCentroid,col="blue")
+  infoQ$indexStart <- infoP$indexStart
+  infoQ$timeStart <- infoP$timeStart
+
+  infoQ$indexEnd <- infoP$indexEnd + hours2extend
+  infoQ$timeEnd <- index(dataX$Q)[infoQ$indexEnd]
+
+  for (event in 1:dim(infoQ)[1]){
+
+    infoQ$Peak[event] <- max(dataX$Q[infoQ$indexStart[event]:infoQ$indexEnd[event]])
+    infoQ$Volume[event] <- sum(dataX$Q[infoQ$indexStart[event]:infoQ$indexEnd[event]])
+    infoQ$Duration[event] <- infoP$Duration[event] + hours2extend
+
+    if (event == 1) {
+      infoQ$PreDuration[event] <- infoQ$indexStart[event] - 1
+    }else{
+      infoQ$PreDuration[event] <- infoQ$indexStart[event] - infoQ$indexEnd[event-1]
+    }
+
   }
 
-  return(newInfoQ)
+  eventTableQ <- centroid(dataX = dataX$Q, infoX = infoQ,
+                          useMax = FALSE, altStart = NULL)
+
+  return(eventTableQ)
 
 }

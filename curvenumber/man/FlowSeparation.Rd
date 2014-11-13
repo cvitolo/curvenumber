@@ -3,11 +3,11 @@
 \alias{FlowSeparation}
 \title{Separate Baseflow and Surface runoff}
 \usage{
-FlowSeparation(data, infoQ, stepsBack = 5, timeUnits = "hours",
-  plotOption = TRUE, event2plot = 3)
+FlowSeparation(dataX, infoQ, stepsBack = 5, timeUnits = "hours",
+  plotOption = FALSE, event2plot = 2)
 }
 \arguments{
-\item{data}{data.frame containing P, Q (and E)}
+\item{dataX}{data.frame containing P, Q (and E)}
 
 \item{infoQ}{table containing summary of Q events}
 
@@ -30,6 +30,6 @@ Separate Baseflow and Surface runoff
 From Boorman 1995: The recession prior to the event is continued through the event, and this flow is subtracted from the total flow hydrograph. A straight line is then drawn from beneath the peak flow, or centroid of peaks, to the point already identified as marking the end of response runoff. The response runoff is the portion of flow above this separation.
 }
 \examples{
-# FlowSeparation(data, tableQ, stepsBack=5, timeUnits = "hours", plotOption = TRUE, event2plot = 3)
+# FlowSeparation(dataX, tableQ, stepsBack=5, timeUnits = "hours", plotOption = TRUE, event2plot = 3)
 }
 

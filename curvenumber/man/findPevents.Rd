@@ -3,12 +3,10 @@
 \alias{findPevents}
 \title{Find precipitation events}
 \usage{
-findPevents(dataX, plotOption = TRUE)
+findPevents(dataX)
 }
 \arguments{
-\item{dataX}{is a time series}
-
-\item{plotOption}{boolean, if TRUE (default) it prints a plot to show the division of the events}
+\item{dataX}{is the table containing time series (P,Q and E)}
 }
 \value{
 table containing summary of events for the time series dataX
@@ -17,6 +15,6 @@ table containing summary of events for the time series dataX
 Find precipitation events
 }
 \examples{
-# tableP <- findPevents(data$P)
+# tableP <- findPevents(InputTS$P)
 }
 

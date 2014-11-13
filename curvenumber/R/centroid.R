@@ -12,12 +12,11 @@
 #' # newInfoQ <- centroid(data$Q, infoQ, useMax = TRUE, altStart = newInfoP$indexCentroid)
 #'
 
-centroid <-
-function(dataX, infoX, useMax = FALSE, altStart = NULL){
+centroid <- function(dataX, infoX, useMax = FALSE, altStart = NULL){
 
   if (is.null(altStart)){
 
-    startTimes <- which(index(data) %in% infoX$Time)
+    startTimes <- infoX$indexStart
 
   }else{
 
@@ -25,31 +24,39 @@ function(dataX, infoX, useMax = FALSE, altStart = NULL){
 
   }
 
-  endTimes <- startTimes + infoX$Duration
+  endTimes <- infoX$indexEnd
 
   if (useMax == FALSE) {
 
-    indexCentroid <- c()
-
     for (event in 1:dim(infoX)[1]){
 
-      cumX <- cumXT <- 0
+      if ( infoX$Duration[event] == 1 ){
 
-      for (timestep in 1:infoX$Duration[event]){
+        # Sometimes the event is made of 1 time step
+        # in this case the centoid is at the start
+        infoX$indexCentroid[event] <- infoX$indexStart[event]
 
-        X <- as.numeric(dataX[startTimes[event] + timestep])
-        cumX <- cumX + X
+      }else{
 
-        cumXT <- cumXT + X * timestep
+        # events with duration > 1 time step
+        cumX <- cumXT <- 0
+
+        for (timestep in 1:infoX$Duration[event]){
+
+          X <- as.numeric(dataX[startTimes[event] + timestep - 1])
+          cumX <- cumX + X
+
+          cumXT <- cumXT + X * timestep
+
+        }
+
+        infoX$indexCentroid[event] <- startTimes[event] + round(cumXT/cumX,0)
 
       }
 
-      indexCentroid[event] <- startTimes[event] + round(cumXT/cumX,0)
-
     }
 
-    infoX$indexCentroid <- indexCentroid
-    infoX$timeCentroid <- index(dataX)[indexCentroid]
+    infoX$timeCentroid <- index(dataX)[infoX$indexCentroid]
 
   }else{
 

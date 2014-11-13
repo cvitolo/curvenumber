@@ -3,11 +3,11 @@
 \alias{EventIdentification}
 \title{Identify PQ events}
 \usage{
-EventIdentification(data, PQindependent = FALSE, plotOption = TRUE,
+EventIdentification(dataX, PQindependent = FALSE, plotOption = FALSE,
   variable2plot = "Q")
 }
 \arguments{
-\item{data}{is a data.frame containing P, Q (and E) time series}
+\item{dataX}{is a data.frame containing P, Q (and E) time series}
 
 \item{PQindependent}{boolean. If TRUE the events P and Q are considered independent and the matching return periods are calculated using the frequency matching approach. If FALSE (default) the events P and Q are dependent and they have the same return period}
 
@@ -22,6 +22,6 @@ table containing Return period and matching P and Q max values
 Identify PQ events
 }
 \examples{
-# df <- EventIdentification(data)
+# df <- EventIdentification(dataX)
 }
 
