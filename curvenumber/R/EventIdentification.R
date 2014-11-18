@@ -119,8 +119,7 @@ EventIdentification <- function(dataX, PQindependent=FALSE,
 
     # Calculate return periods for PQ events
     df <- ReturnPeriod(infoP=tableP, infoQ=newTableQ,
-                       plotOption=FALSE, variable2plot = "Q",
-                       PQindependent = TRUE)
+                       plotOption=FALSE, variable2plot = "Q")
 
   }
 

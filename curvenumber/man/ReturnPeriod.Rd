@@ -3,8 +3,7 @@
 \alias{ReturnPeriod}
 \title{Calculate return periods for PQ events}
 \usage{
-ReturnPeriod(infoP, infoQ, plotOption = FALSE, variable2plot = "Q",
-  PQindependent = FALSE)
+ReturnPeriod(infoP, infoQ, plotOption = FALSE, variable2plot = "Q")
 }
 \arguments{
 \item{infoP}{table containing summary of P events}
@@ -14,8 +13,6 @@ ReturnPeriod(infoP, infoQ, plotOption = FALSE, variable2plot = "Q",
 \item{plotOption}{boolean, if TRUE (default) it prints a plot to show the trend of the return period}
 
 \item{variable2plot}{it can be P or Q (default = Q)}
-
-\item{PQindependent}{boolean. If TRUE the events P and Q are considered independent and the matching return periods are calculated using the frequency matching approach. If FALSE (default) the events P and Q are dependent and they have the same return period}
 }
 \value{
 data.frame containing 3 columns: Tr (return period), P (max precipitation) and Q (max discharge)

@@ -4,7 +4,6 @@
 #' @param infoQ table containing summary of Q events
 #' @param plotOption boolean, if TRUE (default) it prints a plot to show the trend of the return period
 #' @param variable2plot it can be P or Q (default = Q)
-#' @param PQindependent boolean. If TRUE the events P and Q are considered independent and the matching return periods are calculated using the frequency matching approach. If FALSE (default) the events P and Q are dependent and they have the same return period
 #'
 #' @return data.frame containing 3 columns: Tr (return period), P (max precipitation) and Q (max discharge)
 #'
@@ -12,44 +11,40 @@
 #' # ReturnPeriod(infoP,infoQ)
 #'
 
-ReturnPeriod <- function(infoP, infoQ, plotOption=FALSE, variable2plot = "Q",
-                         PQindependent = FALSE){
+ReturnPeriod <- function(infoP, infoQ, plotOption=FALSE, variable2plot = "Q"){
 
   P <- infoP$Volume
   Q <- infoQ$surfaceVolume
   numberOfEvents <- dim(infoQ)[1]
 
-  if ( PQindependent == FALSE ){
+  # Order events in descending order and calculate matching return periods
+  eventsP <- sort(P, decreasing = TRUE)
+  returnPeriodP <- (length(eventsP)-1)/(1:length(eventsP))
+  dP <- data.frame(x=returnPeriodP, y=eventsP)
+  # loglogplot(dP)
 
-    if ( any(infoQ$surfaceVolume==0 | infoP$Volume < infoQ$surfaceVolume) ){
-      rows2remove <- which(infoQ$surfaceVolume==0 | infoP$Volume < infoQ$surfaceVolume)
-      P <- P[-rows2remove]
-      Q <- Q[-rows2remove]
-      numberOfEvents <- dim(infoQ)[1] - length(rows2remove)
+  eventsQ <- sort(Q, decreasing = TRUE)
+  returnPeriodQ <- (length(eventsQ)-1)/(1:length(eventsQ))
+  dQ <- data.frame(x=returnPeriodQ, y=eventsQ)
+  # loglogplot(dQ)
+
+  if ( all(returnPeriodP == returnPeriodQ) ){
+
+    if ( any(dQ$y==0 | dP$y < dQ$y) ){
+      rows2remove <- which(dQ$y==0 | dP$y < dQ$y)
+      dP <- dP[-rows2remove,]
+      dQ <- dQ[-rows2remove,]
+      numberOfEvents <- numberOfEvents - length(rows2remove)
     }
-
-    tableEvents <- data.frame("P"=P,"Q"=Q)
-    tableEvents <- tableEvents[with(tableEvents, order(P)), ]
 
     # Define return periods based on P events
     Tr <- (numberOfEvents-1)/(1:numberOfEvents)
-    df <- data.frame("Tr"=Tr,"P"=tableEvents$P,"Q"=tableEvents$Q)
+    df <- data.frame("Tr"=Tr,"P"=dP$y,"Q"=dQ$y)
 
     if (plotOption == TRUE & variable2plot == "P") plot(df$Tr, df$P, type="o")
     if (plotOption == TRUE & variable2plot == "Q") plot(df$Tr, df$Q, type="o")
 
   }else{
-
-    # Order events in descending order and calculate matching return periods
-    eventsP <- sort(P, decreasing = TRUE)
-    returnPeriodP <- (length(eventsP)-1)/(1:length(eventsP))
-    dP <- data.frame(x=returnPeriodP, y=eventsP)
-    # loglogplot(dP)
-
-    eventsQ <- sort(Q, decreasing = TRUE)
-    returnPeriodQ <- (length(eventsQ)-1)/(1:length(eventsQ))
-    dQ <- data.frame(x=returnPeriodQ, y=eventsQ)
-    # loglogplot(dQ)
 
     Tr <- 2:round(max(returnPeriodP,returnPeriodQ),0)
 
