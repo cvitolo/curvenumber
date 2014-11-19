@@ -1,0 +1,140 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>R curvenumber by cvitolo</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">R curvenumber</h1>
+        <p class="header">SCS Curve Number method (R package) </p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/cvitolo/r_CurveNumber/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/cvitolo/r_CurveNumber/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/cvitolo/r_CurveNumber">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/cvitolo">cvitolo</a></p>
+
+
+      </header>
+      <section>
+        <h1>
+<a id="curvenumber-r-package" class="anchor" href="#curvenumber-r-package" aria-hidden="true"><span class="octicon octicon-link"></span></a>CURVENUMBER (R-package)</h1>
+
+<p>SCS Curve Number method</p>
+
+<p>This package implements the SCS Curve Number method according to <a href="http://dx.doi.org/10.1061/(ASCE)0733-9437(1993)119:2(334)">Hawkins (1993)</a>.</p>
+
+<h4>
+<a id="basics" class="anchor" href="#basics" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basics</h4>
+
+<p>Install and load packages</p>
+
+<div class="highlight highlight-R"><pre><span class="pl-c"># Install dependent packages from CRAN:</span>
+<span class="pl-vo">x</span> <span class="pl-k">&lt;-</span> c(<span class="pl-s1"><span class="pl-pds">"</span>pure<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>hydromad<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>zoo<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>EcoHydRology<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>udunits2<span class="pl-pds">"</span></span>)
+install.packages(<span class="pl-vo">x</span>)
+lapply(<span class="pl-vo">x</span>, <span class="pl-vo">require</span>, <span class="pl-v">character.only</span><span class="pl-k">=</span><span class="pl-c1">T</span>); rm(<span class="pl-vo">x</span>)
+
+<span class="pl-c"># Install dependent gists and packages from github:</span>
+library(<span class="pl-vo">devtools</span>)
+install_github(<span class="pl-s1"><span class="pl-pds">"</span>cvitolo/r_CurveNumber<span class="pl-pds">"</span></span>, <span class="pl-v">subdir</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>curvenumber<span class="pl-pds">"</span></span>)</pre></div>
+
+<h4>
+<a id="load-the-library-and-some-test-data" class="anchor" href="#load-the-library-and-some-test-data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Load the library and some test data</h4>
+
+<div class="highlight highlight-R"><pre>library(<span class="pl-vo">curvenumber</span>)
+data(<span class="pl-vo">DATA</span>) 
+
+<span class="pl-c"># DATA is in mm/d but the time step is 1 hour, below is an adjustment:</span>
+<span class="pl-vo">InputTS</span> <span class="pl-k">&lt;-</span> <span class="pl-vo">DATA</span><span class="pl-k">/</span><span class="pl-c1">24</span>; rm(<span class="pl-vo">DATA</span>)</pre></div>
+
+<h3>
+<a id="identify-rainfall-runoff-events" class="anchor" href="#identify-rainfall-runoff-events" aria-hidden="true"><span class="octicon octicon-link"></span></a>Identify Rainfall-Runoff events</h3>
+
+<p>According to <a href="http://dx.doi.org/10.1061/(ASCE)0733-9437(1993)119:2(334)">Hawkins (1993)</a>, in order to calculate the curve Number, the rainfall and runoff events can be identified separately. Return periods are then matched using the Frequency Matching approach <a href="http://cedb.asce.org/cgi/WWWdisplay.cgi?9734">Hjelmfelt (1980)</a>. </p>
+
+<div class="highlight highlight-R"><pre><span class="pl-vo">df</span>  <span class="pl-k">&lt;-</span> EventIdentification(<span class="pl-v">dataX</span> <span class="pl-k">=</span> <span class="pl-vo">InputTS</span>, <span class="pl-v">PQindependent</span> <span class="pl-k">=</span> <span class="pl-c1">FALSE</span>,
+                           <span class="pl-v">plotOption</span> <span class="pl-k">=</span> <span class="pl-c1">FALSE</span>, <span class="pl-v">variable2plot</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>Q<span class="pl-pds">"</span></span>)</pre></div>
+
+<h3>
+<a id="calculate-the-curve-number" class="anchor" href="#calculate-the-curve-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>Calculate the Curve Number</h3>
+
+<p>Determine the CN for each event</p>
+
+<div class="highlight highlight-R"><pre><span class="pl-vo">newDF</span> <span class="pl-k">&lt;-</span> CalculateCN(<span class="pl-v">dfTPQ</span> <span class="pl-k">=</span> <span class="pl-vo">df</span>, <span class="pl-v">PQunits</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>mm<span class="pl-pds">"</span></span>)</pre></div>
+
+<p>Plot CN-P behaviour to define the type of asymptote</p>
+
+<div class="highlight highlight-R"><pre>plot(<span class="pl-vo">newDF</span><span class="pl-k">$</span><span class="pl-vo">CN</span><span class="pl-k">~</span><span class="pl-vo">newDF</span><span class="pl-k">$</span><span class="pl-vo">P</span>, <span class="pl-v">xlab</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>Rainfall<span class="pl-pds">"</span></span>, <span class="pl-v">ylab</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>Runoff CN<span class="pl-pds">"</span></span>, <span class="pl-v">ylim</span><span class="pl-k">=</span>c(min(<span class="pl-vo">newDF</span><span class="pl-k">$</span><span class="pl-vo">CN</span>),<span class="pl-c1">100</span>))</pre></div>
+
+<p>There are three types of behaviour: "standard" (increasing asymptotically), "complacent" (decreasing indefinitely) and "violent" (increasing asymptotically).
+I the behaviour can be considered standard, then CNinfinity can be calculated by a nonlinear least squares curve fiiting.</p>
+
+<p>The variable CNinf is independent from P.
+It is the CN describing the data set for larger rainfall events.</p>
+
+<div class="highlight highlight-R"><pre><span class="pl-vo">CN</span> <span class="pl-k">&lt;-</span> <span class="pl-vo">newDF</span><span class="pl-k">$</span><span class="pl-vo">CN</span>
+<span class="pl-vo">P</span> <span class="pl-k">&lt;-</span> <span class="pl-vo">newDF</span><span class="pl-k">$</span><span class="pl-vo">P</span>
+
+<span class="pl-c"># Determine parameters first guess</span>
+<span class="pl-vo">CN0</span> <span class="pl-k">&lt;-</span> median( sort(<span class="pl-vo">CN</span>, <span class="pl-v">decreasing</span> <span class="pl-k">=</span> <span class="pl-c1">FALSE</span>)[<span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">5</span>] )
+<span class="pl-v">k</span><span class="pl-k">=</span><span class="pl-c1">1</span> <span class="pl-c"># k=0.003</span>
+
+<span class="pl-c"># nonlinear least squares curve fiiting</span>
+<span class="pl-vo">fit</span> <span class="pl-k">&lt;-</span> nls(<span class="pl-vo">CN</span> <span class="pl-k">~</span> <span class="pl-vo">CN0</span> <span class="pl-k">+</span> (<span class="pl-c1">100</span> <span class="pl-k">-</span> <span class="pl-vo">CN0</span>) <span class="pl-k">*</span> exp(<span class="pl-k">-</span><span class="pl-vo">k</span><span class="pl-k">*</span><span class="pl-vo">P</span>), <span class="pl-v">start</span><span class="pl-k">=</span><span class="pl-st">list</span>(<span class="pl-v">CN0</span><span class="pl-k">=</span><span class="pl-vo">CN0</span>,<span class="pl-v">k</span><span class="pl-k">=</span><span class="pl-vo">k</span>))
+
+summary(<span class="pl-vo">fit</span>)
+
+coefficients(<span class="pl-vo">fit</span>)
+
+<span class="pl-c"># Sum of squared residuals:</span>
+sum(resid(<span class="pl-vo">fit</span>)<span class="pl-k">^</span><span class="pl-c1">2</span>) 
+
+<span class="pl-c"># Finally, lets get the parameter confidence intervals.</span>
+confint(<span class="pl-vo">fit</span>) </pre></div>
+
+<p>Draw the fit on the plot by getting the prediction from the fit at 200 x-coordinates across the range of P</p>
+
+<div class="highlight highlight-R"><pre><span class="pl-v">new</span> <span class="pl-k">=</span> <span class="pl-st">data.frame</span>(<span class="pl-v">P</span> <span class="pl-k">=</span> seq(min(<span class="pl-vo">P</span>),max(<span class="pl-vo">P</span>),<span class="pl-v">len</span><span class="pl-k">=</span><span class="pl-c1">200</span>))
+lines(<span class="pl-vo">new</span><span class="pl-k">$</span><span class="pl-vo">P</span>,predict(<span class="pl-vo">fit</span>,<span class="pl-v">newdata</span><span class="pl-k">=</span><span class="pl-vo">new</span>), <span class="pl-v">col</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>red<span class="pl-pds">"</span></span>)</pre></div>
+
+<h4>
+<a id="warnings" class="anchor" href="#warnings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Warnings</h4>
+
+<p>This package and functions herein are provided as is, without any guarantee.</p>
+
+<h4>
+<a id="please-leave-your-feedback" class="anchor" href="#please-leave-your-feedback" aria-hidden="true"><span class="octicon octicon-link"></span></a>Please leave your feedback</h4>
+
+<p>I would greatly appreciate if you could leave your feedbacks via email (<a href="mailto:cvitolodev@gmail.com">cvitolodev@gmail.com</a>).</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="http://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		          <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-44379190-6");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
