@@ -43,12 +43,12 @@
 <p>Install and load packages</p>
 
 <div class="highlight highlight-R"><pre><span class="pl-c"># Install dependent packages from CRAN:</span>
-<span class="pl-vo">x</span> <span class="pl-k">&lt;-</span> c(<span class="pl-s1"><span class="pl-pds">"</span>pure<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>hydromad<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>zoo<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>EcoHydRology<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>udunits2<span class="pl-pds">"</span></span>)
+<span class="pl-vo">x</span> <span class="pl-k">&lt;-</span> c(<span class="pl-s1"><span class="pl-pds">"</span>zoo<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>EcoHydRology<span class="pl-pds">"</span></span>, <span class="pl-s1"><span class="pl-pds">"</span>udunits2<span class="pl-pds">"</span></span>,<span class="pl-s1"><span class="pl-pds">"</span>devtools<span class="pl-pds">"</span></span>)
 install.packages(<span class="pl-vo">x</span>)
 lapply(<span class="pl-vo">x</span>, <span class="pl-vo">require</span>, <span class="pl-v">character.only</span><span class="pl-k">=</span><span class="pl-c1">T</span>); rm(<span class="pl-vo">x</span>)
 
-<span class="pl-c"># Install dependent gists and packages from github:</span>
-library(<span class="pl-vo">devtools</span>)
+<span class="pl-c"># Install dependent packages from github:</span>
+install_github(<span class="pl-s1"><span class="pl-pds">"</span>josephguillaume/hydromad<span class="pl-pds">"</span></span>)
 install_github(<span class="pl-s1"><span class="pl-pds">"</span>cvitolo/r_CurveNumber<span class="pl-pds">"</span></span>, <span class="pl-v">subdir</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>curvenumber<span class="pl-pds">"</span></span>)</pre></div>
 
 <h4>
