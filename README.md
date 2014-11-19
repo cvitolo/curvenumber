@@ -9,12 +9,12 @@ This package implements the SCS Curve Number method according to [Hawkins (1993)
 Install and load packages
 ```R
 # Install dependent packages from CRAN:
-x <- c("hydromad", "zoo", "EcoHydRology", "udunits2")
+x <- c("zoo", "EcoHydRology", "udunits2","devtools")
 install.packages(x)
 lapply(x, require, character.only=T); rm(x)
 
-# Install dependent gists and packages from github:
-library(devtools)
+# Install dependent packages from github:
+install_github("josephguillaume/hydromad")
 install_github("cvitolo/r_CurveNumber", subdir = "curvenumber")
 ```
 
