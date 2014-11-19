@@ -7,10 +7,10 @@
 #' @return table containing summary of events for the Q time series
 #'
 #' @examples
-#' # tableQ <- findQevents(data$Q,tableP)
+#' # tableQ <- findQevents(data$Q,tableP,hours2extend=6)
 #'
 
-findQevents <- function(dataX, infoP, hours2extend=8){
+findQevents <- function(dataX, infoP, hours2extend){
 
   # Format standard information table
   infoQ <- data.frame(matrix(NA,ncol=11,nrow=dim(infoP)[1]))

@@ -5,7 +5,7 @@
 #' @return table containing summary of events for the time series dataX
 #'
 #' @examples
-#' # tableP <- findPevents(InputTS$P)
+#' # tableP <- findPevents(dataX)
 #'
 
 findPevents <- function(dataX){

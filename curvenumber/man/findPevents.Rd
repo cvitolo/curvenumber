@@ -15,6 +15,6 @@ table containing summary of events for the time series dataX
 Find precipitation events
 }
 \examples{
-# tableP <- findPevents(InputTS$P)
+# tableP <- findPevents(dataX)
 }
 

@@ -3,7 +3,7 @@
 \alias{findQevents}
 \title{Find discharge events}
 \usage{
-findQevents(dataX, infoP, hours2extend = 8)
+findQevents(dataX, infoP, hours2extend)
 }
 \arguments{
 \item{dataX}{is the table containing time series (P,Q and E)}
@@ -19,6 +19,6 @@ table containing summary of events for the Q time series
 Find discharge events
 }
 \examples{
-# tableQ <- findQevents(data$Q,tableP)
+# tableQ <- findQevents(data$Q,tableP,hours2extend=6)
 }
 

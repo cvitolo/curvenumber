@@ -3,16 +3,12 @@
 \alias{ReturnPeriod}
 \title{Calculate return periods for PQ events}
 \usage{
-ReturnPeriod(infoP, infoQ, plotOption = FALSE, variable2plot = "Q")
+ReturnPeriod(infoP, infoQ)
 }
 \arguments{
 \item{infoP}{table containing summary of P events}
 
 \item{infoQ}{table containing summary of Q events}
-
-\item{plotOption}{boolean, if TRUE (default) it prints a plot to show the trend of the return period}
-
-\item{variable2plot}{it can be P or Q (default = Q)}
 }
 \value{
 data.frame containing 3 columns: Tr (return period), P (max precipitation) and Q (max discharge)

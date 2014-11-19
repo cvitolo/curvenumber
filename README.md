@@ -32,54 +32,25 @@ InputTS <- DATA/24; rm(DATA)
 According to [Hawkins (1993)](http://dx.doi.org/10.1061/(ASCE)0733-9437(1993)119:2(334)), in order to calculate the curve Number, the rainfall and runoff events can be identified separately. Return periods are then matched using the Frequency Matching approach [Hjelmfelt (1980)](http://cedb.asce.org/cgi/WWWdisplay.cgi?9734). 
 
 ```R
-df  <- EventIdentification(dataX = InputTS, PQindependent = FALSE,
-                           plotOption = FALSE, variable2plot = "Q")
+df  <- EventIdentification(dataX = InputTS,
+                           hours2extend = 6, plotOption = FALSE,
+                           stepsBack = 5, timeUnits = "hours")
 ```
 
 ### Calculate the Curve Number
-Determine the CN for each event
+Determine the Curve Number and k coefficient and also plot CN-P behaviour to 
+define the type of asymptote
 ```R
-newDF <- CalculateCN(dfTPQ = df, PQunits = "mm")
+coef <- CalculateCN(dfTPQ = df, PQunits = "mm", plotOption = TRUE)
 ```
 
-Plot CN-P behaviour to define the type of asymptote
-```R
-plot(newDF$CN~newDF$P, xlab="Rainfall", ylab="Runoff CN", ylim=c(min(newDF$CN),100))
-```
-
-There are three types of behaviour: "standard" (increasing asymptotically), "complacent" (decreasing indefinitely) and "violent" (increasing asymptotically).
-I the behaviour can be considered standard, then CNinfinity can be calculated by a nonlinear least squares curve fiiting.
-
-The variable CNinf is independent from P.
-It is the CN describing the data set for larger rainfall events.
-
-```R
-CN <- newDF$CN
-P <- newDF$P
-
-# Determine parameters first guess
-CN0 <- median( sort(CN, decreasing = FALSE)[1:5] )
-k=1 # k=0.003
-
-# nonlinear least squares curve fiiting
-fit <- nls(CN ~ CN0 + (100 - CN0) * exp(-k*P), start=list(CN0=CN0,k=k))
-
-summary(fit)
-
-coefficients(fit)
-  
-# Sum of squared residuals:
-sum(resid(fit)^2) 
-
-# Finally, lets get the parameter confidence intervals.
-confint(fit) 
-```
-
-Draw the fit on the plot by getting the prediction from the fit at 200 x-coordinates across the range of P
-```R
-new = data.frame(P = seq(min(P),max(P),len=200))
-lines(new$P,predict(fit,newdata=new), col="red")
-```
+Please note that there are three types of behaviour: 
+* "standard" (increasing asymptotically), 
+* "complacent" (decreasing indefinitely) and 
+* "violent" (increasing asymptotically).
+Here, only the standard behaviour is implemented. In this case, CN (infinity) is
+the value of CN that corresponds to the largest rainfall events and can be 
+calculated by a nonlinear least squares curve fitting (red line).
 
 #### Warnings
 This package and functions herein are provided as is, without any guarantee.

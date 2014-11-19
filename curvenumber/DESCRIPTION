@@ -1,16 +1,21 @@
 Package: curvenumber
 Type: Package
-Title: Implementation of the SCS curve number method
-Version: 0.1.4
-Date: 2014-11-09
-Author: Claudia Vitolo and Nataliya Le Vine
-Maintainer: Claudia Vitolo <cvitolodev@gmail.com>
-Description: Implementation of the SCS curve number method.
+Version: 0.1.5
+Title: SCS Curve Number method
+Description: An adaptation of the SCS curve number method.
+Authors@R: as.person(c(
+    "Claudia Vitolo <cvitolodev@gmail.com> [aut, cre]",
+    "Nataliya Le Vine [aut]"))
+URL: https://github.com/cvitolo/r_CurveNumber
+BugReports: https://github.com/cvitolo/r_CurveNumber/issues
 Depends:
-    R (>= 2.14.0)
+    R (>= 3.1.2)
 Imports:
     hydromad,
     zoo,
     EcoHydRology,
     udunits2
 License: GPL
+Author: Claudia Vitolo and Nataliya Le Vine
+Maintainer: Claudia Vitolo <cvitolodev@gmail.com>
+Repository: CRAN
