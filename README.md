@@ -54,4 +54,4 @@ calculated by a nonlinear least squares curve fitting (red line).
 This package and functions herein are provided as is, without any guarantee.
 
 #### Please leave your feedback
-This package was developed by Claudia Vitolo and Nataliya Le Vine. We would greatly appreciate if you could leave your feedbacks via email (cvitolodev@gmail.com).
+This package was developed by [Claudia Vitolo](http://www.imperial.ac.uk/people/c.vitolo) and [Nataliya Le Vine](http://www.imperial.ac.uk/people/n.le-vine). We would greatly appreciate if you could leave your feedbacks via email (cvitolodev@gmail.com).
