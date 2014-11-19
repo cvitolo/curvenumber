@@ -1,9 +1,7 @@
-CURVENUMBER (R-package)
-===========================
+SCS Curve Number method (R-package)
+===================================
 
-SCS Curve Number method
-
-This package implements the SCS Curve Number method according to [Hawkins (1993)](http://dx.doi.org/10.1061/(ASCE)0733-9437(1993)119:2(334)).
+This package implements an adaptation of the SCS Curve Number method according to [Hawkins (1993)](http://dx.doi.org/10.1061/(ASCE)0733-9437(1993)119:2(334)).
 
 #### Basics
 Install and load packages
@@ -56,4 +54,4 @@ calculated by a nonlinear least squares curve fitting (red line).
 This package and functions herein are provided as is, without any guarantee.
 
 #### Please leave your feedback
-I would greatly appreciate if you could leave your feedbacks via email (cvitolodev@gmail.com).
+This package was developed by Claudia Vitolo and Nataliya Le Vine. We would greatly appreciate if you could leave your feedbacks via email (cvitolodev@gmail.com).
