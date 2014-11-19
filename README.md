@@ -9,7 +9,7 @@ This package implements the SCS Curve Number method according to [Hawkins (1993)
 Install and load packages
 ```R
 # Install dependent packages from CRAN:
-x <- c("pure", "hydromad", "zoo", "EcoHydRology", "udunits2")
+x <- c(hydromad", "zoo", "EcoHydRology", "udunits2")
 install.packages(x)
 lapply(x, require, character.only=T); rm(x)
 
