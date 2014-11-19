@@ -65,50 +65,28 @@ data(<span class="pl-vo">DATA</span>)
 
 <p>According to <a href="http://dx.doi.org/10.1061/(ASCE)0733-9437(1993)119:2(334)">Hawkins (1993)</a>, in order to calculate the curve Number, the rainfall and runoff events can be identified separately. Return periods are then matched using the Frequency Matching approach <a href="http://cedb.asce.org/cgi/WWWdisplay.cgi?9734">Hjelmfelt (1980)</a>. </p>
 
-<div class="highlight highlight-R"><pre><span class="pl-vo">df</span>  <span class="pl-k">&lt;-</span> EventIdentification(<span class="pl-v">dataX</span> <span class="pl-k">=</span> <span class="pl-vo">InputTS</span>, <span class="pl-v">PQindependent</span> <span class="pl-k">=</span> <span class="pl-c1">FALSE</span>,
-                           <span class="pl-v">plotOption</span> <span class="pl-k">=</span> <span class="pl-c1">FALSE</span>, <span class="pl-v">variable2plot</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>Q<span class="pl-pds">"</span></span>)</pre></div>
+<div class="highlight highlight-R"><pre><span class="pl-vo">df</span>  <span class="pl-k">&lt;-</span> EventIdentification(<span class="pl-v">dataX</span> <span class="pl-k">=</span> <span class="pl-vo">InputTS</span>,
+                           <span class="pl-v">hours2extend</span> <span class="pl-k">=</span> <span class="pl-c1">6</span>, <span class="pl-v">plotOption</span> <span class="pl-k">=</span> <span class="pl-c1">FALSE</span>,
+                           <span class="pl-v">stepsBack</span> <span class="pl-k">=</span> <span class="pl-c1">5</span>, <span class="pl-v">timeUnits</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>hours<span class="pl-pds">"</span></span>)</pre></div>
 
 <h3>
 <a id="calculate-the-curve-number" class="anchor" href="#calculate-the-curve-number" aria-hidden="true"><span class="octicon octicon-link"></span></a>Calculate the Curve Number</h3>
 
-<p>Determine the CN for each event</p>
+<p>Determine the Curve Number and k coefficient and also plot CN-P behaviour to 
+define the type of asymptote</p>
 
-<div class="highlight highlight-R"><pre><span class="pl-vo">newDF</span> <span class="pl-k">&lt;-</span> CalculateCN(<span class="pl-v">dfTPQ</span> <span class="pl-k">=</span> <span class="pl-vo">df</span>, <span class="pl-v">PQunits</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>mm<span class="pl-pds">"</span></span>)</pre></div>
+<div class="highlight highlight-R"><pre><span class="pl-vo">coef</span> <span class="pl-k">&lt;-</span> CalculateCN(<span class="pl-v">dfTPQ</span> <span class="pl-k">=</span> <span class="pl-vo">df</span>, <span class="pl-v">PQunits</span> <span class="pl-k">=</span> <span class="pl-s1"><span class="pl-pds">"</span>mm<span class="pl-pds">"</span></span>, <span class="pl-v">plotOption</span> <span class="pl-k">=</span> <span class="pl-c1">TRUE</span>)</pre></div>
 
-<p>Plot CN-P behaviour to define the type of asymptote</p>
+<p>Please note that there are three types of behaviour: </p>
 
-<div class="highlight highlight-R"><pre>plot(<span class="pl-vo">newDF</span><span class="pl-k">$</span><span class="pl-vo">CN</span><span class="pl-k">~</span><span class="pl-vo">newDF</span><span class="pl-k">$</span><span class="pl-vo">P</span>, <span class="pl-v">xlab</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>Rainfall<span class="pl-pds">"</span></span>, <span class="pl-v">ylab</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>Runoff CN<span class="pl-pds">"</span></span>, <span class="pl-v">ylim</span><span class="pl-k">=</span>c(min(<span class="pl-vo">newDF</span><span class="pl-k">$</span><span class="pl-vo">CN</span>),<span class="pl-c1">100</span>))</pre></div>
-
-<p>There are three types of behaviour: "standard" (increasing asymptotically), "complacent" (decreasing indefinitely) and "violent" (increasing asymptotically).
-I the behaviour can be considered standard, then CNinfinity can be calculated by a nonlinear least squares curve fiiting.</p>
-
-<p>The variable CNinf is independent from P.
-It is the CN describing the data set for larger rainfall events.</p>
-
-<div class="highlight highlight-R"><pre><span class="pl-vo">CN</span> <span class="pl-k">&lt;-</span> <span class="pl-vo">newDF</span><span class="pl-k">$</span><span class="pl-vo">CN</span>
-<span class="pl-vo">P</span> <span class="pl-k">&lt;-</span> <span class="pl-vo">newDF</span><span class="pl-k">$</span><span class="pl-vo">P</span>
-
-<span class="pl-c"># Determine parameters first guess</span>
-<span class="pl-vo">CN0</span> <span class="pl-k">&lt;-</span> median( sort(<span class="pl-vo">CN</span>, <span class="pl-v">decreasing</span> <span class="pl-k">=</span> <span class="pl-c1">FALSE</span>)[<span class="pl-c1">1</span><span class="pl-k">:</span><span class="pl-c1">5</span>] )
-<span class="pl-v">k</span><span class="pl-k">=</span><span class="pl-c1">1</span> <span class="pl-c"># k=0.003</span>
-
-<span class="pl-c"># nonlinear least squares curve fiiting</span>
-<span class="pl-vo">fit</span> <span class="pl-k">&lt;-</span> nls(<span class="pl-vo">CN</span> <span class="pl-k">~</span> <span class="pl-vo">CN0</span> <span class="pl-k">+</span> (<span class="pl-c1">100</span> <span class="pl-k">-</span> <span class="pl-vo">CN0</span>) <span class="pl-k">*</span> exp(<span class="pl-k">-</span><span class="pl-vo">k</span><span class="pl-k">*</span><span class="pl-vo">P</span>), <span class="pl-v">start</span><span class="pl-k">=</span><span class="pl-st">list</span>(<span class="pl-v">CN0</span><span class="pl-k">=</span><span class="pl-vo">CN0</span>,<span class="pl-v">k</span><span class="pl-k">=</span><span class="pl-vo">k</span>))
-
-summary(<span class="pl-vo">fit</span>)
-
-coefficients(<span class="pl-vo">fit</span>)
-
-<span class="pl-c"># Sum of squared residuals:</span>
-sum(resid(<span class="pl-vo">fit</span>)<span class="pl-k">^</span><span class="pl-c1">2</span>) 
-
-<span class="pl-c"># Finally, lets get the parameter confidence intervals.</span>
-confint(<span class="pl-vo">fit</span>) </pre></div>
-
-<p>Draw the fit on the plot by getting the prediction from the fit at 200 x-coordinates across the range of P</p>
-
-<div class="highlight highlight-R"><pre><span class="pl-v">new</span> <span class="pl-k">=</span> <span class="pl-st">data.frame</span>(<span class="pl-v">P</span> <span class="pl-k">=</span> seq(min(<span class="pl-vo">P</span>),max(<span class="pl-vo">P</span>),<span class="pl-v">len</span><span class="pl-k">=</span><span class="pl-c1">200</span>))
-lines(<span class="pl-vo">new</span><span class="pl-k">$</span><span class="pl-vo">P</span>,predict(<span class="pl-vo">fit</span>,<span class="pl-v">newdata</span><span class="pl-k">=</span><span class="pl-vo">new</span>), <span class="pl-v">col</span><span class="pl-k">=</span><span class="pl-s1"><span class="pl-pds">"</span>red<span class="pl-pds">"</span></span>)</pre></div>
+<ul>
+<li>"standard" (increasing asymptotically), </li>
+<li>"complacent" (decreasing indefinitely) and </li>
+<li>"violent" (increasing asymptotically).
+Here, only the standard behaviour is implemented. In this case, CN (infinity) is
+the value of CN that corresponds to the largest rainfall events and can be 
+calculated by a nonlinear least squares curve fitting (red line).</li>
+</ul>
 
 <h4>
 <a id="warnings" class="anchor" href="#warnings" aria-hidden="true"><span class="octicon octicon-link"></span></a>Warnings</h4>
