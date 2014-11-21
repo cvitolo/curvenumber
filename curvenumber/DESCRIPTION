@@ -15,7 +15,7 @@ Imports:
     zoo,
     EcoHydRology,
     udunits2
-License: GPL
+License: GPL-3
 Author: Claudia Vitolo and Nataliya Le Vine
 Maintainer: Claudia Vitolo <cvitolodev@gmail.com>
 Repository: CRAN

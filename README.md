@@ -17,13 +17,18 @@ install_github("cvitolo/r_CurveNumber", subdir = "curvenumber")
 ```
 
 #### Load the library and some test data
-
+Library and test dataset can be loaded as follows:
 ```R
 library(curvenumber)
 data(DATA) 
+```
 
-# DATA is in mm/d but the time step is 1 hour, below is an adjustment:
+DATA is in mm/d but the time step is 1 hour, below is an adjustment:
+```R
 InputTS <- DATA/24; rm(DATA)
+```
+
+If the adjustment is not made, volumes should be re-calculated as the sum of the streamflow values multiplied by [the time interval length / your main time units]. E.g. if you use mm/day for hourly observations, the multiplier is [hour/day] = 1/24. If your main time units are the same as the time interval (mm/hr for hourly data), the multiplier is 1.
 ```
 
 ### Identify Rainfall-Runoff events
