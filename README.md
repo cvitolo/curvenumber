@@ -62,7 +62,6 @@ InputTS <- DATA/24; rm(DATA)
 ```
 
 If the adjustment is not made, volumes should be re-calculated as the sum of the streamflow values multiplied by [the time interval length / your main time units]. E.g. if you use mm/day for hourly observations, the multiplier is [hour/day] = 1/24. If your main time units are the same as the time interval (mm/hr for hourly data), the multiplier is 1.
-```
 
 ### Identify Rainfall-Runoff events
 According to (Hawkins, 1993), in order to calculate the curve Number, the rainfall and runoff events can be identified separately. Return periods are then matched using the Frequency Matching approach (Hjelmfelt, 1980). 
