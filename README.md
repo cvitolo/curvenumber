@@ -83,6 +83,7 @@ Please note that there are three types of behaviour:
 * "standard" (increasing asymptotically), 
 * "complacent" (decreasing indefinitely) and 
 * "violent" (increasing asymptotically).
+
 Here, only the standard behaviour is implemented. In this case, CN (infinity) is
 the value of CN that corresponds to the largest rainfall events and can be 
 calculated by a nonlinear least squares curve fitting (red line).
