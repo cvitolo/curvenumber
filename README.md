@@ -1,6 +1,8 @@
 SCS Curve Number method (R-package)
 ===================================
 
+[![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.14280.svg)](http://dx.doi.org/10.5281/zenodo.14280)
+
 The SCS Curve Number (CN) is a well established method for the estimation of direct runoff from storm rainfall, developed by the USDA Soil Conservation Service (Rallison, 1980) and used in hydrologic engineering and environmental impact analyses. 
 
 This package allows to calculate:  
@@ -9,7 +11,7 @@ This package allows to calculate:
 * the CN number, given rainfall (R) and runoff (Q) data
 
 **To cite this software:**  
-C. Vitolo, N. Le Vine, CurveNumber (R package), (2015), GitHub repository, https://github.com/cvitolo/r_CurveNumber, doi: 
+C. Vitolo, N. Le Vine, CurveNumber (R package), (2015), GitHub repository, https://github.com/cvitolo/r_CurveNumber, doi: http://dx.doi.org/10.5281/zenodo.14280
 
 ### Background: the CN method in a nutshell
 The CN number is a dimensionless parameter varying in the range [0,100]. This is tabulated based on land use type and hydrologic soil group. When the CN is known, the potential maximum retention (S) can be calculated using the following formula:

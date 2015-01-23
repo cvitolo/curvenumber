@@ -1,6 +1,6 @@
 Package: curvenumber
 Type: Package
-Version: 0.1.6
+Version: 0.1.7
 Title: SCS Curve Number method
 Description: An adaptation of the SCS curve number method.
 Authors@R: as.person(c(
