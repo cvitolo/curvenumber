@@ -91,13 +91,13 @@ calculated by a nonlinear least squares curve fitting (red line).
 ### Calculate the direct storm runoff
 Given the maximum rainfall and the CN number, the potential maximum reterntion (S) and the direct storm runoff (Q) are calculated as follows:
 ```R
-CalculateQ(P=30, CN=86, PQunits = "mm")
+CalculateQ(P=30, CN=82, PQunits = "mm")
 
 $S
-[1] 41.349
+[1] 55.756
 
 $Q
-[1] 7.486
+[1] 4.762
 ```
 
 ### Warnings

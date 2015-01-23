@@ -20,7 +20,7 @@ EventIdentification <- function(dataX, hours2extend = 6, plotOption = FALSE,
 
   if ( any(is.na(tableQ$Peak)) ){
 
-    row2remove <- which(is.na(tableQ$Value))
+    row2remove <- which(is.na(tableQ$Peak))
 
     tableP <- tableP[-row2remove,]
     tableQ <- tableQ[-row2remove,]
@@ -42,7 +42,7 @@ EventIdentification <- function(dataX, hours2extend = 6, plotOption = FALSE,
 
   if ( any(is.na(tableQ$Peak)) ){
 
-    row2remove <- which(is.na(tableQ$Value))
+    row2remove <- which(is.na(tableQ$Peak))
 
     tableP <- tableP[-row2remove,]
     tableQ <- tableQ[-row2remove,]
