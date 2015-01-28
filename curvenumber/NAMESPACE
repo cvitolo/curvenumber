@@ -2,5 +2,8 @@ import(hydromad)
 import(zoo)
 import(EcoHydRology)
 import(udunits2)
+import(raster)
+import(rgdal)
+import(sp)
 
 exportPattern("^[[:alpha:]]+")

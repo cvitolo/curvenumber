@@ -27,8 +27,8 @@ findQevents <- function(dataX, infoP, hours2extend){
   infoQ$timeEnd <- index(dataX$Q)[infoQ$indexEnd]
 
   for (event in 1:dim(infoQ)[1]){
-    
-    print(paste("Event n.",event,"out of",dim(infoQ)[1]))
+
+    # print(paste("Event n.",event,"out of",dim(infoQ)[1]))
 
     infoQ$Peak[event] <- max(dataX$Q[infoQ$indexStart[event]:infoQ$indexEnd[event]])
     infoQ$Volume[event] <- sum(dataX$Q[infoQ$indexStart[event]:infoQ$indexEnd[event]])

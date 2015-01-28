@@ -9,6 +9,7 @@ This package allows to calculate:
 
 * the direct storm runoff (Q), given rainfall (R) and CN number  
 * the CN number, given rainfall (R) and runoff (Q) data
+* HOST-based soil classes mapping onto the CN soil classes
 
 **To cite this software:**  
 C. Vitolo, N. Le Vine, CurveNumber (R package), (2015), GitHub repository, https://github.com/cvitolo/r_CurveNumber, doi: http://dx.doi.org/10.5281/zenodo.14280
@@ -78,16 +79,17 @@ df  <- EventIdentification(dataX = InputTS,
 Determine the Curve Number and k coefficient and also plot CN-P behaviour to 
 define the type of asymptote
 ```R
-coef <- CalculateCN(dfTPQ = df, PQunits = "mm", plotOption = TRUE)
+CalculateCN(dfTPQ = df, PQunits = "mm", plotOption = TRUE)
 ```
+
+The resulting Curve Number is: 82.
 
 Please note that there are three types of behaviour: 
 * "standard" (increasing asymptotically), 
 * "complacent" (decreasing indefinitely) and 
 * "violent" (increasing asymptotically).
 
-Here, only the standard behaviour is implemented. In this case, CN (infinity) is
-the value of CN that corresponds to the largest rainfall events and can be 
+Here, only the standard behaviour is implemented. In this case, CN (infinity) is the value of CN that corresponds to the largest rainfall events and can be 
 calculated by a nonlinear least squares curve fitting (red line).
 
 ### Calculate the direct storm runoff
@@ -101,6 +103,29 @@ $S
 $Q
 [1] 4.762
 ```
+
+### HOST-based soil classes mapping onto the CN soil classes
+Hydrology of Soil Types (HOST) is the UK soils classification system. This is divided in 29 classes based on hydrological properties. The dominant soil class has been mapped for the entire Great Britain on a 1km resolution. 
+
+Bulygina et al. (2011) defined the mapping between the HOST classes and USDA classes so that the CN can be calculated from soil and land use maps as well as from time series data of precipitation and streamflow discharge.
+
+The function CalculateCNfromMaps() implements the methodology illustrated in Bulygina et al. (2011), allowing to calculate the CN given at least the soil map of the area:
+
+```R
+soilMap <- "/home/claudia/Dropbox/Projects/PURE/PURE_shared/Data/rasters/PontbrenSoilraster.tif"
+shpFolder <- "/home/claudia/Dropbox/Projects/PURE/PURE_shared/Data/vectors/"
+
+CNfromMaps(soilMap,
+           tabulatedCN = list("A"=49,"B"=69,"C"=79,"D"=84),
+           shpFolder,
+           mask="pontbren09", plotOption=FALSE)
+
+$CN
+[1] 81
+```
+
+The result is 81, very close to the one obtained using Hawkins' method (82).
+
 
 ### Warnings
 This package and functions herein are provided as is, without any guarantee.
