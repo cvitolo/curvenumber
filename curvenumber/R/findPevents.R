@@ -12,15 +12,10 @@ findPevents <- function(dataX){
 
   # thresh is the minimum value bigger than 0
   evp <- eventseq(x        = dataX$P,
-                  thresh   = min(dataX$P[which(dataX$P>0),]),
+                  thresh   = min(dataX$P[which(dataX$P>0)]),   # min(dataX$P[which(dataX$P>0),]),
                   inthresh = 0,
                   mindur   = 1,
                   mingap   = 12)
-
-#   xyplot(dataX$P) +
-#     layer_(panel.xblocks(evp,
-#                          col = c("grey90", "grey80"),
-#                          border = "grey80"))
 
   peakP <- eventinfo(dataX$P, evp, FUN = max)
 

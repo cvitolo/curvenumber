@@ -1,6 +1,6 @@
 Package: curvenumber
 Type: Package
-Version: 0.2.0
+Version: 0.2.1
 Title: Soil Conservation Service Curve Number method
 Description: An adaptation of the SCS curve number method.
 Authors@R: as.person(c(
@@ -13,12 +13,12 @@ BugReports: https://github.com/cvitolo/r_CurveNumber/issues
 Depends:
     R (>= 3.0.1)
 Imports:
+    hydromad,
     zoo,
     xts,
-    pracma,
-    sp,
     raster,
-    hydromad
+    sp,
+    pracma
 Suggests:
     rgdal,
     EcoHydRology
