@@ -119,15 +119,15 @@ BaseFlowIndex(InputTS$Q)
 
 Bulygina et al. (2011) defined the mapping between the HOST classes and USDA classes so that the CN can be calculated from soil and land use maps as well as from time series data of precipitation and streamflow discharge.
 
-The function CalculateCNfromMaps() implements the methodology illustrated in Bulygina et al. (2011), allowing to calculate the CN given at least the soil map of the area:
+The function CNfromMaps() implements the methodology illustrated in Bulygina et al. (2011), allowing to calculate the CN given at least the soil map of the area:
 
 ```R
 
 CNfromMaps(soilMap="/path/to/soilmap/",
-           tabulatedCN = list("A"=49,"B"=69,"C"=79,"D"=84),
+           vegetationMap="/path/to/vegmap/",
            shpFolder="/path/to/vectors/",
-           mask="shpfilename", 
-           plotOption=FALSE)
+           mask="shpfilename",
+           myCRS=NULL, artificialDrainage="none", lookupTable=AddYourLookupTableHERE)
 
 $CN
 [1] 81
