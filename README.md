@@ -122,7 +122,6 @@ Bulygina et al. (2011) defined the mapping between the HOST classes and USDA cla
 The function CNfromMaps() implements the methodology illustrated in Bulygina et al. (2011), allowing to calculate the CN given at least the soil map of the area:
 
 ```R
-
 CNfromMaps(soilMap="/path/to/soilmap/",
            vegetationMap="/path/to/vegmap/",
            shpFolder="/path/to/vectors/",
