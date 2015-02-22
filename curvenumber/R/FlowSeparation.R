@@ -21,7 +21,10 @@ FlowSeparation <- function(dataX, infoQ,
                            plotOption = FALSE, event2plot = 2){
 
   # require(udunits2)
-  multiplier <- ud.convert(1,timeUnits,"seconds")
+  # multiplier <- ud.convert(1,timeUnits,"seconds")
+  if (timeUnits == "days")    multiplier <- 24*60*60 # seconds
+  if (timeUnits == "hours")   multiplier <- 60*60 # seconds
+  if (timeUnits == "minutes") multiplier <- 60 # seconds
 
   infoQ$baseflowVolume <- NA
   infoQ$surfaceVolume <- NA

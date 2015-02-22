@@ -1,5 +1,5 @@
-SCS Curve Number method (R-package)
-===================================
+Soil Conservation Service Curve Number method (R-package)
+=========================================================
 
 [![DOI](https://zenodo.org/badge/doi/10.5281/zenodo.14280.svg)](http://dx.doi.org/10.5281/zenodo.14280)
 
@@ -12,7 +12,7 @@ This package allows to calculate:
 * HOST-based soil classes mapping onto the CN soil classes
 
 **To cite this software:**  
-C. Vitolo, N. Le Vine, CurveNumber (R package), (2015), GitHub repository, https://github.com/cvitolo/r_CurveNumber, doi: http://dx.doi.org/10.5281/zenodo.14280
+C. Vitolo, N. Le Vine, Soil Conservation Service Curve Number method (CurveNumber, R-package), (2015), GitHub repository, https://github.com/cvitolo/r_CurveNumber, doi: http://dx.doi.org/10.5281/zenodo.14280
 
 ### Background: the CN method in a nutshell
 The CN number is a dimensionless parameter varying in the range [0,100]. This is tabulated based on land use type and hydrologic soil group. When the CN is known, the potential maximum retention (S) can be calculated using the following formula:
@@ -107,18 +107,27 @@ $Q
 ### HOST-based soil classes mapping onto the CN soil classes
 Hydrology of Soil Types (HOST) is the UK soils classification system. This is divided in 29 classes based on hydrological properties. The dominant soil class has been mapped for the entire Great Britain on a 1km resolution. 
 
+Each soil class was mapped onto theoretical BFI coefficients (BFIHOST) using a multiple regression analysis. The BFIHOST for a certain catchment can be calculated as follows:
+```R
+BFIHOST(soilMap="/path/to/soilmap/",shpFolder="/path/to/vectors/",mask="shpfilename")
+```
+
+This theoretical value can be compared with the Base Flow Index calculated from data (according the the methodology outlined in Report n.108, Low flow estimation in the United Kingdom, by A. Gustard, A. Bullock, and J.M. Dickson, 1992.
+```R
+BaseFlowIndex(InputTS$Q)
+```
+
 Bulygina et al. (2011) defined the mapping between the HOST classes and USDA classes so that the CN can be calculated from soil and land use maps as well as from time series data of precipitation and streamflow discharge.
 
 The function CalculateCNfromMaps() implements the methodology illustrated in Bulygina et al. (2011), allowing to calculate the CN given at least the soil map of the area:
 
 ```R
-soilMap <- "/home/claudia/Dropbox/Projects/PURE/PURE_shared/Data/rasters/PontbrenSoilraster.tif"
-shpFolder <- "/home/claudia/Dropbox/Projects/PURE/PURE_shared/Data/vectors/"
 
-CNfromMaps(soilMap,
+CNfromMaps(soilMap="/path/to/soilmap/",
            tabulatedCN = list("A"=49,"B"=69,"C"=79,"D"=84),
-           shpFolder,
-           mask="pontbren09", plotOption=FALSE)
+           shpFolder="/path/to/vectors/",
+           mask="shpfilename", 
+           plotOption=FALSE)
 
 $CN
 [1] 81

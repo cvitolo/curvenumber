@@ -11,15 +11,17 @@ Maintainer: Claudia Vitolo <cvitolodev@gmail.com>
 URL: http://cvitolo.github.io/r_CurveNumber/
 BugReports: https://github.com/cvitolo/r_CurveNumber/issues
 Depends:
-    R (>= 3.1.2)
+    R (>= 3.0.1)
 Imports:
-    hydromad,
     zoo,
-    EcoHydRology,
-    udunits2,
+    xts,
+    pracma,
+    sp,
     raster,
+    hydromad
+Suggests:
     rgdal,
-    sp
+    EcoHydRology
 License: GPL-3
 Repository: GitHub
 Keywords: hydrology, hydrological modelling, hydrologic modeling, curve number,

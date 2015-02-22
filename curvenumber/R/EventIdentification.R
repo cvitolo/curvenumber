@@ -58,10 +58,15 @@ EventIdentification <- function(dataX, hours2extend = 6, plotOption = FALSE,
   if ( length(rows2remove) > 0 ) {
     tableQ <- newTableQ[-rows2remove,]
     tableP <- tableP[-rows2remove,]
+  }else{
+    tableQ <- newTableQ
   }
 
   # Calculate return periods for PQ events
   df <- ReturnPeriod(tableP, tableQ)
+
+  # add Baseflow Index (BFI) event based
+  # df$BFI <- tableQ$baseflowVolume/tableQ$Volume
 
   return(df)
 
