@@ -12,7 +12,7 @@ This package allows to calculate:
 * HOST-based soil classes mapping onto the CN soil classes
 
 **To cite this software:**  
-C. Vitolo, N. Le Vine, Soil Conservation Service Curve Number method (CurveNumber, R-package), (2015), GitHub repository, https://github.com/cvitolo/r_CurveNumber, doi: http://dx.doi.org/10.5281/zenodo.14280
+Vitolo C., Le Vine N., Soil Conservation Service Curve Number method (CurveNumber, R-package), (2015), GitHub repository, https://github.com/cvitolo/r_CurveNumber, doi: http://dx.doi.org/10.5281/zenodo.14280
 
 ### Background: the CN method in a nutshell
 The CN number is a dimensionless parameter varying in the range [0,100]. This is tabulated based on land use type and hydrologic soil group. When the CN is known, the potential maximum retention (S) can be calculated using the following formula:
