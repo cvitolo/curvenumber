@@ -4,7 +4,7 @@
 \alias{CalculateCN}
 \title{Calculate the Curve Number from P and Q}
 \usage{
-CalculateCN(dfTPQ, PQunits = "mm", plotOption = FALSE)
+CalculateCN(dfTPQ, PQunits = "mm", plotOption = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{dfTPQ}{data.frame containing 3 columns: Tr (return period), P (max precipitation) and Q (max discharge)}
@@ -12,6 +12,8 @@ CalculateCN(dfTPQ, PQunits = "mm", plotOption = FALSE)
 \item{PQunits}{units in which P and Q are expressed (default="mm")}
 
 \item{plotOption}{boolean, if TRUE (default) it prints a plot to show the division of the events}
+
+\item{verbose}{boolean, if TRUE it prints info messages (default = FALSE)}
 }
 \value{
 Curve Number, in the range [0,100]

@@ -1,45 +1,51 @@
 #' Calculate the Curve Number from time series data (P and Q)
 #'
 #' @param DATA time series object containing, at least, precipitation ("P") and discharge ("Q")
-#' @param startPeriod string to define starting date (e.g. "1979-10-01 00:00:00")
-#' @param endPeriod string to define ending date (e.g. "1984-09-30 23:00:00")
 #' @param stepsBack timesteps to use to generate the linear model for the volume under the rising limb (default = 5)
-#' @param hours2extend number of hours to extend the rainfall event to account for the discharge peak to occur (default = 6).
+#' @param hours2extend number of hours to extend the rainfall event to account for the discharge peak to occur (default = 6)
+#' @param timeUnits time step units (default = "hours")
 #'
 #' @return Curve Number, in the range [0,100]
 #'
 #' @examples
-#' # CNfromDATA(DATA=ID54090)
+#' # CNfromDATA(DATA)
 #'
 
-CNfromDATA <- function(DATA,
-                       startPeriod = NULL, endPeriod = NULL,
-                       stepsBack = 5,
-                       hours2extend = 6){
+CNfromDATA <- function(DATA, stepsBack = 5,
+                       hours2extend = 6, timeUnits="hours"){
 
-  options(warn=-1)
-
-  if (is.null(startPeriod) & is.null(endPeriod)){
-
-    newInputTS <- DATA
-
-  }else{
-
-    myStartPeriod <- as.POSIXct(startPeriod)
-    myEndPeriod <- as.POSIXct(endPeriod)
-
-    # extract time-window
-    newInputTS <- window(DATA,start=myStartPeriod,end=myEndPeriod)
-
-  }
+  # options(warn=-1)
 
   # identify events
-  DF  <- EventIdentification(DATA = newInputTS,
-                             hours2extend, plotOption = FALSE,
-                             stepsBack, timeUnits = "hours")
+  tableP <- findPevents(DATA$P)
+  tableQ <- findQevents(DATA$Q, tableP, hours2extend)
+  # PlotEvents(DATA, tableP, tableQ)
+
+  # Boorman (1995) suggests to adjust the end of Q events according to 4*LAG,
+  # where LAG is the time difference between the rainfall & runoff centroids.
+  # But the procedure is recursive, the LAG cannot be calculated without knowing
+  # the end of the Q event. Also, what shall we do for LAG = 0?
+  # LagPQ <- lagtime(tableP, tableQ, timeUnits = "hours")
+  # abline(v=index(DATA)[tableQ$indexCentroid + 4*LagPQ],col="green")
+
+  # The procedure above was dropped in favour of a pragmatic decision:
+  # we extend the Q event for a certain number of hours and calculate the runoff
+  # centroid of the streamflow up to that point.
+  newTableQ <- FlowSeparation(DATA, tableQ, stepsBack, timeUnits)
+
+  # Remove events with surfaceVolume = 0.
+  rows2remove <- which(newTableQ$surfaceVolume==0)
+  if ( length(rows2remove) > 0 ) {
+    eventTable <- newTableQ[-rows2remove,]
+  }else{
+    eventTable <- newTableQ
+  }
+
+  # Calculate return periods for PQ events
+  df <- ReturnPeriod(eventTable)
 
   # calculate CN from data
-  CN <- try(CalculateCN(dfTPQ = DF, PQunits = "mm", plotOption = FALSE),TRUE)
+  CN <- try(CalculateCN(df),TRUE)
   if (class(CN) == "try-error") CN <- NA
 
   return(CN)

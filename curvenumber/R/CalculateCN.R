@@ -3,11 +3,13 @@
 #' @param dfTPQ data.frame containing 3 columns: Tr (return period), P (max precipitation) and Q (max discharge)
 #' @param PQunits units in which P and Q are expressed (default="mm")
 #' @param plotOption boolean, if TRUE (default) it prints a plot to show the division of the events
+#' @param verbose boolean, if TRUE it prints info messages (default = FALSE)
 #'
 #' @return Curve Number, in the range [0,100]
 #'
 
-CalculateCN <- function(dfTPQ, PQunits = "mm", plotOption = FALSE){
+CalculateCN <- function(dfTPQ, PQunits = "mm",
+                        plotOption = FALSE, verbose = FALSE){
 
   # where P & Q are in inches and area is in acre
   # Q <- dfTPQ$Q/25.4
@@ -21,9 +23,9 @@ CalculateCN <- function(dfTPQ, PQunits = "mm", plotOption = FALSE){
   S <- 5 * ( P + 2*Q - sqrt(4*Q^2 + 5*P*Q) )          # Hawkins
 
   if ( all(P>=0.2*S) ){
-    message("OK, P is always >= 0.2 S")
+    if (verbose) message("OK, P is always >= 0.2 S")
   }else{
-    #message("Caution, P is not always >= 0.2 S (the corresponding Q should be 0 according to Hawkins (1993)")
+    if (verbose) message("Caution, P is not always >= 0.2 S (the corresponding Q should be 0 according to Hawkins (1993)")
     rows2remove <- which(P<0.2*S)
     dfTPQ <- dfTPQ[-rows2remove,]
     numberOfEvents <- dim(dfTPQ)[1]
