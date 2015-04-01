@@ -4,12 +4,12 @@
 \alias{findQevents}
 \title{Find discharge events}
 \usage{
-findQevents(dataX, infoP, hours2extend)
+findQevents(Q, eventTable, hours2extend)
 }
 \arguments{
-\item{dataX}{is the table containing time series (P,Q and E)}
+\item{Q}{is the discharge time series}
 
-\item{infoP}{table containing summary of P events}
+\item{eventTable}{table containing summary of P events}
 
 \item{hours2extend}{number of hours to extend the rainfall event to account for the discharge peak to occur}
 }
@@ -20,6 +20,6 @@ table containing summary of events for the Q time series
 Find discharge events
 }
 \examples{
-# tableQ <- findQevents(data$Q,tableP,hours2extend=6)
+# tableQ <- findQevents(Q,eventTable,hours2extend=6)
 }
 

@@ -4,23 +4,21 @@
 \alias{CNfromMaps}
 \title{Calculate Curve Number for soil (HOST) and vegetation (LCM) maps}
 \usage{
-CNfromMaps(soilMap, vegetationMap, shpFolder, mask, myCRS = NULL,
-  artificialDrainage = "none", lookupTable)
+CNfromMaps(Soil, Vegetation, Mask, lookupTable, myCRS = NULL,
+  artificialDrainage = "none")
 }
 \arguments{
-\item{soilMap}{filename of a single band raster map (e.g. tif) that contains HOST soil classes (these are integers in the range [1,29]). By default this should be in the working directory.}
+\item{Soil}{filename of a shapefile containing the percentage coverage of HOST classes}
 
-\item{vegetationMap}{(optional) filename of a shapefile containing the vegetation map (polygons). This should be in the shpFolder directory.}
+\item{Vegetation}{filename of a raster containing the vegetation map.}
 
-\item{shpFolder}{(optional) the path to the folder containing the GIS layers. By default this is the working directory.}
+\item{Mask}{filename of a shapefile containing a single polygon to be used as mask to crop the raster. This is usually the catchment boundary.}
 
-\item{mask}{(optional) filename of a shapefile containing the a single polygon to be used as mask to crop the raster. This is usually the catchment boundary.}
+\item{lookupTable}{this is a data.frame to link Soil, Vegetation and Hydrological conditions.}
 
 \item{myCRS}{proj4 for the desired Coordinate Reference System (default = British National Grid). See http://spatialreference.org/}
 
 \item{artificialDrainage}{(default = "none"), possible values are none, low, medium,high.}
-
-\item{lookupTable}{this is a data.frame to link Soil, Vegetation and Hydrological conditions.}
 }
 \value{
 Curve Number map, a GeoTiff raster with same resolution of soil and vegetation maps and extent equal to the mask
@@ -29,8 +27,7 @@ Curve Number map, a GeoTiff raster with same resolution of soil and vegetation m
 Calculate Curve Number for soil (HOST) and vegetation (LCM) maps
 }
 \examples{
-# CNmap <- CNfromMaps(soilMap=mySoilMap,vegetationMap=myVegMap,
-#                     shpFolder=myShpFolder,mask="severn",
-#                     myCRS=NULL,artificialDrainage="none")
+# CNmap <- CNfromMaps(Soil,Vegetation,Mask,lookupTable,
+#                     myCRS=NULL,artificialDrainage="none",dominant=FALSE)
 }
 

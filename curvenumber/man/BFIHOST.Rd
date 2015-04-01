@@ -2,26 +2,20 @@
 % Please edit documentation in R/BFIHOST.R
 \name{BFIHOST}
 \alias{BFIHOST}
-\title{Generate Base Flow Index (BFI) map from soil (HOST) and vegetation (LCM) maps}
+\title{Generate Base Flow Index (BFI) map from percentages of HOST classes.}
 \usage{
-BFIHOST(soilMap, shpFolder, mask, myCRS = NULL)
+BFIHOST(soilMap)
 }
 \arguments{
-\item{soilMap}{filename of a single band raster map (e.g. tif) that contains HOST soil classes (these are integers in the range [1,29]). By default this should be in the working directory.}
-
-\item{shpFolder}{(optional) the path to the folder containing the GIS layers. By default this is the working directory.}
-
-\item{mask}{(optional) filename of a shapefile containing the a single polygon to be used as mask to crop the raster. This is usually the catchment boundary.}
-
-\item{myCRS}{proj4 for the desired Coordinate Reference System (default = British National Grid). See http://spatialreference.org/}
+\item{soilMap}{shapefile that contains percentage of HOST soil classes.}
 }
 \value{
-BFI map, a GeoTiff raster with same resolution of soil and vegetation maps and extent equal to the mask
+BFIHOST a number in the range [0,1] that represents the theoretical BFI.
 }
 \description{
-Generate Base Flow Index (BFI) map from soil (HOST) and vegetation (LCM) maps
+Generate Base Flow Index (BFI) map from percentages of HOST classes.
 }
 \examples{
-# BFI <- BFIHOST(soilMap=mySoilMap,shpFolder=myShpFolder,mask="mask_tmp")
+# BFI <- BFIHOST(soilMap=mySoilMap)
 }
 

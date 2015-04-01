@@ -4,12 +4,10 @@
 \alias{ReturnPeriod}
 \title{Calculate return periods for PQ events}
 \usage{
-ReturnPeriod(infoP, infoQ)
+ReturnPeriod(eventTable)
 }
 \arguments{
-\item{infoP}{table containing summary of P events}
-
-\item{infoQ}{table containing summary of Q events}
+\item{eventTable}{is a table containing summary of P and Q events}
 }
 \value{
 data.frame containing 3 columns: Tr (return period), P (max precipitation) and Q (max discharge)
@@ -18,6 +16,6 @@ data.frame containing 3 columns: Tr (return period), P (max precipitation) and Q
 Calculate return periods for PQ events
 }
 \examples{
-# ReturnPeriod(infoP,infoQ)
+# ReturnPeriod(eventTable)
 }
 

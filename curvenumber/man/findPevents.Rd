@@ -4,18 +4,18 @@
 \alias{findPevents}
 \title{Find precipitation events}
 \usage{
-findPevents(dataX)
+findPevents(P)
 }
 \arguments{
-\item{dataX}{is the table containing time series (P,Q and E)}
+\item{P}{is the precipitation time series}
 }
 \value{
-table containing summary of events for the time series dataX
+table containing summary of events for the time series DATA
 }
 \description{
 Find precipitation events
 }
 \examples{
-# tableP <- findPevents(dataX)
+# tableP <- findPevents(P)
 }
 

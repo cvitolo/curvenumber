@@ -4,17 +4,17 @@
 \alias{EventIdentification}
 \title{Identify PQ events applying Frequency Matching approach}
 \usage{
-EventIdentification(dataX, hours2extend = 6, plotOption = FALSE,
-  stepsBack = 5, timeUnits = "hours")
+EventIdentification(DATA, hours2extend, plotOption, stepsBack,
+  timeUnits = "hours")
 }
 \arguments{
-\item{dataX}{is a data.frame containing P, Q (and E) time series}
+\item{DATA}{is a data.frame containing P, Q (and E) time series}
 
-\item{hours2extend}{number of hours to extend the rainfall event to account for the discharge peak to occur}
+\item{hours2extend}{number of hours to extend the rainfall event to account for the discharge peak to occur (suggested value for small catchments = 6)}
 
 \item{plotOption}{boolean, if TRUE (default) it prints a plot to show the division of the events}
 
-\item{stepsBack}{timesteps to use to generate the linear model for the volume under the rising limb (default = 5)}
+\item{stepsBack}{timesteps to use to generate the linear model for the volume under the rising limb (suggested value for small catchments = 5)}
 
 \item{timeUnits}{time step units (default = "hours")}
 }
@@ -25,6 +25,6 @@ table containing Return period and matching P and Q max values
 Identify PQ events applying Frequency Matching approach
 }
 \examples{
-# df <- EventIdentification(dataX, hours2extend = 6, plotOption = FALSE)
+# df <- EventIdentification(DATA, hours2extend = 6, plotOption = FALSE)
 }
 

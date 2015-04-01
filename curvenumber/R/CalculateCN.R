@@ -23,7 +23,7 @@ CalculateCN <- function(dfTPQ, PQunits = "mm", plotOption = FALSE){
   if ( all(P>=0.2*S) ){
     message("OK, P is always >= 0.2 S")
   }else{
-    message("Caution, P is not always >= 0.2 S (the corresponding Q should be 0 according to Hawkins (1993)")
+    #message("Caution, P is not always >= 0.2 S (the corresponding Q should be 0 according to Hawkins (1993)")
     rows2remove <- which(P<0.2*S)
     dfTPQ <- dfTPQ[-rows2remove,]
     numberOfEvents <- dim(dfTPQ)[1]
@@ -50,18 +50,18 @@ CalculateCN <- function(dfTPQ, PQunits = "mm", plotOption = FALSE){
 
   # Plot CN-P behaviour to define the type of asymptote
   if (plotOption == TRUE) {
-    plot(CN~P, xlab="Rainfall", ylab="Runoff CN", ylim=c(min(CN),100))
+    plot(CN~P, xlab=paste("Rainfall [",PQunits,"]",sep=""), ylab="Runoff CN", ylim=c(min(CN),100))
   }
 
   # There are three possible types of behaviour:
-  # "standard" (increasing asymptotically),
-  # "complacent" (decreasing indefinitely) and
-  # "violent" (increasing asymptotically)
-  # The only behaviour implemented here is the "standard".
+  # "standard response" (decreasing asymptotically),
+  # "complacent behaviour" (decreasing indefinitely) and
+  # "violent response" (increasing asymptotically)
+  # The only behaviour implemented here is the "standard" one.
 
   # Determine parameters first guess
   CN0 <- median( sort(CN, decreasing = FALSE)[1:5] )
-  k=1 # k=0.003
+  k=1
 
   # Define non linear function
   f <- function(P,CN0,k) {CN0 + (100 - CN0) * exp(-k*P)}
@@ -70,8 +70,8 @@ CalculateCN <- function(dfTPQ, PQunits = "mm", plotOption = FALSE){
   st <- coef(nls(log(CN) ~ log(f(P,CN0,k)), start = c(CN0 = CN0, k = 1)))
 
   # nonlinear least squares curve fiiting
-  # fit <- nls(CN ~ CN0 + (100 - CN0) * exp(-k*P), start=list(CN0=CN0,k=k))
   fit <- nls(CN ~ f(P,CN0,k), start = st)
+
   # The variable CN is independent from P and it's the value that describes the
   # data set for larger rainfall events.
 
@@ -79,8 +79,8 @@ CalculateCN <- function(dfTPQ, PQunits = "mm", plotOption = FALSE){
 
   # Draw the fit on the plot by getting the prediction from the fit at 200 x-coordinates across the range of P
   if (plotOption == TRUE) {
-    new = data.frame(P = seq(min(P),max(P),len=200))
-    lines(new$P,predict(fit,newdata=new), col="red")
+    fittedP = data.frame(P = seq(min(P),max(P),len=200))
+    lines(fittedP$P,predict(fit,newdata=fittedP), col="red")
   }
 
   # Getting the sum of squared residuals:
@@ -89,7 +89,7 @@ CalculateCN <- function(dfTPQ, PQunits = "mm", plotOption = FALSE){
   # Finally, lets get the parameter confidence intervals.
   # confint(fit)
 
-  message(paste("Curve Number:",round(coefficients(fit)[[1]],0)))
+  #message(paste("Curve Number:",round(coefficients(fit)[[1]],0)))
 
   return(round(coefficients(fit)[[1]],0))
 }

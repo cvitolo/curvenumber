@@ -1,46 +1,57 @@
 #' Find precipitation events
 #'
-#' @param dataX is the table containing time series (P,Q and E)
+#' @param P is the precipitation time series
 #'
-#' @return table containing summary of events for the time series dataX
+#' @return table containing summary of events for the time series DATA
 #'
 #' @examples
-#' # tableP <- findPevents(dataX)
+#' # tableP <- findPevents(P)
 #'
 
-findPevents <- function(dataX){
+findPevents <- function(P){
+
+  # require(hydromad)
 
   # thresh is the minimum value bigger than 0
-  evp <- eventseq(x        = dataX$P,
-                  thresh   = min(dataX$P[which(dataX$P>0)]),   # min(dataX$P[which(dataX$P>0),]),
+  evp <- eventseq(x        = P,
+                  thresh   = min(P[which(P>0)]),
                   inthresh = 0,
-                  mindur   = 1,
-                  mingap   = 12)
+                  mindur   = 2,
+                  mingap   = 12) #6?
 
-  peakP <- eventinfo(dataX$P, evp, FUN = max)
+  eventinfoP <- eventinfo(P, evp, FUN = max)
 
-  # Format standard information table
-  infoP <- data.frame(matrix(NA,ncol=11,nrow=dim(peakP)[1]))
-  names(infoP) <- c("Event","indexStart","timeStart","indexEnd","timeEnd",
-                    "indexCentroid","timeCentroid",
-                    "Peak","Volume","Duration","PreDuration")
+  # Rename information in the eventinfoP table
+  names(eventinfoP)[which(names(eventinfoP)=="Time")] <- "timeStart"
+  names(eventinfoP)[which(names(eventinfoP)=="Value")] <- "PeakP"
+  names(eventinfoP)[which(names(eventinfoP)=="Duration")] <- "DurationP"
 
-  infoP$Event <- 1:dim(peakP)[1]
+  # Add information to eventinfoP table
+  eventinfoP$EventID <- 1:dim(eventinfoP)[1]
+  eventinfoP$indexStart <- which( index(P) %in% eventinfoP$timeStart )
+  eventinfoP$indexEndP <- eventinfoP$indexStart + eventinfoP$DurationP
+  eventinfoP$timeEndP <- index(P)[eventinfoP$indexEndP]
+  eventinfoP$VolumeP <- eventinfo(P, evp, FUN = sum)$Value
 
-  infoP$indexStart <- which( index(dataX$P) %in% peakP$Time )
-  infoP$timeStart <- peakP$Time
+  # Create placeholders for centroid info
+  eventinfoP$indexCentroidP <- NA
+  eventinfoP$timeCentroidP <- NA
 
-  infoP$indexEnd <- infoP$indexStart + peakP$Duration
-  infoP$timeEnd <- index(dataX$P)[infoP$indexEnd]
+  # Calculate centroid info
+  for (event in 1:dim(eventinfoP)[1]){
+    eventDATA <- window(P,
+                        start = eventinfoP$timeStart[event],
+                        end = eventinfoP$timeEndP[event])
+    centroidRelIndex <- round(wtd.mean(seq(1:length(eventDATA)),weights=eventDATA),0)
+    eventinfoP$indexCentroidP[event] <- eventinfoP$indexStart[event] + centroidRelIndex
+    tempTime <- as.character(index(eventDATA)[centroidRelIndex])
+    if (nchar(tempTime)==10) {
+      eventinfoP$timeCentroidP[event] <- paste(tempTime,"00:00:00")
+    }else{
+      eventinfoP$timeCentroidP[event] <- tempTime
+    }
+  }
 
-  infoP$Peak <- peakP$Value
-  infoP$Volume <- eventinfo(dataX$P, evp, FUN = sum)$Value
-  infoP$Duration <- peakP$Duration
-  infoP$PreDuration <- peakP$PreDuration
-
-  eventTableP <- centroid(dataX = dataX$P, infoX = infoP,
-                          useMax = FALSE, altStart = NULL)
-
-  return(eventTableP)
+  return(eventinfoP)
 
 }

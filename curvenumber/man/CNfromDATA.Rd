@@ -4,20 +4,15 @@
 \alias{CNfromDATA}
 \title{Calculate the Curve Number from time series data (P and Q)}
 \usage{
-CNfromDATA(myData, startPeriod = NULL, endPeriod = NULL,
-  conversionFactor = 1, verbose = FALSE, stepsBack = 5,
+CNfromDATA(DATA, startPeriod = NULL, endPeriod = NULL, stepsBack = 5,
   hours2extend = 6)
 }
 \arguments{
-\item{myData}{time series object containing, at least, precipitation ("P") and discharge ("Q")}
+\item{DATA}{time series object containing, at least, precipitation ("P") and discharge ("Q")}
 
 \item{startPeriod}{string to define starting date (e.g. "1979-10-01 00:00:00")}
 
 \item{endPeriod}{string to define ending date (e.g. "1984-09-30 23:00:00")}
-
-\item{conversionFactor}{multiplicative conversion factor to take into account that some time series are expressed in "mm/day" but the time step is 1 hour (or similar situations)}
-
-\item{verbose}{if TRUE it plots the time series and summary statistics.#'}
 
 \item{stepsBack}{timesteps to use to generate the linear model for the volume under the rising limb (default = 5)}
 
@@ -30,7 +25,6 @@ Curve Number, in the range [0,100]
 Calculate the Curve Number from time series data (P and Q)
 }
 \examples{
-# CNfromDATA(myData=ID54090,startPeriod="1979-10-01 00:00:00",
-# endPeriod="1984-09-30 23:00:00",conversionFactor=1/24,verbose=TRUE)
+# CNfromDATA(DATA=ID54090)
 }
 

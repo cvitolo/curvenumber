@@ -24,12 +24,11 @@ PlotEvents <- function(dataX, infoP, infoQ){
 
   }
 
-  op <- par(mfrow = c(2,1),
-            oma = c(2,4,0,0) + 0.4,
-            mar = c(0,0,0,2))
+  # Set margins: Bottom, Left, Top, Right.
+  op <- par(mfrow = c(2,1), mar=c(1,4,1,1), oma=c(1,2,2,1))
 
   plot(dataX$P,type="n",cex=0.1,
-       main="",xlab="",ylab="Precipitation [mm/d]",xaxt="n")
+       main="",xlab="",ylab="P [mm/d]",xaxt="n")
   rect(eventTableP4Plot$timeStart,
        par("usr")[3],
        eventTableP4Plot$timeEnd,
@@ -37,8 +36,9 @@ PlotEvents <- function(dataX, infoP, infoQ){
        col="gray")
   points(dataX$P,type="l")
   abline(v=eventTableP4Plot$timeCentroid,col="red")
+  #legend("top",c("Pcentroid","Qcentroid"),col=c("red","blue"),lty = c(1,1))
 
-  plot(dataX$Q,type="n",main="",xlab="",ylab="Discharge [mm/d]")
+  plot(dataX$Q,type="n",main="",xlab="",ylab="Q [mm/d]")
   rect(eventTableP4Plot$timeStart,
        par("usr")[3],
        infoQ$timeEnd,

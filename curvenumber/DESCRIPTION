@@ -1,6 +1,6 @@
 Package: curvenumber
 Type: Package
-Version: 0.2.1
+Version: 0.3.0
 Title: Soil Conservation Service Curve Number method
 Description: An adaptation of the SCS curve number method.
 Authors@R: as.person(c(
@@ -18,10 +18,10 @@ Imports:
     xts,
     raster,
     sp,
-    pracma
-Suggests:
+    pracma,
+    Hmisc,
     rgdal,
-    EcoHydRology
+    shapefiles
 License: GPL-3
 Repository: GitHub
 Keywords: hydrology, hydrological modelling, hydrologic modeling, curve number,

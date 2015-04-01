@@ -1,52 +1,59 @@
-#' Generate Base Flow Index (BFI) map from soil (HOST) and vegetation (LCM) maps
+#' Generate Base Flow Index (BFI) map from percentages of HOST classes.
 #'
-#' @param soilMap filename of a single band raster map (e.g. tif) that contains HOST soil classes (these are integers in the range [1,29]). By default this should be in the working directory.
-#' @param shpFolder (optional) the path to the folder containing the GIS layers. By default this is the working directory.
-#' @param mask (optional) filename of a shapefile containing the a single polygon to be used as mask to crop the raster. This is usually the catchment boundary.
-#' @param myCRS proj4 for the desired Coordinate Reference System (default = British National Grid). See http://spatialreference.org/
+#' @param soilMap shapefile that contains percentage of HOST soil classes.
 #'
-#' @return BFI map, a GeoTiff raster with same resolution of soil and vegetation maps and extent equal to the mask
+#' @return BFIHOST a number in the range [0,1] that represents the theoretical BFI.
 #'
 #' @examples
-#' # BFI <- BFIHOST(soilMap=mySoilMap,shpFolder=myShpFolder,mask="mask_tmp")
+#' # BFI <- BFIHOST(soilMap=mySoilMap)
 #'
 
-BFIHOST <- function(soilMap,shpFolder,mask,myCRS=NULL){
+BFIHOST <- function(soilMap){
 
   # require(rgdal)
   # require(raster)
+  # soilMap <- "/home/claudia/Dropbox/Projects/PURE/PURE_shared/Data/vectors/host_54022.shp"
 
-  if (is.null(myCRS)) {
-    # use British National Grid by default
-    myCRS <- "+proj=tmerc +lat_0=49 +lon_0=-2 +k=0.9996012717 +x_0=400000 +y_0=-100000
-    +datum=OSGB36 +units=m +no_defs +ellps=airy
-    +towgs84=446.448,-125.157,542.060,0.1502,0.2470,0.8421,-20.4894"
+  # Read in the shapefile
+  soilSHP <- read.dbf(gsub(".shp", ".dbf",soilMap), header=TRUE)
+
+  # Calculate the percentage coverage of each bandValue
+  totArea <- sum(soilSHP$dbf$AREAkm2)
+  columnNames <- c("HOSTCODE1","HOSTCODE2","HOSTCODE3","HOSTCODE4",
+                   "HOSTCODE5","HOSTCODE6","HOSTCODE7","HOSTCODE8",
+                   "HOSTCODE9","HOSTCODE10","HOSTCODE11","HOSTCODE12",
+                   "HOSTCODE13","HOSTCODE14","HOSTCODE15","HOSTCODE16",
+                   "HOSTCODE17","HOSTCODE18","HOSTCODE19","HOSTCODE20",
+                   "HOSTCODE21","HOSTCODE22","HOSTCODE23","HOSTCODE24",
+                   "HOSTCODE25","HOSTCODE26","HOSTCODE27","HOSTCODE28",
+                   "HOSTCODE29")
+
+  listClasses <- as.list(rep(NA,length(columnNames)))
+  names(listClasses) <- columnNames
+  for (cols in columnNames){
+    for (rows in 1:dim(soilSHP$dbf)[1]){
+      listClasses[[cols]] <- sum(soilSHP$dbf[,cols]/100*soilSHP$dbf$AREAkm2)
+    }
   }
 
-  Soil <- raster(soilMap)
-  proj4string(Soil) <- CRS(myCRS)
-
-  rawMask <- readOGR(dsn=shpFolder,layer=mask)
-  projectedMask <- spTransform(rawMask, crs(Soil))
-
-  freqT <- data.frame(table(raster::extract(Soil,projectedMask)))
-
   # calculate the percentage coverage of each bandValue
-  freqT$percentage <- freqT$Freq/sum(freqT$Freq)
+  percentageCoverage <- round(unlist(listClasses)/totArea,2)
+  percentageCoverage <- as.list(percentageCoverage[percentageCoverage!=0])
 
-  # Find correspondent BFI
+  # Find corresponding BFIHOST
   BFIHOST <- NULL
   load(system.file("BFIHOST.rda", package = 'curvenumber'))
 
-  freqT$BFI <- NA
+  BFI <- NA
   # change values from HOST to BFI
-  for (i in 1:dim(freqT)[1]){
-    freqT$BFI[i] <- ifelse(is.na(freqT$Var1[i]), NA,
-                           BFIHOST$BFI[which(BFIHOST$HOST==freqT$Var1[i])])
+  for (i in 1:length(percentageCoverage)){
+    soilClass <- substr(names(percentageCoverage)[i],9,
+                        nchar(names(percentageCoverage)[i]))
+    BFI[i] <- BFIHOST$BFI[which(BFIHOST$HOST==soilClass)]
   }
 
   # sum up the above to get the final CN value
-  BFI <- round(sum(freqT$percentage*as.numeric(as.character(freqT$BFI))),2)
+  BFI <- round(sum(as.numeric(as.character(percentageCoverage))*as.numeric(as.character(BFI))),3)
 
   return(BFI)
 
