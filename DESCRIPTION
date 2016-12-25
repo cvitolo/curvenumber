@@ -1,0 +1,32 @@
+Package: curvenumber
+Title: An implementation of the USDA Soil Conservation Service Curve Number method
+Version: 0.3
+Authors@R: c(person("Claudia", "Vitolo", email = "cvitolodev@gmail.com", role = c("aut", "cre")),
+             person("Nataliya", "Le Vine", role = "ctb"))
+Maintainer: Claudia Vitolo <cvitolodev@gmail.com>
+URL: http://cvitolo.github.io/curvenumber/
+BugReports: https://github.com/cvitolo/curvenumber/issues
+Description: This package is an implementation of the Curve Number, a well established method for the estimation of direct runoff from storm rainfall.
+Depends: R (>= 3.3.1)
+Imports:
+    hydromad,
+    zoo,
+    xts,
+    raster,
+    sp,
+    pracma,
+    Hmisc,
+    rgdal,
+    shapefiles
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Repository: GitHub
+Keywords: hydrology, hydrological modelling, hydrologic modeling, curve number
+Suggests:
+    knitr,
+    rmarkdown,
+    testthat,
+    covr
+VignetteBuilder: knitr
+RoxygenNote: 5.0.1

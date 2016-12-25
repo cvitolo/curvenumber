@@ -11,6 +11,6 @@
 .Rproj.user/
 .Rproj.user
 
-r_CurveNumber.Rproj
+curvenumber.Rproj
 tests/*
 *.tar.gz

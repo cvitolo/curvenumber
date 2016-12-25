@@ -1,0 +1,11 @@
+citHeader("To cite 'curvenumber' in publications, please use:")
+
+citEntry(entry = "manual",
+  author = "Claudia Vitolo and Nataliya Le Vine",
+  title = "curvenumber: an implementation of the US Soil Conservation Service Curve Number method",
+  year = "2016",
+  note = "R package version 0.3",
+  url = "http://cvitolo.github.io/curvenumber/",
+  doi = "http://dx.doi.org/10.5281/zenodo.14280",
+  textVersion = "Claudia Vitolo and Nataliya Le Vine (2016). curvenumber: an implementation of the US Soil Conservation Service Curve Number method. R package version 0.3, http://cvitolo.github.io/curvenumber/, DOI: http://dx.doi.org/10.5281/zenodo.14280"
+)
