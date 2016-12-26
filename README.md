@@ -8,7 +8,7 @@ The package contains example data as well as a number of examples to test the ma
 
 ### Dependencies
 
-The curbvenumber package, as well as the examples in the vignette, depend on a number of CRAN packages. Check for missing dependencies and install them:
+The curvenumber package, as well as the examples in the vignette, depend on a number of CRAN packages. Check for missing dependencies and install them:
 
 ``` r
 packs <- c("dplyr", "zoo", "tgp", "stats", "utils", "BH", "Rcpp", "testthat",
