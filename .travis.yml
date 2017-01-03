@@ -22,11 +22,10 @@ before_install:
   - ./configure --prefix=/usr
   - make
   - sudo make install
-  - wget http://hydromad.catchment.org/src/contrib/hydromad_0.9-26.tar.gz
-  - R CMD install hydromad_0.9-26.tar.gz
   - cd /home/travis/build/cvitolo/curvenumber
 
 r_github_packages:
+  - josephguillaume/hydromad
   - jimhester/covr
 
 after_success:
