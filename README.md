@@ -67,4 +67,4 @@ Vitolo, Claudia, and Nataliya Le Vine. 2016. *Curvenumber: An Implementation of 
 
 Vitolo, Claudia, Peter Wells, Martin Dobias, and Wouter Buytaert. 2012. *Fuse: Framework for Understanding Structural Errors*. doi:[http://dx.doi.org/10.5281/zenodo.14005](https://doi.org/http://dx.doi.org/10.5281/zenodo.14005).
 
-———. 2016. “Fuse: An R Package for Ensemble Hydrological Modelling.” *The Journal of Open Source Software* 1 (8). The Open Journal. doi:[10.21105/joss.00052](https://doi.org/10.21105/joss.00052).
+Vitolo, Claudia, Peter Wells, Martin Dobias, and Wouter Buytaert. 2016. “Fuse: An R Package for Ensemble Hydrological Modelling.” *The Journal of Open Source Software* 1 (8). The Open Journal. doi:[10.21105/joss.00052](https://doi.org/10.21105/joss.00052).
