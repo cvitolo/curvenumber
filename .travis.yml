@@ -31,10 +31,10 @@ r_packages:
   - polynom
   - car
   - reshape
+  - rgeos
 
 r_github_packages:
   - josephguillaume/hydromad
-  - cvitolo/curvenumber
   - jimhester/covr
 
 after_success:
