@@ -10,7 +10,7 @@
 #' @examples
 #' \dontrun{
 #'   data("SevernTS")
-#'   tableP <- FindPevents(SevernTS$P)
+#'   tableP <- FindPevents(P = SevernTS$P)
 #' }
 #'
 
