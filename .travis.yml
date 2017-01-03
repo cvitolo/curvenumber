@@ -24,6 +24,14 @@ before_install:
   - sudo make install
   - cd /home/travis/build/cvitolo/curvenumber
 
+r_packages:
+  - Hmisc
+  - zoo
+  - latticeExtra
+  - polynom
+  - car
+  - reshape
+
 r_github_packages:
   - josephguillaume/hydromad
   - jimhester/covr
