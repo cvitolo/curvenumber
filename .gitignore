@@ -12,7 +12,6 @@
 .Rproj.user
 
 curvenumber.Rproj
-tests/*
 *.tar.gz
 
 # Temporarily ignore inst sub-folders
