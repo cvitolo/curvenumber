@@ -1,6 +1,6 @@
 ---
-bibliography: vignettes/biblio.bib
-csl: vignettes/hydrology-and-earth-system-sciences.csl
+bibliography: /home/claudia/Dropbox/Repos/curvenumber/vignettes/biblio.bib
+csl: /home/claudia/Dropbox/Repos/curvenumber/vignettes/hydrology-and-earth-system-sciences.csl
 output:
   github_document
 ---
@@ -43,7 +43,7 @@ new.packages <- packs[!(packs %in% installed.packages()[, "Package"])]
 if(length(new.packages)) install.packages(new.packages)
 ```
 
-You can install this package from Github with [devtools](https://github.com/hadley/devtools):
+This package is not yet published on CRAN but can be installed from Github using [devtools](https://github.com/hadley/devtools) functionalities:
 ```{r, eval=FALSE}
 devtools::install_github("cvitolo/curvenumber")
 ```
