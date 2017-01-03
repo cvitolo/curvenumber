@@ -16,7 +16,7 @@ HOST class, this can be an integer (or a vector of inegers) in the range [1,29].
 Map raster band values into HOST classes
 }
 \examples{
-HOSTband2class(c("3","7"))
+# HOSTband2class(c("3","7"))
 
 }
 

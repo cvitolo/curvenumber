@@ -1,58 +1,129 @@
 ---
-title: "Vignette Title"
-author: "Vignette Author"
+title: "An introduction to the curvenumber R package for the calculation of Base Flow Index and Curve Number"
 date: "`r Sys.Date()`"
+bibliography: biblio.bib
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
+tags:
+- R
+- hydrological modelling
+authors:
+- affiliation: European Centre for Medium-range Weather Forecast
+  name: Claudia Vitolo
+  orcid: 0000-0002-4252-1176
+- affiliation: Imperial College London
+  name: Nataliya Le Vine
+  orcid: 0000-0002-1492-447X
 ---
 
-Vignettes are long form documentation commonly included in packages. Because they are part of the distribution of the package, they need to be as compact as possible. The `html_vignette` output type provides a custom style sheet (and tweaks some options) to ensure that the resulting html is as small as possible. The `html_vignette` format:
-
-- Never uses retina figures
-- Has a smaller default figure size
-- Uses a custom CSS stylesheet instead of the default Twitter Bootstrap style
-
-## Vignette Info
-
-Note the various macros within the `vignette` section of the metadata block above. These are required in order to instruct R how to build the vignette. Note that you should change the `title` field and the `\VignetteIndexEntry` to match the title of your vignette.
-
-## Styles
-
-The `html_vignette` template includes a basic CSS theme. To override this theme you can specify your own CSS in the document metadata as follows:
-
-    output: 
-      rmarkdown::html_vignette:
-        css: mystyles.css
-
-## Figures
-
-The figure sizes have been customised so that you can easily put two images side-by-side. 
-
-```{r, fig.show='hold'}
-plot(1:10)
-plot(10:1)
+```{r echo=FALSE}
+knitr::opts_chunk$set(
+  comment = "#>",
+  collapse = TRUE,
+  warning = FALSE,
+  message = FALSE,
+  cache = FALSE,
+  eval = TRUE
+)
 ```
 
-You can enable figure captions by `fig_caption: yes` in YAML:
+The curvenumber [@curvenumber-archive] is an R package [@Rbase] which allows to calculate two indices for the classification of hydrological responses: the Base Flow Index and the Curve Number. These indices are indicators of low and high flow responses, respectively. Techniques have been developed to calculate the indices for gauged and ungauged catchments in the United States [@Rallison1980; @Hjelmfelt1980; @Hawkins1993]. 
 
-    output:
-      rmarkdown::html_vignette:
-        fig_caption: yes
+This work presents the first stable release of the curvenumber R package, which allows to calculate the Curve Number and Base Flow Index empirically as well as from spatial data layers for catchments in the United Kingdom. The proposed method is based on previous investigations made by @Bulygina2011 but sets the scene for a more general approach that can be applied globally.
 
-Then you can use the chunk option `fig.cap = "Your figure caption."` in **knitr**.
+The package contains sample datasets as well as a number of examples to test the main functionalities. The functions `FindQevents()` and `FindQevents()`, for instance, are used to identify rainfall-runoff events according to @Hjelmfelt1980. The function `EmpiricalCN()` is used to identify the Curve Number from time series data as well as to plot the CN-P asymptotic behaviour, according to @Hawkins1993. The direct storm runoff can be calulated using the function `DirectStormRunoff()` and `RegionalisedCN()` allows to calculate the CN given soil and vegetation maps of the area. The package also allows to calculate the BFI given a soil map `RegionalisedBFI()` and/or a time series of river discharges `EmpiricalBFI()`.
 
-## More Examples
+Work is currently ongoing to develop the curvenumber package further and use it with a probabilistic hydrological multi-model framework [@fuseGitHub; @fuseJOSS] to predict the effects of land use changes on catchment flows.
 
-You can write math expressions, e.g. $Y = X\beta + \epsilon$, footnotes^[A footnote here.], and tables, e.g. using `knitr::kable()`.
+## Dependencies and installation
+The curvenumber package, as well as the examples in the vignette, depend on a number of CRAN packages. Check for missing dependencies and install them:
 
-```{r, echo=FALSE, results='asis'}
-knitr::kable(head(mtcars, 10))
+```{r, eval=FALSE}
+packs <- c("dplyr", "zoo", "tgp", "stats", "utils", "BH", "Rcpp", "testthat",
+           "qualV", "devtools")
+new.packages <- packs[!(packs %in% installed.packages()[, "Package"])]
+if(length(new.packages)) install.packages(new.packages)
 ```
 
-Also a quote using `>`:
+You can install this package from Github with [devtools](https://github.com/hadley/devtools):
+```{r, eval=FALSE}
+devtools::install_github("cvitolo/curvenumber")
+```
 
-> "He who gives up [code] safety for [code] speed deserves neither."
-([via](https://twitter.com/hadleywickham/status/504368538874703872))
+Load the package:
+```{r}
+library("curvenumber")
+```
+
+## Usage
+For demonstration purposes, we will use data available for the Plynlimon catchments in the United Kingdom. This data is available from the [Environmental Information Platform](https://eip.ceh.ac.uk/) hosted by the Centre for Ecology and Hydrology.
+
+```{r}
+# LOAD ALL THE SAMPLE DATA
+# Look-up table for Plynlimon sub-catchments and codes
+data("PlynlimonTable")
+# Load table S1 from Bulygina et al. 2011
+data("S1")
+# Plynlimon sub-catchments spatial polygons data frame
+data("PlynlimonSUBCATCHMENTS")
+# Load time series (in mm/hour) for Plynlimon subcatchments
+data("SevernTS")
+SevernTS <- SevernTS
+# SOIL MAP (HOST percentage distribution of classes)
+data("PlynlimonSOIL")
+# LAND COVER (VEGETATION 2013) MAP
+data("PlynlimonVEG")
+```
+
+### Calculated regionalised and empirical BFI
+As Severn at Plynlimon flume is a gauged catchment, the discharge time series is avalable and can be used to calculate the empirical BFI as follows:
+```{r}
+EmpiricalBFI(Qflow = SevernTS$Q)
+```
+
+Calculate the regionalised BFI for Severn at Plynlimon flume, given a map of percentage distribution of soil classes and a lookup table.
+```{r}
+RegionalisedBFI(soil = PlynlimonSOIL, 
+                catchment = PlynlimonSUBCATCHMENTS[1,], 
+                lookupTable = S1)
+```
+
+This value is not expected to diverge from the empirical value +- the weighted standard deviation of BFI, which is calculated as follows.
+```{r}
+StDevBFIHOST(soil = PlynlimonSOIL, 
+             catchment = PlynlimonSUBCATCHMENTS[1,],
+             lookupTable = S1)
+```
+
+Regionalised and empirical BFI are very similar, the difference is much lower than the standard deviation.
+
+### Calculated regionalised and empirical CN
+As Severn at Plynlimon flume is a gauged catchment, we can use the precipitation and discharge time series to calculate the empirical CN using the code below. The code takes a while to run, and the result should be 81.
+```{r, eval = FALSE}
+EmpiricalCN(tseries = SevernTS)
+```
+
+In order to calculate the regionalised CN for Severn at Plynlimon flume, we need a vegetation map, a map of percentage distribution of soil classes and a lookup table. The lookup should be generated by the user based on the vegetation classes and hydrological condition of the region of interest. For the HOST classification, the package contains a function to generate the default lookup table, which does not take into account of the particular hydrological condition of the area:
+```{r, eval = FALSE}
+dfLookup <- MakeLoopkupTable()
+```
+
+In some cases the hydrological conditions are different from the default ones. For instance, according to Bulygina et al. (2011) the Severn at Plynlimn flume catchment should have forest and pasture in good condition. The corresponding lookup table is:
+```{r}
+dfLookup <- MakeLoopkupTable("Fair woods + Poor pasture")
+```
+
+The regionalised CN can be calculated as follows:
+```{r}
+RegionalisedCN(soil = PlynlimonSOIL,
+               catchment = PlynlimonSUBCATCHMENTS[1,],
+               lookupTable = dfLookup,
+               vegetation = PlynlimonVEG)
+```
+
+This value is not expected to diverge from the empirical value +- 2 (standard deviation of CN), according to Bulygina et al. (2011).
+
+## References

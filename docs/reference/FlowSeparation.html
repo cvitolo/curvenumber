@@ -80,7 +80,7 @@
     
 
     <pre><span class='fu'>FlowSeparation</span>(<span class='no'>DATA</span>, <span class='no'>eventTable</span>, <span class='kw'>stepsBack</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>timeUnits</span> <span class='kw'>=</span> <span class='st'>"hours"</span>,
-  <span class='kw'>plotOption</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>event2plot</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
+  <span class='kw'>plotOption</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>event2plot</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
@@ -96,6 +96,8 @@
       <dd>boolean, if TRUE (default) it prints a plot to show the division of the events</dd>
       <dt>event2plot</dt>
       <dd>even number for which the plot should be generated (default = 3). This is only used if plotOption = TRUE</dd>
+      <dt>verbose</dt>
+      <dd>(optional) boolean (FALSE by default). If TRUE prints the progress in terms of event number.</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -109,8 +111,13 @@ volumeQ, baseflowVolume, surfaceVolume and surfacePeak</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># FlowSeparation(DATA, eventTable, stepsBack=5, timeUnits = "hours",</span>
-<span class='co'>#                plotOption = TRUE, event2plot = 3)</span></div></pre>
+    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
+<span class='co'>#   data("SevernTS")</span>
+<span class='co'>#   tableP &lt;- FindPevents(SevernTS$P[1:1000])</span>
+<span class='co'>#   tableQ &lt;- FindQevents(SevernTS$Q[1:1000], tableP, hours2extend=6)</span>
+<span class='co'>#   df &lt;- FlowSeparation(SevernTS, tableQ, stepsBack=5, timeUnits = "hours",</span>
+<span class='co'>#                        plotOption = TRUE, event2plot = 3)</span>
+<span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

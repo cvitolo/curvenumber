@@ -4,14 +4,12 @@
 \alias{PlotEvents}
 \title{Plot PQ events}
 \usage{
-PlotEvents(dataX, infoP, infoQ)
+PlotEvents(tseries, eventTable)
 }
 \arguments{
-\item{dataX}{is a data.frame containing P, Q (and E) time series}
+\item{tseries}{time series object containing, at least, precipitation ("P") and discharge ("Q")}
 
-\item{infoP}{table containing summary of P events}
-
-\item{infoQ}{table containing summary of Q events}
+\item{eventTable}{table containing summary of P&Q events}
 }
 \value{
 Plot showing PQ events
@@ -20,7 +18,16 @@ Plot showing PQ events
 Plot PQ events
 }
 \examples{
-# PlotEvents(dataX, infoP, infoQ)
+\dontrun{
+  data("SevernTS")
+  tableP <- FindPevents(SevernTS$P[1:100])
+  tableQ <- FindQevents(Q = SevernTS$Q[1:100],
+                        eventTableP = tableP,
+                        hours2extend = 6)
+
+  PlotEvents(tseries = SevernTS[1:100,],
+             eventTable = tableQ)
+}
 
 }
 

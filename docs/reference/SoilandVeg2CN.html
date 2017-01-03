@@ -79,14 +79,15 @@
     <p>Soil and Vegetation code to CN, and corrects it based on drainage level, if needed.</p>
     
 
-    <pre><span class='fu'>SoilandVeg2CN</span>(<span class='no'>soilCODE</span>, <span class='no'>vegetationCODE</span>, <span class='no'>lookupTable</span>, <span class='no'>artificialDrainage</span>)</pre>
+    <pre><span class='fu'>SoilandVeg2CN</span>(<span class='no'>soilCODE</span>, <span class='no'>vegetationCODE</span>, <span class='no'>lookupTable</span>,
+  <span class='kw'>artificialDrainage</span> <span class='kw'>=</span> <span class='st'>"none"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
       <dt>soilCODE</dt>
-      <dd>HOST soil class (integer in the range [1,29])</dd>
+      <dd>soil class code (e.g. for the HOST system this is an integer in the range [1,29]).</dd>
       <dt>vegetationCODE</dt>
-      <dd>integer in the range [1,10]</dd>
+      <dd>vegetation class code (e.g. for the UK vegetation map 2013 this is an integer in the range [1,10]).</dd>
       <dt>lookupTable</dt>
       <dd>this is a data.frame to link Soil, Vegetation and Hydrological conditions.</dd>
       <dt>artificialDrainage</dt>
@@ -95,11 +96,18 @@
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>CN, integer in the range [1,100]</p>
+    <p>Curve Number for a single raster cell, this is an integer in the range [0,100] with 0 = no runoff and 100 = all rainfall becomes runoff.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># SoilandVeg2CN(15,6,lookupTable,artificialDrainage="none")</span></div></pre>
+    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
+<span class='co'># # Load lookup table</span>
+<span class='co'># dfLookup &lt;- MakeLoopkupTable("Fair woods + Poor pasture")</span>
+<span class='co'># cnLocal &lt;- SoilandVeg2CN(soilCODE = 15,</span>
+<span class='co'>#                          vegetationCODE = 6,</span>
+<span class='co'>#                          lookupTable = dfLookup,</span>
+<span class='co'>#                          artificialDrainage = "none")</span>
+<span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

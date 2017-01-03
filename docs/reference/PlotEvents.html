@@ -79,16 +79,14 @@
     <p>Plot PQ events</p>
     
 
-    <pre><span class='fu'>PlotEvents</span>(<span class='no'>dataX</span>, <span class='no'>infoP</span>, <span class='no'>infoQ</span>)</pre>
+    <pre><span class='fu'>PlotEvents</span>(<span class='no'>tseries</span>, <span class='no'>eventTable</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <dl class="dl-horizontal">
-      <dt>dataX</dt>
-      <dd>is a data.frame containing P, Q (and E) time series</dd>
-      <dt>infoP</dt>
-      <dd>table containing summary of P events</dd>
-      <dt>infoQ</dt>
-      <dd>table containing summary of Q events</dd>
+      <dt>tseries</dt>
+      <dd>time series object containing, at least, precipitation (&quot;P&quot;) and discharge (&quot;Q&quot;)</dd>
+      <dt>eventTable</dt>
+      <dd>table containing summary of P&amp;Q events</dd>
     </dl>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -97,7 +95,16 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># PlotEvents(dataX, infoP, infoQ)</span></div></pre>
+    <pre class="examples"><div class='input'><span class='co'>## Not run: ------------------------------------</span>
+<span class='co'>#   data("SevernTS")</span>
+<span class='co'>#   tableP &lt;- FindPevents(SevernTS$P[1:100])</span>
+<span class='co'>#   tableQ &lt;- FindQevents(Q = SevernTS$Q[1:100],</span>
+<span class='co'>#                         eventTableP = tableP,</span>
+<span class='co'>#                         hours2extend = 6)</span>
+<span class='co'># </span>
+<span class='co'>#   PlotEvents(tseries = SevernTS[1:100,],</span>
+<span class='co'>#              eventTable = tableQ)</span>
+<span class='co'>## ---------------------------------------------</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

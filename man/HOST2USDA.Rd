@@ -18,7 +18,9 @@ USDA class, this can be: A, B, C, D or a combination of them.
 Map HOST classes into USDA classes
 }
 \examples{
-HOST2USDA(c("3","7"))
+\dontrun{
+  HOST2USDA(c("3","7"))
+}
 
 }
 

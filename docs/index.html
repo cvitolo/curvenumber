@@ -36,36 +36,67 @@
     
     
 <div class="contents">
+<div id="curvenumber-an-r-package-to-calculate-base-flow-index-and-curve-number-for-gauged-and-ungauged-river-catchments" class="section level1">
+<div class="page-header"><h1 class="hasAnchor"><a href="#curvenumber-an-r-package-to-calculate-base-flow-index-and-curve-number-for-gauged-and-ungauged-river-catchments" class="anchor"> </a>curvenumber: an R package to calculate Base Flow Index and Curve Number for gauged and ungauged river catchments</h1></div>
 <!-- Edit the README.Rmd only!!! The README.md is generated automatically from README.Rmd. -->
 
-<p>The SCS Curve Number (CN) is a well established method for the estimation of direct runoff from storm rainfall, developed by the USDA Soil Conservation Service and used in hydrologic engineering and environmental impact analyses. The <code>curvenumber</code> is an R package which allows to calculate: a) the direct storm runoff (Q), given rainfall (R) and CN number; b) the CN number, given rainfall (R) and runoff (Q) data; c) HOST-based soil classes mapping onto the CN soil classes.</p>
-<p>The package contains example data as well as a number of examples to test the main functionalities. The function <code>EventIdentification()</code>, for instance, is used to identify rainfall-runoff events and calculating the matching return period, according to Hjelmfelt (1980). The function <code><a href="reference/CalculateCN.html">CalculateCN()</a></code> is used to identify Curve Number and k coefficient as well as to plot the CN-P asymptotic behaviour (see figure below), according to Hawkins (1993). The direct storm runoff can be calulated using the function <code><a href="reference/CalculateQ.html">CalculateQ()</a></code> and <code><a href="reference/CNfromMaps.html">CNfromMaps()</a></code> implements the methodology illustrated in Bulygina et al. (2011), allowing to calculate the CN given at least the soil map of the area.</p>
-<div id="dependencies" class="section level3">
-<h3 class="hasAnchor"><a href="#dependencies" class="anchor"> </a>Dependencies</h3>
-<p>The curbvenumber package, as well as the examples in the vignette, depend on a number of CRAN packages. Check for missing dependencies and install them:</p>
+<p>The curvenumber <span class="citation">(Vitolo and Le Vine 2016)</span> is an R package <span class="citation">(R Core Team 2016)</span> which allows to calculate two indices for the classification of hydrological responses: the Base Flow Index and the Curve Number. These indices are indicators of low and high flow responses, respectively. Techniques have been developed to calculate the indices for gauged and ungauged catchments in the United States <span class="citation">(Rallison 1980; Hjelmfelt 1980; Hawkins 1993)</span>.</p>
+<p>This work presents the first stable release of the curvenumber R package, which allows to calculate the Curve Number and Base Flow Index empirically as well as from spatial data layers for catchments in the United Kingdom. The proposed method is based on previous investigations made by <span class="citation">Bulygina, McIntyre, and Wheater (2011)</span> but sets the scene for a more general approach that can be applied globally.</p>
+<p>The package contains sample datasets as well as a number of examples to test the main functionalities. The functions <code><a href="reference/FindQevents.html">FindQevents()</a></code> and <code><a href="reference/FindQevents.html">FindQevents()</a></code>, for instance, are used to identify rainfall-runoff events while <code><a href="reference/ReturnPeriod.html">ReturnPeriod()</a></code> is used to calculate the matching return period, according to <span class="citation">Hjelmfelt (1980)</span>. The function <code><a href="reference/EmpiricalCN.html">EmpiricalCN()</a></code> is used to identify the Curve Number from time series data as well as to plot the CN-P asymptotic behaviour, according to <span class="citation">Hawkins (1993)</span>. The direct storm runoff can be calulated using the function <code><a href="reference/DirectStormRunoff.html">DirectStormRunoff()</a></code> and <code><a href="reference/RegionalisedCN.html">RegionalisedCN()</a></code> allows to calculate the CN given soil and vegetation maps of the area. The package also allows to calculate the BFI given a soil map <code><a href="reference/RegionalisedBFI.html">RegionalisedBFI()</a></code> and/or a time series of river discharges <code><a href="reference/EmpiricalBFI.html">EmpiricalBFI()</a></code>.</p>
+<p>Work is currently ongoing to develop the curvenumber package further and use it with a probabilistic hydrological multi-model framework <span class="citation">(Vitolo et al. 2012; Vitolo et al. 2016)</span> to predict the effects of land use changes on catchment flows.</p>
+<div id="dependencies-and-installation" class="section level2">
+<h2 class="hasAnchor"><a href="#dependencies-and-installation" class="anchor"> </a>Dependencies and installation</h2>
+<p>The curvenumber package, as well as the examples in the vignette, depend on a number of CRAN packages. Check for missing dependencies and install them:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">packs &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">"dplyr"</span>, <span class="st">"zoo"</span>, <span class="st">"tgp"</span>, <span class="st">"stats"</span>, <span class="st">"utils"</span>, <span class="st">"BH"</span>, <span class="st">"Rcpp"</span>, <span class="st">"testthat"</span>,
            <span class="st">"qualV"</span>, <span class="st">"devtools"</span>)
 new.packages &lt;-<span class="st"> </span>packs[!(packs %in%<span class="st"> </span><span class="kw">installed.packages</span>()[, <span class="st">"Package"</span>])]
 if(<span class="kw">length</span>(new.packages)) <span class="kw">install.packages</span>(new.packages)</code></pre></div>
-</div>
-<div id="installation" class="section level3">
-<h3 class="hasAnchor"><a href="#installation" class="anchor"> </a>Installation</h3>
 <p>You can install this package from Github with <a href="https://github.com/hadley/devtools">devtools</a>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">devtools::<span class="kw">install_github</span>(<span class="st">"cvitolo/curvenumber"</span>)</code></pre></div>
 <p>Load the package:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(<span class="st">"curvenumber"</span>)</code></pre></div>
 </div>
-<div id="usage" class="section level3">
-<h3 class="hasAnchor"><a href="#usage" class="anchor"> </a>Usage</h3>
+<div id="usage" class="section level2">
+<h2 class="hasAnchor"><a href="#usage" class="anchor"> </a>Usage</h2>
 <p>For details and examples usage, please refer to the <a href="vignettes/curvenumber_vignette.Rmd">vignette</a>.</p>
 </div>
-<div id="meta" class="section level3">
-<h3 class="hasAnchor"><a href="#meta" class="anchor"> </a>Meta</h3>
+<div id="meta" class="section level2">
+<h2 class="hasAnchor"><a href="#meta" class="anchor"> </a>Meta</h2>
 <ul><li>Code contributions are welcome! Please note that this project is released with a <a href="CONDUCT.md">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</li>
 <li>Please <a href="https://github.com/cvitolo/fuse/issues">report any issues or bugs</a>.</li>
 <li>License: <a href="https://opensource.org/licenses/GPL-3.0">GPL-3</a></li>
 <li>Get citation information for the <code>fuse</code> package in R doing <code>citation(package = 'curvenumber')</code></li>
 </ul></div>
+<div id="references" class="section level2 unnumbered">
+<h2 class="hasAnchor"><a href="#references" class="anchor"> </a>References</h2>
+<div id="refs" class="references">
+<div id="ref-Bulygina2011">
+<p>Bulygina, Nataliya, Neil McIntyre, and Howard Wheater. 2011. &ldquo;Bayesian Conditioning of a Rainfall-Runoff Model for Predicting Flows in Ungauged Catchments and Under Land Use Changes.&rdquo; <em>Water Resources Research</em> 47 (2). Wiley Online Library.</p>
+</div>
+<div id="ref-Hawkins1993">
+<p>Hawkins, Richard H. 1993. &ldquo;Asymptotic Determination of Runoff Curve Numbers from Data.&rdquo; <em>Journal of Irrigation and Drainage Engineering</em> 119 (2). American Society of Civil Engineers: 334&ndash;45.</p>
+</div>
+<div id="ref-Hjelmfelt1980">
+<p>Hjelmfelt, Allen T. 1980. &ldquo;Empirical Investigation of Curve Number Technique.&rdquo; <em>Journal of the Hydraulics Division</em> 106 (9). ASCE: 1471&ndash;6.</p>
+</div>
+<div id="ref-Rbase">
+<p>R Core Team. 2016. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p>
+</div>
+<div id="ref-Rallison1980">
+<p>Rallison, Robert E. 1980. &ldquo;Origin and Evolution of the Scs Runoff Equation.&rdquo; In <em>Symposium on Watershed Management 1980</em>, 912&ndash;24. ASCE.</p>
+</div>
+<div id="ref-curvenumber-archive">
+<p>Vitolo, Claudia, and Nataliya Le Vine. 2016. <em>Curvenumber: An Implementation of the Us Soil Conservation Service Curve Number Method</em>. doi:<a href="https://doi.org/http://dx.doi.org/10.5281/zenodo.14280">http://dx.doi.org/10.5281/zenodo.14280</a>.</p>
+</div>
+<div id="ref-fuseGitHub">
+<p>Vitolo, Claudia, Peter Wells, Martin Dobias, and Wouter Buytaert. 2012. <em>Fuse: Framework for Understanding Structural Errors</em>. doi:<a href="https://doi.org/http://dx.doi.org/10.5281/zenodo.14005">http://dx.doi.org/10.5281/zenodo.14005</a>.</p>
+</div>
+<div id="ref-fuseJOSS">
+<p>&mdash;&mdash;&mdash;. 2016. &ldquo;Fuse: An R Package for Ensemble Hydrological Modelling.&rdquo; <em>The Journal of Open Source Software</em> 1 (8). The Open Journal. doi:<a href="https://doi.org/10.21105/joss.00052">10.21105/joss.00052</a>.</p>
+</div>
+</div>
+</div>
+</div>
 </div>
   </div>
 
@@ -76,12 +107,12 @@ if(<span class="kw">length</span>(new.packages)) <span class="kw">install.packag
 <p><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></p>
 <h2>Developers</h2><ul class="list-unstyled"><li>Claudia Vitolo <br><small class="roles"> Author, maintainer </small> </li>
 <li><a href="authors.html">All authors...</a></li>
-</ul><html><body><h2>Dev status</h2><ul class="list-unstyled"><li><a href="https://travis-ci.org/cvitolo/r_CurveNumber">
-  <img src="https://travis-ci.org/cvitolo/r_CurveNumber.svg?branch=master" alt="Travis-CI Build Status"></a></li>
-<li><a href="https://ci.appveyor.com/project/cvitolo/r_CurveNumber">
-  <img src="https://ci.appveyor.com/api/projects/status/github/cvitolo/r_CurveNumber?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
-<li><a href="https://codecov.io/github/cvitolo/r_CurveNumber?branch=master">
-  <img src="https://img.shields.io/codecov/c/github/cvitolo/r_CurveNumber/master.svg" alt="Coverage Status"></a></li>
+</ul><html><body><h2>Dev status</h2><ul class="list-unstyled"><li><a href="https://travis-ci.org/cvitolo/curvenumber">
+  <img src="https://travis-ci.org/cvitolo/curvenumber.svg?branch=master" alt="Travis-CI Build Status"></a></li>
+<li><a href="https://ci.appveyor.com/project/cvitolo/curvenumber">
+  <img src="https://ci.appveyor.com/api/projects/status/github/cvitolo/curvenumber?branch=master&amp;svg=true" alt="AppVeyor Build Status"></a></li>
+<li><a href="https://codecov.io/github/cvitolo/curvenumber?branch=master">
+  <img src="https://img.shields.io/codecov/c/github/cvitolo/curvenumber/master.svg" alt="Coverage Status"></a></li>
 </ul></body></html></div>
 
 </div>

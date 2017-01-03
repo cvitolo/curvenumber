@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>curvenumber. — curvenumber • curvenumber</title>
+<title>curvenumber: an implementation of the USDA Soil Conservation Service Curve Number method — curvenumber • curvenumber</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -72,20 +72,33 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>curvenumber.</h1>
+    <h1>curvenumber: an implementation of the USDA Soil Conservation Service Curve Number method</h1>
     </div>
 
     
-    <p>curvenumber.</p>
+    <p>The SCS Curve Number (CN) is a well established method for the estimation of direct runoff from storm rainfall, developed by the USDA Soil Conservation Service and used in hydrologic engineering and environmental impact analyses. The curvenumber is an R package which allows to calculate: a) the direct storm runoff (Q), given rainfall (R) and CN number; b) the CN number, given rainfall (R) and runoff (Q) data; c) HOST-based soil classes mapping onto the CN soil classes.
+The package contains example data as well as a number of examples to test the main functionalities. The function EventIdentification(), for instance, is used to identify rainfall-runoff events and calculating the matching return period, according to Hjelmfelt (1980). The function CalculateCN() is used to identify Curve Number and k coefficient as well as to plot the CN-P asymptotic behaviour (see figure below), according to Hawkins (1993). The direct storm runoff can be calulated using the function CalculateQ() and CNfromMaps() implements the methodology illustrated in Bulygina et al. (2011), allowing to calculate the CN given at least the soil map of the area.</p>
     
 
         
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Bulygina, N., N. McIntyre, and H. Wheater (2011), Bayesian conditioning of a rainfall-runoff model for predicting flows in ungauged catchments and under land use changes, Water Resour. Res., 47, W02503, doi:10.1029/2010WR009240.</p>
+    <p>Hawkins, Richard H. 1993. Asymptotic Determination of Runoff Curve Numbers from Data. Journal of Irrigation and Drainage Engineering 119 (2). American Society of Civil Engineers: 334–45.</p>
+    <p>Hjelmfelt, Allen T. 1980. Empirical Investigation of Curve Number Technique. Journal of the Hydraulics Division 106 (9). ASCE: 1471–6.</p>
+    
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-                </ul>
+      
+      <li><a href="#references">References</a></li>
+          </ul>
+
+    <h2>Author</h2>
+    
+Claudia Vitolo and Nataliya Le Vine
 
   </div>
 </div>

@@ -5,7 +5,7 @@
 \title{Separate Baseflow and Surface runoff}
 \usage{
 FlowSeparation(DATA, eventTable, stepsBack = 5, timeUnits = "hours",
-  plotOption = FALSE, event2plot = 1)
+  plotOption = FALSE, event2plot = 1, verbose = FALSE)
 }
 \arguments{
 \item{DATA}{data.frame containing P, Q (and E)}
@@ -19,6 +19,8 @@ FlowSeparation(DATA, eventTable, stepsBack = 5, timeUnits = "hours",
 \item{plotOption}{boolean, if TRUE (default) it prints a plot to show the division of the events}
 
 \item{event2plot}{even number for which the plot should be generated (default = 3). This is only used if plotOption = TRUE}
+
+\item{verbose}{(optional) boolean (FALSE by default). If TRUE prints the progress in terms of event number.}
 }
 \value{
 updated table containing summary of Q events with 4 more columns:
@@ -31,8 +33,13 @@ Separate Baseflow and Surface runoff
 From Boorman 1995: The recession prior to the event is continued through the event, and this flow is subtracted from the total flow hydrograph. A straight line is then drawn from beneath the peak flow, or centroid of peaks, to the point already identified as marking the end of response runoff. The response runoff is the portion of flow above this separation.
 }
 \examples{
-# FlowSeparation(DATA, eventTable, stepsBack=5, timeUnits = "hours",
-#                plotOption = TRUE, event2plot = 3)
+\dontrun{
+  data("SevernTS")
+  tableP <- FindPevents(SevernTS$P[1:1000])
+  tableQ <- FindQevents(SevernTS$Q[1:1000], tableP, hours2extend=6)
+  df <- FlowSeparation(SevernTS, tableQ, stepsBack=5, timeUnits = "hours",
+                       plotOption = TRUE, event2plot = 3)
+}
 
 }
 

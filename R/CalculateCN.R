@@ -19,14 +19,22 @@ CalculateCN <- function(dfTPQ, PQunits = "mm",
   P <- dfTPQ$P
   Q <- dfTPQ$Q
 
-  # S <- 5*P + 10*Q - sqrt( (5*P+10*Q)^2 -25*(P^2-P*Q) ) # Nataliya
-  S <- 5 * ( P + 2*Q - sqrt(4*Q^2 + 5*P*Q) )          # Hawkins
+  S <- 5 * (P + 2*Q - sqrt(4*Q^2 + 5*P*Q))                             # Hawkins
 
-  if ( all(P>=0.2*S) ){
+  if (all(P >= 0.2*S)){
+
     if (verbose) message("OK, P is always >= 0.2 S")
+
   }else{
-    if (verbose) message("Caution, P is not always >= 0.2 S (the corresponding Q should be 0 according to Hawkins (1993)")
-    rows2remove <- which(P<0.2*S)
+
+    if (verbose == TRUE) {
+
+      message(paste("Caution, P is not always >= 0.2 S, therefore the",
+                    "corresponding Q should be 0 according to Hawkins (1993)"))
+
+    }
+
+    rows2remove <- which(P < 0.2*S)
     dfTPQ <- dfTPQ[-rows2remove,]
     numberOfEvents <- dim(dfTPQ)[1]
     dfTPQ <- dfTPQ[with(dfTPQ, order(Q)), ]
@@ -34,11 +42,9 @@ CalculateCN <- function(dfTPQ, PQunits = "mm",
     Q <- dfTPQ$Q
     Tr <- (numberOfEvents-1)/(1:numberOfEvents)
     dfTPQ <- data.frame("Tr"=Tr,"P"=P,"Q"=Q)
-    S <- 5 * ( P + 2*Q - sqrt(4*Q^2 + 5*P*Q) )
-  }
+    S <- 5 * (P + 2*Q - sqrt(4*Q^2 + 5*P*Q))
 
-  # Curve Number, in the range [0,100].
-  # 0 = no runoff, 100 = all rainfall becomes runoff
+  }
 
   if (PQunits=="mm"){
     CN <- 25400/(254 + S)
@@ -48,11 +54,13 @@ CalculateCN <- function(dfTPQ, PQunits = "mm",
     CN <- 1000/(S + 10)
   }
 
-  P <- dfTPQ$P
+  # P <- dfTPQ$P
 
   # Plot CN-P behaviour to define the type of asymptote
   if (plotOption == TRUE) {
-    plot(CN~P, xlab=paste("Rainfall [",PQunits,"]",sep=""), ylab="Runoff CN", ylim=c(min(CN),100))
+    plot(CN~P,
+         xlab=paste("Rainfall [",PQunits,"]",sep=""),
+         ylab="Runoff CN", ylim=c(min(CN),100))
   }
 
   # There are three possible types of behaviour:
@@ -62,27 +70,30 @@ CalculateCN <- function(dfTPQ, PQunits = "mm",
   # The only behaviour implemented here is the "standard" one.
 
   # Determine parameters first guess
-  CN0 <- median( sort(CN, decreasing = FALSE)[1:5] )
-  k=1
+  CN0 <- stats::median(sort(CN, decreasing = FALSE)[1:5])
+  k <- 1
 
   # Define non linear function
-  f <- function(P,CN0,k) {CN0 + (100 - CN0) * exp(-k*P)}
+  f <- function(P, CN0, k){CN0 + (100 - CN0) * exp(-k*P)}
 
   # compute reasonable starting values
-  st <- coef(nls(log(CN) ~ log(f(P,CN0,k)), start = c(CN0 = CN0, k = 1)))
+  st <- stats::coef(minpack.lm::nlsLM(log(CN) ~ log(f(P,CN0,k)),
+                                      start = c(CN0 = CN0, k = 1),
+                                      data = dfTPQ))
 
   # nonlinear least squares curve fiiting
-  fit <- nls(CN ~ f(P,CN0,k), start = st)
+  fit <- minpack.lm::nlsLM(CN ~ f(P, CN0, k), start = st)
 
   # The variable CN is independent from P and it's the value that describes the
   # data set for larger rainfall events.
 
-  # summary(fit)
-
-  # Draw the fit on the plot by getting the prediction from the fit at 200 x-coordinates across the range of P
+  # Draw the fit on the plot by getting the prediction from the fit at
+  # 200 x-coordinates across the range of P
   if (plotOption == TRUE) {
-    fittedP = data.frame(P = seq(min(P),max(P),len=200))
-    lines(fittedP$P,predict(fit,newdata=fittedP), col="red")
+
+    fittedP = data.frame(P = seq(min(P), max(P), len = 200))
+    lines(fittedP$P, predict(fit, newdata = fittedP), col = "red")
+
   }
 
   # Getting the sum of squared residuals:
@@ -91,7 +102,7 @@ CalculateCN <- function(dfTPQ, PQunits = "mm",
   # Finally, lets get the parameter confidence intervals.
   # confint(fit)
 
-  #message(paste("Curve Number:",round(coefficients(fit)[[1]],0)))
+  # message(paste("Curve Number:", round(stats::coef(fit)[[1]], 0)))
 
-  return(round(coefficients(fit)[[1]],0))
+  return(round(stats::coef(fit)[[1]], 0))
 }

@@ -2,7 +2,10 @@
 ^\.Rproj\.user$
 ^README\.Rmd$
 ^README-.*\.png$
+^NEWS\.md$
 ^CONDUCT\.md$
 ^cran-comments\.md$
 ^\.travis\.yml$
 ^appveyor\.yml$
+inst/*
+docs/*

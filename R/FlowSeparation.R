@@ -6,20 +6,28 @@
 #' @param timeUnits time step units (default = "hours")
 #' @param plotOption boolean, if TRUE (default) it prints a plot to show the division of the events
 #' @param event2plot even number for which the plot should be generated (default = 3). This is only used if plotOption = TRUE
+#' @param verbose (optional) boolean (FALSE by default). If TRUE prints the progress in terms of event number.
 #'
 #' @return updated table containing summary of Q events with 4 more columns:
 #' volumeQ, baseflowVolume, surfaceVolume and surfacePeak
 #'
 #' @details From Boorman 1995: The recession prior to the event is continued through the event, and this flow is subtracted from the total flow hydrograph. A straight line is then drawn from beneath the peak flow, or centroid of peaks, to the point already identified as marking the end of response runoff. The response runoff is the portion of flow above this separation.
 #'
+#' @export
+#'
 #' @examples
-#' # FlowSeparation(DATA, eventTable, stepsBack=5, timeUnits = "hours",
-#' #                plotOption = TRUE, event2plot = 3)
+#' \dontrun{
+#'   data("SevernTS")
+#'   tableP <- FindPevents(SevernTS$P[1:1000])
+#'   tableQ <- FindQevents(SevernTS$Q[1:1000], tableP, hours2extend=6)
+#'   df <- FlowSeparation(SevernTS, tableQ, stepsBack=5, timeUnits = "hours",
+#'                        plotOption = TRUE, event2plot = 3)
+#' }
 #'
 
 FlowSeparation <- function(DATA, eventTable,
-                           stepsBack=5, timeUnits = "hours",
-                           plotOption = FALSE, event2plot = 1){
+                           stepsBack=5, timeUnits = "hours", plotOption = FALSE,
+                           event2plot = 1, verbose = FALSE){
 
   # require(udunits2)
   # multiplier <- ud.convert(1,timeUnits,"seconds")
@@ -33,10 +41,13 @@ FlowSeparation <- function(DATA, eventTable,
 
   for (event in 1:dim(eventTable)[1]){
 
-    # print(event)
+    if (verbose == TRUE) {
+      print(paste("FlowSeparation-event n.", event,
+                  "out of", dim(eventTable)[1]))
+    }
 
     # Define the starting point of the event
-    point1 <- c(stepsBack+1,coredata(DATA$Q[eventTable$indexStart[event]]))
+    point1 <- c(stepsBack+1, zoo::coredata(DATA$Q[eventTable$indexStart[event]]))
 
     # Extract Q for the event window + stepsBack
     eventDATA <- window(DATA$Q,

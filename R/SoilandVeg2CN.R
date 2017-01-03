@@ -1,17 +1,27 @@
 #' Soil and Vegetation code to CN, and corrects it based on drainage level, if needed.
 #'
-#' @param soilCODE HOST soil class (integer in the range [1,29])
-#' @param vegetationCODE integer in the range [1,10]
+#' @param soilCODE soil class code (e.g. for the HOST system this is an integer in the range [1,29]).
+#' @param vegetationCODE vegetation class code (e.g. for the UK vegetation map 2013 this is an integer in the range [1,10]).
 #' @param lookupTable this is a data.frame to link Soil, Vegetation and Hydrological conditions.
 #' @param artificialDrainage (default = "none"), possible values are none, low, medium,high.
 #'
-#' @return CN, integer in the range [1,100]
+#' @return Curve Number for a single raster cell, this is an integer in the range [0,100] with 0 = no runoff and 100 = all rainfall becomes runoff.
+#'
+#' @export
 #'
 #' @examples
-#' # SoilandVeg2CN(15,6,lookupTable,artificialDrainage="none")
+#' \dontrun{
+#' # Load lookup table
+#' dfLookup <- MakeLoopkupTable("Fair woods + Poor pasture")
+#' cnLocal <- SoilandVeg2CN(soilCODE = 15,
+#'                          vegetationCODE = 6,
+#'                          lookupTable = dfLookup,
+#'                          artificialDrainage = "none")
+#' }
 #'
 
-SoilandVeg2CN <- function(soilCODE,vegetationCODE,lookupTable,artificialDrainage){
+SoilandVeg2CN <- function(soilCODE, vegetationCODE,
+                          lookupTable, artificialDrainage="none"){
 
   usda <- HOST2USDA(soilCODE)
 

@@ -5,7 +5,7 @@
 #' @return HOST class, this can be an integer (or a vector of inegers) in the range [1,29].
 #'
 #' @examples
-#' HOSTband2class(c("3","7"))
+#' # HOSTband2class(c("3","7"))
 #'
 
 HOSTband2class <- function(rasterBandValue){

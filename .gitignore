@@ -14,3 +14,7 @@
 curvenumber.Rproj
 tests/*
 *.tar.gz
+
+# Temporarily ignore inst sub-folders
+inst/extdata/*
+inst/HESSpaper/*
