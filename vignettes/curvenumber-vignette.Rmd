@@ -2,6 +2,7 @@
 title: "An introduction to the curvenumber R package for the calculation of Base Flow Index and Curve Number"
 date: "`r Sys.Date()`"
 bibliography: biblio.bib
+csl: hydrology-and-earth-system-sciences.csl
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Vignette Title}

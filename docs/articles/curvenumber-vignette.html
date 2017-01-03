@@ -40,10 +40,10 @@
     
     
 <div class="contents">
-<p>The curvenumber <span class="citation">(Vitolo and Le Vine 2016)</span> is an R package <span class="citation">(R Core Team 2016)</span> which allows to calculate two indices for the classification of hydrological responses: the Base Flow Index and the Curve Number. These indices are indicators of low and high flow responses, respectively. Techniques have been developed to calculate the indices for gauged and ungauged catchments in the United States <span class="citation">(Rallison 1980; Hjelmfelt 1980; Hawkins 1993)</span>.</p>
-<p>This work presents the first stable release of the curvenumber R package, which allows to calculate the Curve Number and Base Flow Index empirically as well as from spatial data layers for catchments in the United Kingdom. The proposed method is based on previous investigations made by <span class="citation">Bulygina, McIntyre, and Wheater (2011)</span> but sets the scene for a more general approach that can be applied globally.</p>
+<p>The curvenumber <span class="citation">(Vitolo and Le Vine, 2016)</span> is an R package <span class="citation">(R Core Team, 2016)</span> which allows to calculate two indices for the classification of hydrological responses: the Base Flow Index and the Curve Number. These indices are indicators of low and high flow responses, respectively. Techniques have been developed to calculate the indices for gauged and ungauged catchments in the United States <span class="citation">(Hawkins, 1993; Hjelmfelt, 1980; Rallison, 1980)</span>.</p>
+<p>This work presents the first stable release of the curvenumber R package, which allows to calculate the Curve Number and Base Flow Index empirically as well as from spatial data layers for catchments in the United Kingdom. The proposed method is based on previous investigations made by <span class="citation">Bulygina et al. (2011)</span> but sets the scene for a more general approach that can be applied globally.</p>
 <p>The package contains sample datasets as well as a number of examples to test the main functionalities. The functions <code><a href="../reference/FindQevents.html">FindQevents()</a></code> and <code><a href="../reference/FindQevents.html">FindQevents()</a></code>, for instance, are used to identify rainfall-runoff events according to <span class="citation">Hjelmfelt (1980)</span>. The function <code><a href="../reference/EmpiricalCN.html">EmpiricalCN()</a></code> is used to identify the Curve Number from time series data as well as to plot the CN-P asymptotic behaviour, according to <span class="citation">Hawkins (1993)</span>. The direct storm runoff can be calulated using the function <code><a href="../reference/DirectStormRunoff.html">DirectStormRunoff()</a></code> and <code><a href="../reference/RegionalisedCN.html">RegionalisedCN()</a></code> allows to calculate the CN given soil and vegetation maps of the area. The package also allows to calculate the BFI given a soil map <code><a href="../reference/RegionalisedBFI.html">RegionalisedBFI()</a></code> and/or a time series of river discharges <code><a href="../reference/EmpiricalBFI.html">EmpiricalBFI()</a></code>.</p>
-<p>Work is currently ongoing to develop the curvenumber package further and use it with a probabilistic hydrological multi-model framework <span class="citation">(Vitolo et al. 2012; Vitolo et al. 2016)</span> to predict the effects of land use changes on catchment flows.</p>
+<p>Work is currently ongoing to develop the curvenumber package further and use it with a probabilistic hydrological multi-model framework <span class="citation">(Vitolo et al., 2012, 2016)</span> to predict the effects of land use changes on catchment flows.</p>
 <div id="dependencies-and-installation" class="section level2">
 <h2 class="hasAnchor"><html><body><a href="#dependencies-and-installation" class="anchor"> </a></body></html>Dependencies and installation</h2>
 <p>The curvenumber package, as well as the examples in the vignette, depend on a number of CRAN packages. Check for missing dependencies and install them:</p>
@@ -116,28 +116,28 @@ SevernTS &lt;-<span class="st"> </span>SevernTS
 <h2 class="hasAnchor"><html><body><a href="#references" class="anchor"> </a></body></html>References</h2>
 <div id="refs" class="references">
 <div id="ref-Bulygina2011">
-<p>Bulygina, Nataliya, Neil McIntyre, and Howard Wheater. 2011. &ldquo;Bayesian Conditioning of a Rainfall-Runoff Model for Predicting Flows in Ungauged Catchments and Under Land Use Changes.&rdquo; <em>Water Resources Research</em> 47 (2). Wiley Online Library.</p>
+<p>Bulygina, N., McIntyre, N. and Wheater, H.: Bayesian conditioning of a rainfall-runoff model for predicting flows in ungauged catchments and under land use changes, Water Resources Research, 47(2), 2011.</p>
 </div>
 <div id="ref-Hawkins1993">
-<p>Hawkins, Richard H. 1993. &ldquo;Asymptotic Determination of Runoff Curve Numbers from Data.&rdquo; <em>Journal of Irrigation and Drainage Engineering</em> 119 (2). American Society of Civil Engineers: 334&ndash;45.</p>
+<p>Hawkins, R. H.: Asymptotic determination of runoff curve numbers from data, Journal of Irrigation and Drainage Engineering, 119(2), 334&ndash;345, 1993.</p>
 </div>
 <div id="ref-Hjelmfelt1980">
-<p>Hjelmfelt, Allen T. 1980. &ldquo;Empirical Investigation of Curve Number Technique.&rdquo; <em>Journal of the Hydraulics Division</em> 106 (9). ASCE: 1471&ndash;6.</p>
+<p>Hjelmfelt, A. T.: Empirical investigation of curve number technique, Journal of the Hydraulics Division, 106(9), 1471&ndash;1476, 1980.</p>
 </div>
 <div id="ref-Rbase">
-<p>R Core Team. 2016. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>.</p>
+<p>R Core Team: R: A language and environment for statistical computing, R Foundation for Statistical Computing, Vienna, Austria. [online] Available from: <a href="https://www.R-project.org/" class="uri">https://www.R-project.org/</a>, 2016.</p>
 </div>
 <div id="ref-Rallison1980">
-<p>Rallison, Robert E. 1980. &ldquo;Origin and Evolution of the Scs Runoff Equation.&rdquo; In <em>Symposium on Watershed Management 1980</em>, 912&ndash;24. ASCE.</p>
+<p>Rallison, R. E.: Origin and evolution of the scs runoff equation, in Symposium on watershed management 1980, pp. 912&ndash;924, ASCE., 1980.</p>
 </div>
 <div id="ref-curvenumber-archive">
-<p>Vitolo, Claudia, and Nataliya Le Vine. 2016. <em>Curvenumber: An Implementation of the Us Soil Conservation Service Curve Number Method</em>. doi:<a href="https://doi.org/http://dx.doi.org/10.5281/zenodo.14280">http://dx.doi.org/10.5281/zenodo.14280</a>.</p>
+<p>Vitolo, C. and Le Vine, N.: Curvenumber: An implementation of the us soil conservation service curve number method., 2016.</p>
 </div>
 <div id="ref-fuseGitHub">
-<p>Vitolo, Claudia, Peter Wells, Martin Dobias, and Wouter Buytaert. 2012. <em>Fuse: Framework for Understanding Structural Errors</em>. doi:<a href="https://doi.org/http://dx.doi.org/10.5281/zenodo.14005">http://dx.doi.org/10.5281/zenodo.14005</a>.</p>
+<p>Vitolo, C., Wells, P., Dobias, M. and Buytaert, W.: Fuse: Framework for understanding structural errors., 2012.</p>
 </div>
 <div id="ref-fuseJOSS">
-<p>&mdash;&mdash;&mdash;. 2016. &ldquo;Fuse: An R Package for Ensemble Hydrological Modelling.&rdquo; <em>The Journal of Open Source Software</em> 1 (8). The Open Journal. doi:<a href="https://doi.org/10.21105/joss.00052">10.21105/joss.00052</a>.</p>
+<p>Vitolo, C., Wells, P., Dobias, M. and Buytaert, W.: Fuse: An r package for ensemble hydrological modelling, The Journal of Open Source Software, 1(8), doi:<a href="https://doi.org/10.21105/joss.00052">10.21105/joss.00052</a>, 2016.</p>
 </div>
 </div>
 </div>
