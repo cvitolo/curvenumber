@@ -5,9 +5,7 @@ sudo: required
 cache: packages
 
 before_install:
-  - curl -OL https://raw.githubusercontent.com/metacran/r-builder/master/pkg-build.sh
-  - chmod 755 pkg-build.sh
-  - ./pkg-build.sh bootstrap
+  - sudo apt-get install libproj-dev libgeos++-dev
   - cd
   - wget http://download.osgeo.org/gdal/2.0.1/gdal-2.0.1.tar.gz
   - tar zxf gdal-2.0.1.tar.gz
@@ -31,8 +29,9 @@ r_packages:
   - polynom
   - car
   - reshape
-  - sp
+  - rgdal
   - rgeos
+  - sp
 
 r_github_packages:
   - josephguillaume/hydromad
