@@ -30,6 +30,36 @@
 #'
 NULL
 
+#' Data set: CNlookupTable
+#'
+#' @description CNlookupTable is a look-up table for Curve Number.
+#'
+#' @usage data("CNlookupTable")
+#'
+#' @format A data frame with 81 rows and the following 8 columns:
+#' \describe{
+#'   \item{\code{Type}}{Type of vegetation}
+#'   \item{\code{CoverDescription}}{Description (character)}
+#'   \item{\code{Detail}}{Additional details (character)}
+#'   \item{\code{Condition}}{Soil condition (character)}
+#'   \item{\code{A}}{Soil group A (numeric)}
+#'   \item{\code{B}}{Soil group B (numeric)}
+#'   \item{\code{C}}{Soil group C (numeric)}
+#'   \item{\code{D}}{Soil group D (numeric)}
+#' }
+#'
+#' @details
+#' Grassland (Poor: <50% ground cover or heavily grazed with no mulch; Fair: 50-75% ground cover and not heavily grazed; Good: >75% ground cover and light or only occasionally grazed.)
+#' Brush (Poor: <50% ground cover; Fair: 50-75% ground cover; Good: >75% ground cover.)
+#' Woods-grass combination (CN were computed for areas with 50% woods and 50% grass (pasture) cover. Other combinations of conditions may be computed from the CN's for woods and pasture.)
+#' Wood (Poor: Forest litter, small trees, and brush are destroyed by heavy grazing or regular burning; Fair: Woods are grazed but not burned, and some forest litter covers the soil; Good: Woods are protected from grazing, and litter and brush adequately cover the soil.)
+#'
+#' @keywords datasets
+#'
+#' @source \url{https://en.wikipedia.org/wiki/Runoff_curve_number}
+#'
+"CNlookupTable"
+
 #' Data set: PlynlimonTable
 #'
 #' @description PlynlimonTable is a look-up table for Plynlimon subcatchment names and id codes.

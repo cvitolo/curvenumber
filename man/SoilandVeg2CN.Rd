@@ -4,13 +4,13 @@
 \alias{SoilandVeg2CN}
 \title{Soil and Vegetation code to CN, and corrects it based on drainage level, if needed.}
 \usage{
-SoilandVeg2CN(soilCODE, vegetationCODE, lookupTable,
+SoilandVeg2CN(vegetationCODE, soilCODE, lookupTable,
   artificialDrainage = "none")
 }
 \arguments{
-\item{soilCODE}{soil class code (e.g. for the HOST system this is an integer in the range [1,29]).}
-
 \item{vegetationCODE}{vegetation class code (e.g. for the UK vegetation map 2013 this is an integer in the range [1,10]).}
+
+\item{soilCODE}{soil class code (e.g. for the HOST system this is an integer in the range [1,29]).}
 
 \item{lookupTable}{this is a data.frame to link Soil, Vegetation and Hydrological conditions.}
 
@@ -25,9 +25,9 @@ Soil and Vegetation code to CN, and corrects it based on drainage level, if need
 \examples{
 \dontrun{
 # Load lookup table
-dfLookup <- MakeLoopkupTable("Fair woods + Poor pasture")
-cnLocal <- SoilandVeg2CN(soilCODE = 15,
-                         vegetationCODE = 6,
+dfLookup <- MakeLoopkupTable("Severn&Wye")
+cnLocal <- SoilandVeg2CN(vegetationCODE = 6,
+                         soilCODE = 15,
                          lookupTable = dfLookup,
                          artificialDrainage = "none")
 }

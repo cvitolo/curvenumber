@@ -6,10 +6,10 @@ test_that("PercentageCoverageSoilClasses works", {
   data("PlynlimonSOIL")
 
   # Clip soil map over Severn catchment
-  soilMap <- ClipSoilMap(soil = PlynlimonSOIL,
-                         catchment = PlynlimonSUBCATCHMENTS[1,])
+  soilMap <- ClipMap(map = PlynlimonSOIL,
+                     catchment = PlynlimonSUBCATCHMENTS[1,])
 
-  soilcov <- PercentageCoverageSoilClasses(soilMap=soilMap,
+  soilcov <- PercentageCoverageSoilClasses(soilMap = soilMap,
                                            ignoreColumns = c(32, 33))
 
   expect_equal(soilcov[[1]], 0.54)

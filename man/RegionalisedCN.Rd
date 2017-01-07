@@ -36,7 +36,7 @@ Please make sure that soil, catchment and vegetation are projected in the same C
   # Load land cover (VEGETATION 2013) MAP
   data("PlynlimonVEG")
   # Load lookup table
-  dfLookup <- MakeLoopkupTable("Fair woods + Poor pasture")
+  dfLookup <- MakeLoopkupTable("Severn&Wye")
 
   cn <- RegionalisedCN(soil = PlynlimonSOIL,
                        catchment = PlynlimonSUBCATCHMENTS[1,],

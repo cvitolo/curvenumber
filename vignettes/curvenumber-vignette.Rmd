@@ -72,14 +72,13 @@ data("S1")
 data("PlynlimonSUBCATCHMENTS")
 # Load time series (in mm/hour) for Plynlimon subcatchments
 data("SevernTS")
-SevernTS <- SevernTS
 # SOIL MAP (HOST percentage distribution of classes)
 data("PlynlimonSOIL")
 # LAND COVER (VEGETATION 2013) MAP
 data("PlynlimonVEG")
 ```
 
-### Calculated regionalised and empirical BFI
+### Calculate regionalised and empirical BFI
 As Severn at Plynlimon flume is a gauged catchment, the discharge time series is avalable and can be used to calculate the empirical BFI as follows:
 ```{r}
 EmpiricalBFI(Qflow = SevernTS$Q)
@@ -101,7 +100,7 @@ StDevBFIHOST(soil = PlynlimonSOIL,
 
 Regionalised and empirical BFI are very similar, the difference is much lower than the standard deviation.
 
-### Calculated regionalised and empirical CN
+### Calculate regionalised and empirical CN
 As Severn at Plynlimon flume is a gauged catchment, we can use the precipitation and discharge time series to calculate the empirical CN using the code below. The code takes a while to run, and the result should be 81.
 ```{r, eval = FALSE}
 EmpiricalCN(tseries = SevernTS)
@@ -114,7 +113,7 @@ dfLookup <- MakeLoopkupTable()
 
 In some cases the hydrological conditions are different from the default ones. For instance, according to Bulygina et al. (2011) the Severn at Plynlimn flume catchment should have forest and pasture in good condition. The corresponding lookup table is:
 ```{r}
-dfLookup <- MakeLoopkupTable("Fair woods + Poor pasture")
+dfLookup <- MakeLoopkupTable("Severn&Wye")
 ```
 
 The regionalised CN can be calculated as follows:

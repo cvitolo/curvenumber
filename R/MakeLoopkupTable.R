@@ -35,6 +35,22 @@ MakeLoopkupTable <- function(case = "default"){
   # Modify the lookup table above, if needed.
   # Adjustments for the Severn&Wye catchments
   if (case == "Severn&Wye"){
+    dfLookup[1,4:7] <- c(36,60,73,79)   # Coniferous Woodland/Conifer = Fair, woods
+    dfLookup[2,4:7] <- c(36,60,73,79)   # Coniferous Woodland/Recent (<10yrs) = Fair, woods
+    dfLookup[3,4:7] <- c(45,66,77,83)   # Coniferous Woodland/Felled = Fair, woods
+    dfLookup[4,4:7] <- c(68,79,86,89)   # Acid Grassland/Acid = Poor, pasture
+    dfLookup[5,4:7] <- c(68,79,86,89)   # Acid Grassland/Bracken = Poor, pasture
+    dfLookup[6,4:7] <- c(45,66,77,83)   # Heather Burnt/heather = Poor, wood
+    dfLookup[7,4:7] <- c(68,79,86,89)   # Improved Grassland/Improved grassland = Poor, pasture
+    dfLookup[8,4:7] <- c(77,86,91,94)   # Inland Rock/Inland rock = Fallow, bare soil
+    dfLookup[9,4:7] <- c(36,60,73,79)   # Broadleaved woodland/Deciduous = Fair, woods
+    dfLookup[10,4:7] <- c(100,100,100,100)  # Freshwater Water/flooded = Open water
+
+  }
+
+  # Modify the lookup table above, if needed.
+  # Adjustments for the Severn&Wye catchments
+  if (case == "Severn&Wye_old"){
     dfLookup[1,4:7] <- c(30,55,70,77)   # Coniferous Woodland/Conifer = Good, woods
     dfLookup[2,4:7] <- c(30,55,70,77)   # Coniferous Woodland/Recent (<10yrs) = Good, woods
     dfLookup[3,4:7] <- c(30,55,70,77)   # Coniferous Woodland/Felled = Good, woods

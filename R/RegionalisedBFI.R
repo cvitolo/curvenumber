@@ -26,7 +26,7 @@
 RegionalisedBFI <- function(soil, catchment, lookupTable){
 
   # Clip soil map over Severn catchment
-  soilMap <- ClipSoilMap(soil, catchment)
+  soilMap <- ClipMap(soil, catchment)
 
   # Calculate the percentage coverage of each bandValue
   percentageCoverage <- PercentageCoverageSoilClasses(soilMap=soilMap,

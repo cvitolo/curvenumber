@@ -16,10 +16,10 @@ test_that("MakeLoopkupTable Severn&Wye option works", {
 
   dfLookup <- MakeLoopkupTable("Severn&Wye")
 
-  expect_equal(as.character(dfLookup$SoilA[1]), "30")
-  expect_equal(as.character(dfLookup$SoilB[1]), "55")
-  expect_equal(as.character(dfLookup$SoilC[1]), "70")
-  expect_equal(as.character(dfLookup$SoilD[1]), "77")
+  expect_equal(as.character(dfLookup$SoilA[1]), "36")
+  expect_equal(as.character(dfLookup$SoilB[1]), "60")
+  expect_equal(as.character(dfLookup$SoilC[1]), "73")
+  expect_equal(as.character(dfLookup$SoilD[1]), "79")
 
 })
 
