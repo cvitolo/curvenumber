@@ -48,23 +48,6 @@ RegionalisedCN <- function(soil, catchment, lookupTable, vegetation,
   nonNullHOST <- apply(tableOfAttributes, 2, sum)
   nonNullHOST <- nonNullHOST[nonNullHOST != 0]
 
-  # Utility function to calculate CN cell by cell from a raster stack.
-  SoilandVeg2CNHOST <- function(x){
-
-    if (x %in% 1:10){
-
-      return(SoilandVeg2CN(vegetationCODE = x,
-                           soilCODE = HOSTclass,
-                           lookupTable,
-                           artificialDrainage))
-
-    }else{
-
-      return(NA)
-
-    }
-  }
-
   CNraster <- raster::stack()
   # Create list of rasters
   for (i in 1:length(nonNullHOST)) {
@@ -72,7 +55,9 @@ RegionalisedCN <- function(soil, catchment, lookupTable, vegetation,
     HOSTclass <- gsub("[^0-9]", "", names(nonNullHOST)[i])
     print(paste0("Calculating contribution of HOSTCODE", HOSTclass))
 
-    tempRaster <- raster::calc(vegMap, fun = function(x){SoilandVeg2CNHOST(x)})
+    tempRaster <- raster::calc(vegMap,
+                               fun = function(x){SoilandVeg2CN(x,
+                               HOSTclass, lookupTable, artificialDrainage)})
 
     # Resample soil raster
     SoilRaster <- raster::rasterize(x = soilMap, y = vegMap,
