@@ -111,7 +111,7 @@ In order to calculate the regionalised CN for Severn at Plynlimon flume, we need
 dfLookup <- MakeLoopkupTable()
 ```
 
-In some cases the hydrological conditions are different from the default ones. For instance, according to Bulygina et al. (2011) the Severn at Plynlimn flume catchment should have forest and pasture in good condition. The corresponding lookup table is:
+In some cases the hydrological conditions are different from the default ones. For instance, according to @Bulygina2011 the Severn at Plynlimn flume catchment should have forest and pasture in good condition. The corresponding lookup table is:
 ```{r}
 dfLookup <- MakeLoopkupTable("Severn&Wye")
 ```
@@ -124,6 +124,6 @@ RegionalisedCN(soil = PlynlimonSOIL,
                vegetation = PlynlimonVEG)
 ```
 
-This value is not expected to diverge from the empirical value +- 2 (standard deviation of CN), according to Bulygina et al. (2011).
+This value is not expected to diverge from the empirical value +- 2 (standard deviation of CN), according to @Bulygina2011.
 
 ## References
