@@ -40,15 +40,15 @@ library("curvenumber")
 Usage
 -----
 
-For details and examples usage, please refer to the [vignette](vignettes/curvenumber_vignette.Rmd).
+For details and examples usage, please refer to the [vignette](vignettes/curvenumber-vignette.Rmd).
 
 Meta
 ----
 
 -   Code contributions are welcome! Please note that this project is released with a [Contributor Code of Conduct](CONDUCT.md). By participating in this project you agree to abide by its terms.
--   Please [report any issues or bugs](https://github.com/cvitolo/fuse/issues).
+-   Please [report any issues or bugs](https://github.com/cvitolo/curvenumber/issues).
 -   License: [GPL-3](https://opensource.org/licenses/GPL-3.0)
--   Get citation information for the `fuse` package in R doing `citation(package = 'curvenumber')`
+-   Get citation information for the `curvenumber` package in R doing `citation(package = 'curvenumber')`
 
 References
 ----------
