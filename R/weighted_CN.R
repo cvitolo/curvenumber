@@ -38,7 +38,8 @@
 #'
 #'
 #' @examples
-#' library(curvenumber)
+#' library("curvenumber")
+#' library("ramify")
 #'
 #' Example 1 - Reference (page 21)
 #' area <- c(220, 150, 30)
@@ -65,10 +66,27 @@
 #' weighted_CN(CN = CN, area_pct = area_pct)
 #'
 #'
+#' Example 5
+#' data_matrix1 <- matrix(c(98, 30, 40, 43, 57, 3.24, 1, 30, 50, 123), nrow = 5, ncol = 2, dimnames = list(rep("", 5), c("CN", "Area")))
+#' weighted_CN(CN_area_table = data_matrix1)
+#'
+#'
+#' using ramify
+#' data_matrix2 <- mat("98 30 40 43 57;3.24 1 30 50 123", rows = FALSE, sep = " ", dimnames = list(rep("", 5), c("CN", "Area")))
+#' weighted_CN(CN_area_table = data_matrix2)
+#'
+#'
+#' Example 6
+#' data_list <- list(CN = c(77, 29, 68), Area = c(43560, 56893, 345329.32))
+#' weighted_CN(CN_area_table = data_list, area_units = "square feet")
+#'
+#'
+#'
+#'
 #' @import data.table units fpCompare stringi
 #'
 #' @export
-weighted_CN <- function (CN = NULL, area = NULL, area_pct = NULL, area_units = c("acre", "square feet", "square mile", "hectare", "square kilometer", CN_area_table = NULL, CN_area_pct_table = NULL)) {
+weighted_CN <- function (CN = NULL, area = NULL, area_pct = NULL, area_units = c("acre", "square feet", "square mile", "hectare", "square kilometer"), CN_area_table = NULL, CN_area_pct_table = NULL) {
 
 
 if (missing(CN) & missing(area) & missing(area_pct) & missing(CN_area_pct_table)) {
@@ -105,50 +123,57 @@ stop("There are not at least 2 Curve Number values. Try again with at least 2 Cu
 
 } else {
 
+
 area <- as.numeric(stri_replace_all_fixed(area, ",", ""))
 
 ifelse(length(area_units) > 1, area_units <- "acre", area_units <- area_units)
 
 
+# define missing units
+acre <- make_unit("acre")
+
+hectare <- make_unit("hectare")
+
+
 if (area_units == "acre") {
 
-area_units <- area_units
+area <- area
 
 
 } else if (area_units == "square feet") {
 
-area_units <- with(ud_units, ft^2) # ft^2
+area <- with(ud_units, area * ft^2) # ft^2
 
-units(area_units) <- with(ud_units, acre)
+units(area) <- with(ud_units, acre) # acres
 
-area_units <- as.numeric(area_units) # acres
+area <- as.numeric(area)
 
 
 } else if (area_units == "square mile") {
 
-area_units <- with(ud_units, mi^2) # mi^2
+area <- with(ud_units, area * mi^2) # mi^2
 
-units(area_units) <- with(ud_units, acre)
+units(area) <- with(ud_units, acre) # acres
 
-area_units <- as.numeric(area_units) # acres
+area <- as.numeric(area)
 
 
 } else if (area_units == "hectare") {
 
-area_units <- with(ud_units, hectare) # hectare
+area <- with(ud_units, area * hectare) # hectare
 
-units(area_units) <- with(ud_units, acre)
+units(area) <- with(ud_units, acre) # acres
 
-area_units <- as.numeric(area_units) # acres
+area <- as.numeric(area)
 
 
 } else if (area_units == "square kilometer") {
 
-area_units <- with(ud_units, km^2) # km^2
+area <- with(ud_units, area * km^2) # km^2
 
-units(area_units) <- with(ud_units, acre)
+units(area) <- with(ud_units, acre) # acres
 
-area_units <- as.numeric(area_units) # acres
+area <- as.numeric(area)
 
 }
 

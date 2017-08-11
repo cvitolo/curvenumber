@@ -13,5 +13,5 @@ License: GPL-2
 Encoding: UTF-8
 Repository: GitHub
 Keywords: hydrology, hydrological modelling, hydrologic modeling, curve number
-Suggests: devtools, knitr, rmarkdown, testthat, covr
+Suggests: devtools, knitr, rmarkdown, testthat, covr, ramify
 RoxygenNote: 5.0.1
