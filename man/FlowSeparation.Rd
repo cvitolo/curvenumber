@@ -4,8 +4,15 @@
 \alias{FlowSeparation}
 \title{Separate Baseflow and Surface runoff}
 \usage{
-FlowSeparation(DATA, eventTable, stepsBack = 5, timeUnits = "hours",
-  plotOption = FALSE, event2plot = 1, verbose = FALSE)
+FlowSeparation(
+  DATA,
+  eventTable,
+  stepsBack = 5,
+  timeUnits = "hours",
+  plotOption = FALSE,
+  event2plot = 1,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{DATA}{data.frame containing P, Q (and E)}
@@ -42,4 +49,3 @@ From Boorman 1995: The recession prior to the event is continued through the eve
 }
 
 }
-

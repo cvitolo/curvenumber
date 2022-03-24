@@ -4,13 +4,15 @@
 \name{S1}
 \alias{S1}
 \title{Data set: Table S1}
-\format{A data frame with 29 rows and the following 4 columns:
+\format{
+A data frame with 29 rows and the following 4 columns:
 \describe{
   \item{\code{HOSTclass}}{An integer in the range [1, 29]}
   \item{\code{BFIHOST}}{An index in the range [0, 1]}
   \item{\code{sHOST}}{HOST standard deviation}
   \item{\code{USDAclass}}{USDA class corresponding to the given HOST class.}
-}}
+}
+}
 \source{
 \url{http://dx.doi.org/10.1029/2010WR009240}
 }
@@ -24,4 +26,3 @@ Table S1 is part of the supporting information of Bulygina et al. (2011). It con
 Bulygina, N., N. McIntyre, and H. Wheater (2011), Bayesian conditioning of a rainfall-runoff model for predicting flows in ungauged catchments and under land use changes, Water Resour. Res., 47, W02503, doi:10.1029/2010WR009240.
 }
 \keyword{datasets}
-

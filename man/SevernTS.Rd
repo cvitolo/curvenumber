@@ -4,11 +4,13 @@
 \name{SevernTS}
 \alias{SevernTS}
 \title{Data set: SevernTS}
-\format{The time series object (e.g. ID54022) is of class zoo. The index is a POSIXct in the format "1975-04-27 03:00:00". The data is measured in mm/hour and contain the following variables:
+\format{
+The time series object (e.g. ID54022) is of class zoo. The index is a POSIXct in the format "1975-04-27 03:00:00". The data is measured in mm/hour and contain the following variables:
 \describe{
   \item{\code{P}}{Precipitation.}
   \item{\code{Q}}{Streamflow discharge}
-}}
+}
+}
 \source{
 \url{http://hdl.handle.net/10044/1/30773}
 }
@@ -22,4 +24,3 @@ SevernTS contains time series information for one of the gauged sub-catchment in
 Vitolo, C. (2015), Exploring data mining for hydrological modelling (Ph.D. thesis), Imperial College London, uri: http://hdl.handle.net/10044/1/30773.
 }
 \keyword{datasets}
-

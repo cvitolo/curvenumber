@@ -26,4 +26,3 @@ Clip map over a polygon and (re)calculate areas.
 }
 
 }
-

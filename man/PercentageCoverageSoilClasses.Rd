@@ -4,8 +4,11 @@
 \alias{PercentageCoverageSoilClasses}
 \title{Percentage coverage of soil classes.}
 \usage{
-PercentageCoverageSoilClasses(soilMap, ignoreColumns = NULL,
-  removeZeros = TRUE)
+PercentageCoverageSoilClasses(
+  soilMap,
+  ignoreColumns = NULL,
+  removeZeros = TRUE
+)
 }
 \arguments{
 \item{soilMap}{SpatialPolygonsDataFrame containing percentage of HOST soil classes, i.e. see data("PlynlimonSOIL").}
@@ -34,4 +37,3 @@ This function recognises the column containing soil classes (it assumes that the
 }
 
 }
-

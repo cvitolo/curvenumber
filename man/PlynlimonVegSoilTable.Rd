@@ -4,7 +4,8 @@
 \name{PlynlimonVegSoilTable}
 \alias{PlynlimonVegSoilTable}
 \title{Data set: PlynlimonVegSoilTable}
-\format{A data frame with 58 rows and the following 12 columns:
+\format{
+A data frame with 58 rows and the following 12 columns:
 \describe{
   \item{\code{Class}}{Description of vegetation class}
   \item{\code{SubClass}}{Description of vegetation subclass}
@@ -18,7 +19,8 @@
   \item{\code{SoilB}}{CN value for soil type B}
   \item{\code{SoilC}}{CN value for soil type C}
   \item{\code{SoilD}}{CN value for soil type D}
-}}
+}
+}
 \source{
 \url{http://hdl.handle.net/10044/1/30773}
 }
@@ -32,4 +34,3 @@ PlynlimonVegSoilTable is a look-up table for vegetation and soil classes.
 Vitolo, C. (2015), Exploring data mining for hydrological modelling (Ph.D. thesis), Imperial College London, uri: http://hdl.handle.net/10044/1/30773.
 }
 \keyword{datasets}
-

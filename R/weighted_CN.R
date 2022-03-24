@@ -1,93 +1,114 @@
-#' Calculate the Weighted Curve Number
+#' Calculate the Weighted CN (Curve Number)
 #'
-#' @param CN numeric vector containing dimensionless Curve Numbers
+#' This function computes the weighted CN (Curve Number) using the
+#' user-supplied unit or the default unit of an acre.
+#'
+#'
+#' @param CN numeric vector containing dimensionless Curve Number(s)
 #' @param area numeric vector containing the surface land area
 #' @param area_pct numeric vector containing the surface land area, as a
 #'    percent (decimal or whole number)
 #' @param area_units character vector containing the units for area
-#' (default = "acres"). The units should be consistent and not mixed.
+#'    (default = "acre"). The units should be consistent and not mixed.
 #' @param CN_area_table data.frame/data.table/tibble, list, or matrix
-#' containing the CN in column 1 and the area in column 2
+#'    containing the CN in column 1 and the area in column 2
 #' @param CN_area_pct_table data.frame/data.table/tibble, list, or matrix
-#' containing the CN in column 1 and the area_pct in column 2
+#'    containing the CN in column 1 and the area_pct in column 2
 #'
-#' @return Weighted Curve Number as a single numeric vector, in the range
-#' [0, 100]
-#'
-#'
-#'
-#' @source
-#' r - Better error message for stopifnot? - Stack Overflow answered by Andrie on Dec 1 2011. See \url{http://stackoverflow.com/questions/8343509/better-error-message-for-stopifnot}.
+#' @return the Weighted Curve Number as a single numeric vector, in the range
+#'    [0, 100]
 #'
 #'
-#'
-#' @references
-#' Engineering Hydrology Training Series Module 104 - Runoff Curve Number Computations Study Guide, United States Department of Agriculture Soil Conservation Service National Employee Development Staff, September 1989, page 21 \url{https://www.wcc.nrcs.usda.gov/ftpref/wntsc/H&H/training/runoff-curve-numbers1.pdf}.
-#'
-#'
-#'
-#'
-#' @author Irucka Embry
-#'
-#'
-#'
-#' @encoding UTF-8
+#
 #'
 #'
 #'
 #'
 #'
 #' @examples
-#' library("curvenumber")
-#' library("ramify")
 #'
-#' Example 1 - Reference (page 21)
-#' area <- c(220, 150, 30)
-#' CN <- c(75, 89, 80)
-#' weighted_CN(CN = CN, area = area)
+#' # Note: the default area unit is an acre
 #'
+#' # Example 1
 #'
-#' Example 2 - Reference (page 21)
-#' area <- c(220, 150, 30)
-#' area_pct <- area / sum(area)
-#' CN <- c(80, 95, 80)
-#' CN_area_pct_table <- data.frame(CN, area_pct)
-#' weighted_CN(CN_area_pct_table = CN_area_pct_table)
+#' library("iemisc")
+#'
+#' area1 <- c(220, 150, 30)
+#' CN1 <- c(75, 89, 80)
+#' weighted_CN(CN = CN1, area = area1)
 #'
 #'
-#' Example 3
-#' CN_area_table <- data.table(CN = c(98, 100, 45), area = c(2.53, 453.00, 0.21))
-#' weighted_CN(CN_area_table = CN_area_table)
+#' # Example 2
+#'
+#' library("iemisc")
+#'
+#' area2 <- c(220, 150, 30)
+#' area_pct2 <- area2 / sum(area2)
+#' CN2 <- c(80, 95, 80)
+#' CN_area_pct_table2 <- data.frame(CN2, area_pct2)
+#' weighted_CN(CN_area_pct_table = CN_area_pct_table2)
 #'
 #'
-#' Example 4
-#' CN <- c(98, 100, 45)
-#' area_pct <- c(0.15, 0.23, 0.62)
-#' weighted_CN(CN = CN, area_pct = area_pct)
+#' # Example 3
+#' 
+#' install.load::load_package("iemisc", "data.table")
+#' 
+#' CN_area_table3 <- data.table(CN = c(98, 100, 45), area = c(2.53, 453.00, 0.21))
+#' weighted_CN(CN_area_table = CN_area_table3)
 #'
 #'
-#' Example 5
-#' data_matrix1 <- matrix(c(98, 30, 40, 43, 57, 3.24, 1, 30, 50, 123), nrow = 5, ncol = 2, dimnames = list(rep("", 5), c("CN", "Area")))
-#' weighted_CN(CN_area_table = data_matrix1)
+#' # Example 4
+#'
+#' library("iemisc")
+#'
+#' CN4 <- c(98, 100, 45)
+#' area_pct4 <- c(0.15, 0.23, 0.62)
+#' weighted_CN(CN = CN4, area_pct = area_pct4)
 #'
 #'
-#' using ramify
-#' data_matrix2 <- mat("98 30 40 43 57;3.24 1 30 50 123", rows = FALSE, sep = " ", dimnames = list(rep("", 5), c("CN", "Area")))
-#' weighted_CN(CN_area_table = data_matrix2)
+#' # Example 5
+#'
+#' library("iemisc")
+#'
+#' import::from(ramify, mat)
 #'
 #'
-#' Example 6
-#' data_list <- list(CN = c(77, 29, 68), Area = c(43560, 56893, 345329.32))
-#' weighted_CN(CN_area_table = data_list, area_units = "square feet")
+#' data_matrix5a <- matrix(c(98, 30, 40, 43, 57, 3.24, 1, 30, 50, 123), nrow = 5, ncol = 2, dimnames = list(rep("", 5), c("C", "Area")))
+#' weighted_CN(CN_area_table = data_matrix5a)
 #'
 #'
+#' # using ramify to create the matrix
+#' data_matrix5b <- mat("98 30 40 43 57;3.24 1 30 50 123", rows = FALSE, sep = " ", dimnames = list(rep("", 5), c("CN", "Area")))
+#' weighted_CN(CN_area_table = data_matrix5b)
 #'
 #'
-#' @import data.table units fpCompare stringi
+#' # Example 6 - using area in square feet
+#'
+#' library("iemisc")
+#'
+#' data_list6 <- list(CN = c(77, 29, 68), Area = c(43560, 56893, 345329.32))
+#' weighted_CN(CN_area_table = data_list6, area_units = "square feet")
+#'
+#'
+#' # Example 7 - using area in whole percents
+#'
+#' library("iemisc")
+#'
+#' CN7 <- c(61, 74)
+#' area_pct7 <- c(30, 70)
+#' weighted_CN(CN = CN7, area_pct = area_pct7)
+#'
+#'
+#' @import data.table
+#' @import units
+#' @import fpCompare
+#' @import stringi
+#' @import assertthat
+#' @import checkmate
+#' @import round
 #'
 #' @export
-weighted_CN <- function (CN = NULL, area = NULL, area_pct = NULL, area_units = c("acre", "square feet", "square mile", "hectare", "square kilometer"), CN_area_table = NULL, CN_area_pct_table = NULL) {
-
+weighted_CN <- function (CN = NULL, CN_area_table = NULL, CN_area_pct_table = NULL, area = NULL, area_pct = NULL, area_units = c("acre", "square feet", "square mile", "hectare", "square kilometer")) {
 
 if (missing(CN) & missing(area) & missing(area_pct) & missing(CN_area_pct_table)) {
 
@@ -95,6 +116,10 @@ if (missing(CN) & missing(area) & missing(area_pct) & missing(CN_area_pct_table)
 # assume column 1 is CN and column 2 is area
 
 CN_area_table <- as.data.table(CN_area_table)
+
+
+assert_that(testDataTable(CN_area_table, types = "numeric", any.missing = FALSE, all.missing = FALSE, min.rows = 1, min.cols = 1, ncols = 2), msg = "Any row of CN_area_table contains a value that is NA, NaN, empty, or a string. Please try again.")
+# only process enough known CN factor values and provide a stop warning if not enough
 
 CN <- CN_area_table[, 1][[1]]
 
@@ -108,6 +133,10 @@ area <- CN_area_table[, 2][[1]]
 
 CN_area_pct_table <- as.data.table(CN_area_pct_table)
 
+assert_that(testDataTable(CN_area_pct_table, types = "numeric", any.missing = FALSE, all.missing = FALSE, min.rows = 1, min.cols = 1, ncols = 2), msg = "Any row of CN_area_pct_table contains a value that is NA, NaN, empty, or a string. Please try again.")
+# only process enough known CN factor values and provide a stop warning if not enough
+
+
 CN <- CN_area_pct_table[, 1][[1]]
 
 area_pct <- CN_area_pct_table[, 2][[1]]
@@ -115,24 +144,17 @@ area_pct <- CN_area_pct_table[, 2][[1]]
 }
 
 
-if (length(CN) < 2) {
-
-stop("There are not at least 2 Curve Number values. Try again with at least 2 Curve Number values.")
-# Source 1 / only process enough known variables and provide a stop warning if not enough
-
-
-} else {
+# Check for CN
+assert_that(!any(qtest(CN, "N>=2(0,)") == FALSE), msg = "CN is 0, NA, NaN, Inf, -Inf, empty, or a string. Or, there are not at least 2 CN factor values. Please try again.")
+# only process enough known CN factor values and provide a stop warning if not enough
 
 
 area <- as.numeric(stri_replace_all_fixed(area, ",", ""))
 
 ifelse(length(area_units) > 1, area_units <- "acre", area_units <- area_units)
 
+ifelse(missing(area_units), area_units <- "acre", area_units <- area_units)
 
-# define missing units
-acre <- make_unit("acre")
-
-hectare <- make_unit("hectare")
 
 
 if (area_units == "acre") {
@@ -142,45 +164,45 @@ area <- area
 
 } else if (area_units == "square feet") {
 
-area <- with(ud_units, area * ft^2) # ft^2
+area <- set_units(area, ft^2) # ft^2
 
-units(area) <- with(ud_units, acre) # acres
+units(area) <- make_units(acre) # acres
 
-area <- as.numeric(area)
+area <- drop_units(area)
 
 
 } else if (area_units == "square mile") {
 
-area <- with(ud_units, area * mi^2) # mi^2
+area <- set_units(area,  mi^2) # mi^2
 
-units(area) <- with(ud_units, acre) # acres
+units(area) <- make_units(acre) # acres
 
-area <- as.numeric(area)
+area <- drop_units(area)
 
 
 } else if (area_units == "hectare") {
 
-area <- with(ud_units, area * hectare) # hectare
+area <- set_units(area, hectare) # hectare
 
-units(area) <- with(ud_units, acre) # acres
+units(area) <- make_units(acre) # acres
 
-area <- as.numeric(area)
+area <- drop_units(area)
 
 
 } else if (area_units == "square kilometer") {
 
-area <- with(ud_units, area * km^2) # km^2
+area <- set_units(area, km^2) # km^2
 
-units(area) <- with(ud_units, acre) # acres
+units(area) <- make_units(acre) # acres
 
-area <- as.numeric(area)
+area <- drop_units(area)
 
 }
 
 
 if (missing(area_pct)) {
 
-weighted_CN <- round(sum(CN * area) / sum(area))
+weighted_CN <- round_r3(sum(CN * area) / sum(area), 2)
 
 return(weighted_CN)
 
@@ -192,9 +214,8 @@ ifelse(area_pct < 1, area_pct_type <- "decimal", area_pct_type <- "whole")
 if(area_pct_type == "decimal") {
 
 ifelse(sum(area_pct) %==% 1, weighted_CN <- weighted_CN, stop("The area sum does not equal 100%."))
-# Source 1 / only process enough known variables and provide a stop warning if not enough
 
-weighted_CN <- round(sum(CN * area_pct) / sum(area_pct))
+weighted_CN <- round_r3(sum(CN * area_pct) / sum(area_pct), 2)
 
 return(weighted_CN)
 
@@ -202,12 +223,10 @@ return(weighted_CN)
 } else if(area_pct_type == "whole") {
 
 ifelse(sum(area_pct) %==% 100, weighted_CN <- weighted_CN, stop("The area sum does not equal 100%."))
-# Source 1 / only process enough known variables and provide a stop warning if not enough
 
-weighted_CN <- round(sum(CN * area_pct) / sum(area_pct))
+weighted_CN <- round_r3(sum(CN * area_pct) / sum(area_pct), 2)
 
 return(weighted_CN)
-}
 }
 }
 }

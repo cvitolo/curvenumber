@@ -19,4 +19,3 @@ Map raster band values into HOST classes
 # HOSTband2class(c("3","7"))
 
 }
-

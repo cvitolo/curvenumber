@@ -31,4 +31,3 @@ Generate Base Flow Index (BFI) map from percentages of HOST classes.
 }
 
 }
-

@@ -4,8 +4,13 @@
 \alias{RegionalisedCNdominant}
 \title{Calculate Curve Number for soil dominant classes (HOST) and vegetation (LCM) maps}
 \usage{
-RegionalisedCNdominant(soil, catchment, lookupTable, vegetation,
-  artificialDrainage = "none")
+RegionalisedCNdominant(
+  soil,
+  catchment,
+  lookupTable,
+  vegetation,
+  artificialDrainage = "none"
+)
 }
 \arguments{
 \item{soil}{filename of a raster containing the dominant soil classes (HOST).}
@@ -43,4 +48,3 @@ Calculate Curve Number for soil dominant classes (HOST) and vegetation (LCM) map
 }
 
 }
-

@@ -4,7 +4,8 @@
 \name{CNlookupTable}
 \alias{CNlookupTable}
 \title{Data set: CNlookupTable}
-\format{A data frame with 81 rows and the following 8 columns:
+\format{
+A data frame with 81 rows and the following 8 columns:
 \describe{
   \item{\code{Type}}{Type of vegetation}
   \item{\code{CoverDescription}}{Description (character)}
@@ -14,7 +15,8 @@
   \item{\code{B}}{Soil group B (numeric)}
   \item{\code{C}}{Soil group C (numeric)}
   \item{\code{D}}{Soil group D (numeric)}
-}}
+}
+}
 \source{
 \url{https://en.wikipedia.org/wiki/Runoff_curve_number}
 }
@@ -31,4 +33,3 @@ Woods-grass combination (CN were computed for areas with 50% woods and 50% grass
 Wood (Poor: Forest litter, small trees, and brush are destroyed by heavy grazing or regular burning; Fair: Woods are grazed but not burned, and some forest litter covers the soil; Good: Woods are protected from grazing, and litter and brush adequately cover the soil.)
 }
 \keyword{datasets}
-

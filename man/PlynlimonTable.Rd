@@ -4,12 +4,14 @@
 \name{PlynlimonTable}
 \alias{PlynlimonTable}
 \title{Data set: PlynlimonTable}
-\format{A data frame with 9 rows and the following 3 columns:
+\format{
+A data frame with 9 rows and the following 3 columns:
 \describe{
   \item{\code{ID}}{Subcatchment identification code (character)}
   \item{\code{Name}}{Full name of subcatchment (character)}
   \item{\code{ShortName}}{Short name of subcatchment (character)}
-}}
+}
+}
 \source{
 \url{http://hdl.handle.net/10044/1/30773}
 }
@@ -23,4 +25,3 @@ PlynlimonTable is a look-up table for Plynlimon subcatchment names and id codes.
 Vitolo, C. (2015), Exploring data mining for hydrological modelling (Ph.D. thesis), Imperial College London, uri: http://hdl.handle.net/10044/1/30773.
 }
 \keyword{datasets}
-

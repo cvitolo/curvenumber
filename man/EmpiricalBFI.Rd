@@ -30,4 +30,3 @@ Calculates Base Flow Index for a given discharge time series as described in Rep
 \author{
 Nataliya Bulygina (original Matlab code: July 2008), Claudia Vitolo (R code)
 }
-

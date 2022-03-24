@@ -24,4 +24,3 @@ Find precipitation events
 }
 
 }
-

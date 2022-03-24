@@ -4,14 +4,16 @@
 \name{PlynlimonSUBCATCHMENTS}
 \alias{PlynlimonSUBCATCHMENTS}
 \title{Data set: PlynlimonSUBCATCHMENTS}
-\format{Formal class 'SpatialPolygonsDataFrame' [package "sp"] with 5 slots:
+\format{
+Formal class 'SpatialPolygonsDataFrame' [package "sp"] with 5 slots:
 \describe{
   \item{\code{data}}{A data.frame containing 9 rows and 2 columns: CATCHMENT and SUBCATCH (this corresponds to the PlynlimonTable$ShortName).}
   \item{\code{polygons}}{List of 11 polygons}
   \item{\code{plotOrder}}{Numeric value indicating the plot order}
   \item{\code{bbox}}{Matrix containing bounding box in British National Grid coordinates}
   \item{\code{proj4string}}{Proj4 string describing the British National Grid reference system}
-}}
+}
+}
 \source{
 \url{http://hdl.handle.net/10044/1/30773}
 }
@@ -25,4 +27,3 @@ PlynlimonSUBCATCHMENTS is a spatial polygons data frame for Plynlimon subcatchme
 Vitolo, C. (2015), Exploring data mining for hydrological modelling (Ph.D. thesis), Imperial College London, uri: http://hdl.handle.net/10044/1/30773.
 }
 \keyword{datasets}
-

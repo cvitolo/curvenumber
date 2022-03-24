@@ -4,14 +4,16 @@
 \name{PlynlimonSOIL}
 \alias{PlynlimonSOIL}
 \title{Data set: PlynlimonSOIL}
-\format{Formal class 'SpatialPolygonsDataFrame' [package "sp"] with 5 slots:
+\format{
+Formal class 'SpatialPolygonsDataFrame' [package "sp"] with 5 slots:
 \describe{
   \item{\code{data}}{A data.frame containing 35 rows and 34 columns: ID, ID0, HOSTCODE1-HOSTCODE29, HOSTCODE98-99 and AreaKm2.}
   \item{\code{polygons}}{List of 35 polygons}
   \item{\code{plotOrder}}{Numeric value indicating the plot order}
   \item{\code{bbox}}{Matrix containing bounding box in British National Grid coordinates}
   \item{\code{proj4string}}{Proj4 string describing the British National Grid reference system}
-}}
+}
+}
 \source{
 \url{http://hdl.handle.net/10044/1/30773}
 }
@@ -25,4 +27,3 @@ PlynlimonSOIL is a spatial polygons data frame for Plynlimon soil (HOST percenta
 Vitolo, C. (2015), Exploring data mining for hydrological modelling (Ph.D. thesis), Imperial College London, uri: http://hdl.handle.net/10044/1/30773.
 }
 \keyword{datasets}
-

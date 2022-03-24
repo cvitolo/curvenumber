@@ -21,4 +21,3 @@ Curve Number, in the range [0,100]
 \description{
 Calculate the Curve Number from P and Q
 }
-

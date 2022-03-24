@@ -4,8 +4,13 @@
 \alias{RegionalisedCN}
 \title{Calculate Curve Number for soil (HOST) and vegetation (LCM) maps}
 \usage{
-RegionalisedCN(soil, catchment, lookupTable, vegetation,
-  artificialDrainage = "none")
+RegionalisedCN(
+  soil,
+  catchment,
+  lookupTable,
+  vegetation,
+  artificialDrainage = "none"
+)
 }
 \arguments{
 \item{soil}{filename of a shapefile containing the percentage coverage of HOST classes}
@@ -46,4 +51,3 @@ Please make sure that soil, catchment and vegetation are projected in the same C
 }
 
 }
-

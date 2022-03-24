@@ -4,8 +4,12 @@
 \alias{SoilandVeg2CN}
 \title{Soil and Vegetation code to CN, and corrects it based on drainage level, if needed.}
 \usage{
-SoilandVeg2CN(vegetationCODE, soilCODE, lookupTable,
-  artificialDrainage = "none")
+SoilandVeg2CN(
+  vegetationCODE,
+  soilCODE,
+  lookupTable,
+  artificialDrainage = "none"
+)
 }
 \arguments{
 \item{vegetationCODE}{vegetation class code (e.g. for the UK vegetation map 2013 this is an integer in the range [1,10]).}
@@ -33,4 +37,3 @@ cnLocal <- SoilandVeg2CN(vegetationCODE = 6,
 }
 
 }
-

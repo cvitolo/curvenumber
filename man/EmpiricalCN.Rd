@@ -4,8 +4,13 @@
 \alias{EmpiricalCN}
 \title{Calculate the Curve Number from time series data (P and Q)}
 \usage{
-EmpiricalCN(tseries, stepsBack = 5, hours2extend = 6, timeUnits = "hours",
-  verbose = FALSE)
+EmpiricalCN(
+  tseries,
+  stepsBack = 5,
+  hours2extend = 6,
+  timeUnits = "hours",
+  verbose = FALSE
+)
 }
 \arguments{
 \item{tseries}{time series object containing, at least, precipitation ("P") and discharge ("Q")}
@@ -31,4 +36,3 @@ Calculate the Curve Number from time series data (P and Q)
 }
 
 }
-
