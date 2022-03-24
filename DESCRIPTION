@@ -6,7 +6,13 @@ Authors@R: c(person("Claudia", "Vitolo", email = "cvitolodev@gmail.com", role = 
 Maintainer: Claudia Vitolo <cvitolodev@gmail.com>
 URL: http://cvitolo.github.io/curvenumber/
 BugReports: https://github.com/cvitolo/curvenumber/issues
-Description: This package is an implementation of the Curve Number, a well established method for the estimation of direct runoff from storm rainfall. To install the Imported 'hydromad' package, use the following R code: 'install.packages("hydromad", repos="http://hydromad.catchment.org")'. hydromad also makes use of the 'dream' package, in order to install 'dream', use the following R code: 'install.packages("dream", repos="http://hydromad.catchment.org")'.
+Description: This package is an implementation of the Curve Number, a well
+    established method for the estimation of direct runoff from storm rainfall.
+    To install the Imported 'hydromad' package, use the following R code:
+    'install.packages("hydromad", repos="http://hydromad.catchment.org")'.
+    hydromad also makes use of the 'dream' package, in order to install 'dream',
+    use the following R code:
+    'install.packages("dream", repos="http://hydromad.catchment.org")'.
 Depends: R (>= 3.0), rgdal, sp, data.table
 Imports: raster, pracma, xts, zoo, Hmisc, hydromad, minpack.lm, graphics, stats, utils, units, fpCompare, stringi, latticeExtra, polynom, car, reshape, DEoptim
 License: GPL-3
