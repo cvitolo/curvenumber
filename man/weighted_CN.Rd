@@ -44,7 +44,7 @@ user-supplied unit or the default unit of an acre.
 
 # Example 1
 
-library("iemisc")
+library("curvenumber")
 
 area1 <- c(220, 150, 30)
 CN1 <- c(75, 89, 80)
@@ -53,7 +53,7 @@ weighted_CN(CN = CN1, area = area1)
 
 # Example 2
 
-library("iemisc")
+library("curvenumber")
 
 area2 <- c(220, 150, 30)
 area_pct2 <- area2 / sum(area2)
@@ -64,7 +64,7 @@ weighted_CN(CN_area_pct_table = CN_area_pct_table2)
 
 # Example 3
 
-install.load::load_package("iemisc", "data.table")
+install.load::load_package("curvenumber", "data.table")
 
 CN_area_table3 <- data.table(CN = c(98, 100, 45), area = c(2.53, 453.00, 0.21))
 weighted_CN(CN_area_table = CN_area_table3)
@@ -72,7 +72,7 @@ weighted_CN(CN_area_table = CN_area_table3)
 
 # Example 4
 
-library("iemisc")
+library("curvenumber")
 
 CN4 <- c(98, 100, 45)
 area_pct4 <- c(0.15, 0.23, 0.62)
@@ -81,7 +81,7 @@ weighted_CN(CN = CN4, area_pct = area_pct4)
 
 # Example 5
 
-library("iemisc")
+library("curvenumber")
 
 import::from(ramify, mat)
 
@@ -97,7 +97,7 @@ weighted_CN(CN_area_table = data_matrix5b)
 
 # Example 6 - using area in square feet
 
-library("iemisc")
+library("curvenumber")
 
 data_list6 <- list(CN = c(77, 29, 68), Area = c(43560, 56893, 345329.32))
 weighted_CN(CN_area_table = data_list6, area_units = "square feet")
@@ -105,7 +105,7 @@ weighted_CN(CN_area_table = data_list6, area_units = "square feet")
 
 # Example 7 - using area in whole percents
 
-library("iemisc")
+library("curvenumber")
 
 CN7 <- c(61, 74)
 area_pct7 <- c(30, 70)

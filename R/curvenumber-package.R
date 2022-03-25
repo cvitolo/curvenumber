@@ -27,6 +27,13 @@
 #' @importFrom stats coef end lm predict start window
 #' @importFrom utils tail
 #' @importFrom minpack.lm nlsLM
+#' @importFrom data.table as.data.table
+#' @importFrom units drop_units make_units set_units units
+#' @importFrom fpCompare "%==%"
+#' @importFrom stringi stri_replace_all_fixed
+#' @importFrom assertthat assert_that
+#' @importFrom checkmate testDataTable qtest
+#' @importFrom round round_r3
 #'
 NULL
 
