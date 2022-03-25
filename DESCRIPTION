@@ -13,10 +13,10 @@ Description: This package is an implementation of the Curve Number, a well
     hydromad also makes use of the 'dream' package, in order to install 'dream',
     use the following R code:
     'install.packages("dream", repos="http://hydromad.catchment.org")'.
-Depends: R (>= 3.0), rgdal, sp, data.table
+Depends: R (>= 3.0)
 Imports: raster, pracma, xts, zoo, Hmisc, hydromad, minpack.lm, graphics, stats,
     utils, units, fpCompare, stringi, latticeExtra, polynom, car, reshape,
-    DEoptim, data.table, assertthat, checkmate, round
+    DEoptim, data.table, assertthat, checkmate, round, rgdal, sp
 License: GPL-3
 Encoding: UTF-8
 Repository: GitHub
