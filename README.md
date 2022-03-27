@@ -5,6 +5,8 @@ curvenumber: an R package to calculate Base Flow Index and Curve Number for gaug
 <!-- Edit the README.Rmd only!!! The README.md is generated automatically from README.Rmd. -->
 [![Travis-CI Build Status](https://travis-ci.org/cvitolo/curvenumber.svg?branch=master)](https://travis-ci.org/cvitolo/curvenumber) [![Coverage Status](https://img.shields.io/codecov/c/github/cvitolo/curvenumber/master.svg)](https://codecov.io/github/cvitolo/curvenumber?branch=master) [![CRAN\_Status\_Badge](http://www.r-pkg.org/badges/version/curvenumber)](https://cran.r-project.org/package=curvenumber)
 
+**Update on 27-03-2022: the maintainer of this package has changed. The latest version of the `curvenumber` package is now available at [https://github.com/iembry/curvenumber](https://github.com/iembry/curvenumber)**
+
 The curvenumber (Vitolo and Le Vine, 2016) is an R package (R Core Team, 2016) which allows to calculate two indices for the classification of hydrological responses: the Base Flow Index (BFI) and the Curve Number (CN). These indices are indicators of low and high flow responses, respectively. Techniques have been developed to calculate the indices for gauged and ungauged catchments in the United States (Hawkins, 1993; Hjelmfelt, 1980; Rallison, 1980).
 
 This work presents the first stable release of the curvenumber R package, which allows to calculate the CN and BFI empirically as well as from spatial data layers for catchments in the United Kingdom. The proposed method is based on previous investigations made by Bulygina et al. (2011) but sets the scene for a more general approach that can be applied globally.
